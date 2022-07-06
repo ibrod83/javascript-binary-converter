@@ -1,9 +1,12 @@
 import { isNode } from "../utils/crossPlatform.js";
 import { binaryToImage } from "../utils/image.js";
+import BlobConverter from "./BlobConverter.js";
 
-export default class FileConverter {
+export default class FileConverter extends BlobConverter {
 
-    constructor(private original: File) {
+    constructor(original: File) {
+        super(original)
+        
         if (isNode())
             throw new Error('FileConvertor is available only in the browser')
     }

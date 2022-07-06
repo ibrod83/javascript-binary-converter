@@ -19,6 +19,12 @@ export default class BlobConverter {
             return new Uint8Array(arrayBuffer);
         });
     }
+    toInt8Array() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const arrayBuffer = yield this.toArrayBuffer();
+            return new Int8Array(arrayBuffer);
+        });
+    }
     toArrayBuffer() {
         return __awaiter(this, void 0, void 0, function* () {
             return yield this.original.arrayBuffer();
@@ -37,6 +43,7 @@ export default class BlobConverter {
             return this.toBase64_Node();
         }
         return new Promise((resolve) => {
+            debugger;
             const reader = new FileReader();
             reader.onloadend = () => resolve(reader.result);
             reader.readAsDataURL(this.original);

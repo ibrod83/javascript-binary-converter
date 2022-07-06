@@ -9,9 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { isNode } from "../utils/crossPlatform.js";
 import { binaryToImage } from "../utils/image.js";
-export default class FileConverter {
+import BlobConverter from "./BlobConverter.js";
+export default class FileConverter extends BlobConverter {
     constructor(original) {
-        this.original = original;
+        super(original);
         if (isNode())
             throw new Error('FileConvertor is available only in the browser');
     }

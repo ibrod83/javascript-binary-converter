@@ -24,13 +24,6 @@ describe('Browser tests', () => {
 
     });
 
-    it('Should return a dataUrl string from Blob', async function () {
-
-        const blob = new Blob([206, 134])
-        const url = await converter(blob).toBase64();
-        expect(typeof url).to.equal('string')
-    });
-
     it('Should return a Blob, that is converted to "Ά", from Uint8Array', async function () {
 
         const int8 = new Uint8Array([206, 134])
@@ -47,16 +40,10 @@ describe('Browser tests', () => {
 
 
     it('Should return an image, from a file', async function () {
-        const imageFromDom = document.querySelector('img')//Take the original hidden image from the DOM.
-
-        const canvas = createCanvas(imageFromDom,{width:imageFromDom.width,height:imageFromDom.height})
-
-        const blob = await new Promise((res) => canvas.toBlob(res));//Create a Blob from the canvas.
-
-        const file = new File([blob], 'Koala.jpg')//Create a file object, passing the Blob as the binary data.
+        const { imageFromDom, blob, file } = await createObjectsForFileDummyTests()
 
         const image = await converter(file).toImage({ validateImage: false })//Create an image from "file"
-        
+
         const blobFromImage = await imageToBlob(image, { height: imageFromDom.height, width: imageFromDom.width })//Create blob again, just to verify the size.
         expect(file.size).to.equal(1780070)
 
@@ -80,13 +67,72 @@ describe('Browser tests', () => {
 
         const blobFromImage = await imageToBlob(imageFromDom, { height: imageFromDom.height, width: imageFromDom.width })//Create blob again, just to verify the size.
         const dataUrl = await converter(blobFromImage).toBase64();
-        const image  = document.createElement('img')
+        debugger;
+        const image = document.createElement('img')
         image.src = dataUrl
-        debugger;
         expect(image.src.includes('data:image/png;base64,')).to.equal(true)
-        // document.body.append(image)
+
+    });
+
+    it('Should return a dataUrl string from File', async function () {
+
+        const { file } = await createObjectsForFileDummyTests()
+        const dataUrl = await converter(file).toBase64();
         debugger;
+        expect(dataUrl.includes('base64,')).to.equal(true)
+
+    });
+
+    it('Should return an arrayBuffer, from a file', async function () {
+
+        const { file } = await createObjectsForFileDummyTests()
+
+        const arrayBuffer = await converter(file).toArrayBuffer()
+        expect(arrayBuffer.byteLength).to.equal(1780070)
+        // debugger;
+
+
+    });
+
+    it('Should return a Uint8Array, from a file', async function () {
+
+        const { file } = await createObjectsForFileDummyTests()
+
+        const uint8 = await converter(file).toUint8Array()
+        expect(uint8.byteLength).to.equal(1780070)
+        // debugger;
+
+
+    });
+
+    it('Should return an Int8Array, from a file', async function () {
+
+        const { file } = await createObjectsForFileDummyTests()
+
+        const int8 = await converter(file).toInt8Array()
+        expect(int8.byteLength).to.equal(1780070)
+        // debugger;
+
+
     });
 
 
 })
+
+async function createObjectsForFileDummyTests() {
+    const imageFromDom = document.querySelector('img')//Take the original hidden image from the DOM.
+
+    const canvas = createCanvas(imageFromDom, { width: imageFromDom.width, height: imageFromDom.height })
+
+    const blob = await new Promise((res) => canvas.toBlob(res));//Create a Blob from the canvas.
+
+    const file = new File([blob], 'Koala.jpg')//Create a file object, passing the Blob as the binary data.
+
+    return {
+        imageFromDom,
+        blob,
+        file
+    }
+}
+
+
