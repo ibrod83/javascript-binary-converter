@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="mocha"></div>
+    <!-- <script type="module" src="../../build/index.js"></script> -->
+    <script src="https://unpkg.com/chai/chai.js"></script>
+    <script src="../../node_modules/mocha/mocha.js"></script>
+    <input type="file">
+    <img style="display:none;" src="./images/Koala.jpg" alt="">
+
+    <script type="module" class="mocha-init">
+        mocha.setup('bdd');
+        // mocha.checkLeaks();
+    </script>
+    <script type="module" src="./browser.spec.js"></script>
+    <script type="module">
+        mocha.run();
+    </script>
+    <script type="module">
+        import converter from "../../build/converter.js";
+
+        document.querySelector('input').addEventListener('change', async (event) => {
+            const target = event.target
+            const files = target.files;
+            const file = files[0]
+            const image = await converter(file).toImage({ longestDimension: 200 })
+            document.body.appendChild(image)
+        })
+
+    </script>
+</body>
+
+</html>
