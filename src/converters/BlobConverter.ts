@@ -39,7 +39,6 @@ export default class BlobConverter {
       return this.toBase64_Node()
     }
     return new Promise<string>((resolve) => {
-      debugger;
       const reader = new FileReader();
       reader.onloadend = () => resolve(reader.result as string);
       reader.readAsDataURL(this.original);

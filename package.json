@@ -1,9 +1,9 @@
 {
-  "name": "converter",
+  "name": "javascript-binary-converter",
   "type": "module",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.0.1",
+  "description": "A utility package to quickly handle and convert various Javascript binary objects",
+  "main": "./build/index.js",
   "scripts": {
     "test": "mocha -p --watch ./src/tests/node.spec.js",
     "start": "tsc --watch"
