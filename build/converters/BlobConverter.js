@@ -39,7 +39,7 @@ export default class BlobConverter {
      * In the browser this will return a full dataurl string. In node, the base64 portion only is returned!
      */
     toBase64() {
-        if (isNode()) {
+        if (isNode) {
             return this.toBase64_Node();
         }
         return new Promise((resolve) => {

@@ -13,7 +13,7 @@ import BlobConverter from "./BlobConverter.js";
 export default class FileConverter extends BlobConverter {
     constructor(original) {
         super(original);
-        if (isNode())
+        if (isNode)
             throw new Error('FileConvertor is available only in the browser');
     }
     /**

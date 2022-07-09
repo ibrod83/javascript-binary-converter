@@ -125,6 +125,16 @@ describe('Browser tests', () => {
 
         document.body.appendChild(image)
     });
+
+    it('Should return a Uint8Array, from an ArrayBuffer', async function () {
+
+        const buffer = new ArrayBuffer(5)
+        const uint8 = converter(buffer).toUint8Array()
+        expect(uint8.constructor.name).to.equal('Uint8Array')
+        expect(uint8.buffer === buffer).to.equal(true)
+    });
+
+    
 })
 
 const dummyImageBytes = [

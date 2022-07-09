@@ -68,6 +68,14 @@ describe('Node tests', () => {
         expect(typeof url).toBe('string')
     });
 
+    it('Should return a Uint8Array, from an ArrayBuffer', async function () {
+
+        const buffer = new ArrayBuffer(5)
+        const uint8 = converter(buffer).toUint8Array()
+        expect(uint8.constructor.name).toBe('Uint8Array')
+        expect(uint8.buffer === buffer).toBe(true)
+    });
+
 
 
 
