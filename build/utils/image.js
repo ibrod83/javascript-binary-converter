@@ -29,6 +29,7 @@ export function getBlobWithModifiedImageSize(binary, { longestDimension }) {
         image.src = URL.createObjectURL(binary);
         yield new Promise((res) => image.onload = res);
         const deducedDimensions = getScaledDimensions({ width: image.width, height: image.height, longestDimension });
+        debugger;
         const blob = yield imageToBlob(image, deducedDimensions);
         return blob;
     });
@@ -53,12 +54,16 @@ export function getScaledDimensions({ width: w, height: h, longestDimension }) {
     }
     return { width, height };
 }
-export function imageToBlob(image, assertDimensions) {
+export function imageToBlob(image, assertDimensions, config) {
     return __awaiter(this, void 0, void 0, function* () {
+        debugger;
         const height = (assertDimensions === null || assertDimensions === void 0 ? void 0 : assertDimensions.height) || image.height;
         const width = (assertDimensions === null || assertDimensions === void 0 ? void 0 : assertDimensions.width) || image.width;
+        const type = (config === null || config === void 0 ? void 0 : config.type) || 'image/png';
         const canvas = createCanvas(image, { height, width });
-        return new Promise((res) => canvas.toBlob(res));
+        const blob = yield new Promise((res) => canvas.toBlob(res, type));
+        debugger;
+        return blob;
     });
 }
 export function createCanvas(image, config) {

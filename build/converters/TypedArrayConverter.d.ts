@@ -10,5 +10,8 @@ export default class TypedArrayConverter {
     toUint32Array(): Uint32Array;
     toText(): string;
     toBlob(): Blob;
+    toImage(config?: {
+        longestDimension: number;
+    }): Promise<HTMLImageElement>;
 }
 export {};

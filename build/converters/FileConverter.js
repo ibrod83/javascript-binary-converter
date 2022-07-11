@@ -27,6 +27,7 @@ export default class FileConverter extends BlobConverter {
                 // debugger
                 throw new Error('File supplied is not an image');
             }
+            // debugger;
             return binaryToImage(this.original, config ? config : undefined);
         });
     }

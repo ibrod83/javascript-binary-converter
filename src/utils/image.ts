@@ -1,4 +1,14 @@
 
+type ImageTypes = 'image/png' | 'image/jpeg'
+
+interface AssertDimensions{
+    height: number, width: number
+}
+
+interface ImageToBlobConfig{
+    type?:ImageTypes
+}
+
 export async function binaryToImage(binary: Blob | File, config?: { longestDimension: number }) {
     // debugger
     let finalBinary!: Blob | File;
@@ -24,7 +34,7 @@ export async function getBlobWithModifiedImageSize(binary: Blob | File, { longes
     await new Promise<Event>((res) => image.onload = res);
 
     const deducedDimensions = getScaledDimensions({ width: image.width, height: image.height, longestDimension })
-
+    debugger;
     const blob = await imageToBlob(image, deducedDimensions)
 
     return blob;
@@ -52,14 +62,16 @@ export function getScaledDimensions({ width: w, height: h, longestDimension }: {
     return { width, height }
 }
 
-export async function imageToBlob(image: HTMLImageElement, assertDimensions?: { height: number, width: number }) {
-   
+export async function imageToBlob(image: HTMLImageElement, assertDimensions?: AssertDimensions,config?:ImageToBlobConfig) {
+   debugger
     const height = assertDimensions?.height || image.height   
     const width = assertDimensions?.width || image.width
-   
+    const type = config?.type || 'image/png'
     const canvas = createCanvas(image,{height,width})
-   
-    return new Promise((res) => canvas.toBlob(res));
+    const blob = await new Promise((res) => canvas.toBlob(res,type));
+    
+    debugger;
+    return blob
 }
 
 

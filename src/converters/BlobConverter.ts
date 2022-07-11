@@ -25,8 +25,7 @@ export default class BlobConverter {
 
   }
 
-  async toImage(config?: { longestDimension: number }) {
-
+  async toImage(config?: { longestDimension: number,format?:string }) {
     return binaryToImage(this.original, config ? config : undefined)
 
   }
@@ -40,8 +39,13 @@ export default class BlobConverter {
     }
     return new Promise<string>((resolve) => {
       const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result as string);
-      reader.readAsDataURL(this.original);
+      reader.readAsDataURL(this.original)
+      reader.onloadend = () => {
+        const dataUrl = reader.result
+        debugger;
+        resolve(dataUrl as string)
+      };
+     
     });
   }
 

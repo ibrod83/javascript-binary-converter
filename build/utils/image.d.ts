@@ -1,3 +1,11 @@
+declare type ImageTypes = 'image/png' | 'image/jpeg';
+interface AssertDimensions {
+    height: number;
+    width: number;
+}
+interface ImageToBlobConfig {
+    type?: ImageTypes;
+}
 export declare function binaryToImage(binary: Blob | File, config?: {
     longestDimension: number;
 }): Promise<HTMLImageElement>;
@@ -15,11 +23,9 @@ export declare function getScaledDimensions({ width: w, height: h, longestDimens
     width: number;
     height: number;
 };
-export declare function imageToBlob(image: HTMLImageElement, assertDimensions?: {
-    height: number;
-    width: number;
-}): Promise<unknown>;
+export declare function imageToBlob(image: HTMLImageElement, assertDimensions?: AssertDimensions, config?: ImageToBlobConfig): Promise<unknown>;
 export declare function createCanvas(image: HTMLImageElement, config: {
     width: number;
     height: number;
 }): HTMLCanvasElement;
+export {};

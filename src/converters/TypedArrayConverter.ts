@@ -1,18 +1,14 @@
 import { getBlobClass } from '../utils/crossPlatform.js'
-
+import { binaryToImage } from '../utils/image.js'
 
 type TypedArray = Int8Array | Uint8Array | Int16Array | Uint16Array | Int32Array | Uint32Array
 
-
 export default class TypedArrayConverter {
 
-    constructor(private original: TypedArray) { 
-        // debugger
-    }
+    constructor(private original: TypedArray) { }
 
     toUint8Array() {
-        // debugger
-        return new Uint8Array(this.original)//
+        return new Uint8Array(this.original)
     }
 
     toInt8Array() {
@@ -20,15 +16,14 @@ export default class TypedArrayConverter {
     }
 
     toInt16Array() {
-        const int16 = new Int16Array(this.original)//
-        return  int16;
+        const int16 = new Int16Array(this.original)
+        return int16;
     }
 
     toUint16Array() {
-        // debugger;
-        const uint16 = new Uint16Array(this.original)//
+        const uint16 = new Uint16Array(this.original)
 
-        return  uint16
+        return uint16
     }
 
     toInt32Array() {
@@ -48,7 +43,11 @@ export default class TypedArrayConverter {
     toBlob(): Blob {
         const BlobClass = getBlobClass()
 
-        return  new BlobClass([this.original])
+        return new BlobClass([this.original])
+    }
+
+    async toImage(config?: { longestDimension: number }) {
+        return binaryToImage(this.toBlob(), config && config)
     }
 
 }

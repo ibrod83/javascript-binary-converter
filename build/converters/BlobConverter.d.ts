@@ -6,6 +6,7 @@ export default class BlobConverter {
     toArrayBuffer(): Promise<ArrayBuffer>;
     toImage(config?: {
         longestDimension: number;
+        format?: string;
     }): Promise<HTMLImageElement>;
     /**
      * In the browser this will return a full dataurl string. In node, the base64 portion only is returned!

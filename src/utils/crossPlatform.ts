@@ -1,7 +1,6 @@
 var blob:typeof Blob;
-// var url: typeof URL;
-export const isNode = typeof window === 'undefined'
 
+export const isNode = typeof window === 'undefined'
 
 if (isNode) {//In case it's Node
      //@ts-ignore 
@@ -9,10 +8,6 @@ if (isNode) {//In case it's Node
 }else{//In case it's the browser
     blob = Blob;//
 }
-
-// export function isNode{
-//     return typeof window === 'undefined'
-// }
 
 export function getBlobClass() {
    return blob;
