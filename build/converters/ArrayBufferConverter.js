@@ -12,11 +12,11 @@ export default class ArrayBufferConverter {
     constructor(original) {
         this.original = original;
     } //
-    toImage({ type = 'image/jpeg', longestDimension = undefined } = {}) {
+    toImage({ type = 'image/jpeg', maxSize = undefined } = {}) {
         return __awaiter(this, void 0, void 0, function* () {
             const uint8 = new Uint8Array(this.original);
             const blob = new Blob([uint8], { type });
-            const image = longestDimension ? yield binaryToImage(blob, { longestDimension }) : yield binaryToImage(blob);
+            const image = maxSize ? yield binaryToImage(blob, { maxSize }) : yield binaryToImage(blob);
             return image;
         });
     }

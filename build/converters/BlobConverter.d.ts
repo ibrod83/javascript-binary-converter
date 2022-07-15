@@ -5,12 +5,14 @@ export default class BlobConverter {
     toInt8Array(): Promise<Int8Array>;
     toArrayBuffer(): Promise<ArrayBuffer>;
     toImage(config?: {
-        longestDimension: number;
+        maxSize: number;
         format?: string;
     }): Promise<HTMLImageElement>;
     /**
-     * In the browser this will return a full dataurl string. In node, the base64 portion only is returned!
+     * Returns a base64 string. If you want a dataUrl appended to it, pass {appendDataUrl:true}
+     * In Node will always return plain base64
      */
-    toBase64(): Promise<string>;
-    toBase64_Node(): Promise<string>;
+    toBase64(config?: {
+        appendDataUrl?: boolean;
+    }): Promise<string>;
 }

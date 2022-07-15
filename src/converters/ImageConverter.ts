@@ -1,6 +1,11 @@
 import { isNode } from "../utils/crossPlatform.js";
-import { binaryToImage, imageToBlob } from "../utils/image.js";
+import { binaryToImage, imageToBlob, imageToCanvas } from "../utils/image.js";
 
+
+interface ImageConversionConfig{
+    height?:number
+    width?:number
+}
 export default class ImageConverter {
 
     constructor(private original: HTMLImageElement) {
@@ -9,15 +14,29 @@ export default class ImageConverter {
         }
     }
 
-    async toBlob(config?:{assertDimensions:{height:number,width:number}}){
-        const assertDimensions = config?.assertDimensions
-        return imageToBlob(this.original, assertDimensions && assertDimensions ) as Promise<Blob>
+    async toBlob(config?:ImageConversionConfig){
+        return imageToBlob(this.original, {height:config?.height,width:config?.width} ) as Promise<Blob>
+    }
+
+    async toArrayBuffer(config?:ImageConversionConfig){
+        const blob = await this.toBlob(config)
+        return blob.arrayBuffer()
     }
 
     async toUint8Array(){
-        const blob  = await this.toBlob();
-        const arrayBuffer = await blob.arrayBuffer()
-        return new Uint8Array(arrayBuffer);
+        return new Uint8Array(await this.toArrayBuffer());
+    }
+
+    async toInt8Array(){
+        
+        return new Int8Array(await this.toArrayBuffer());
+    }   
+
+    toCanvas(config?:ImageConversionConfig){
+        const w = config?.width || this.original.width
+        const h = config?.height || this.original.height
+        const canvas = imageToCanvas(this.original,{width:w,height:h})
+        return canvas;
     }
 
 }

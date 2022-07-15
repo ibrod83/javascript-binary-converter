@@ -11,8 +11,8 @@ export function binaryToImage(binary, config) {
     return __awaiter(this, void 0, void 0, function* () {
         // debugger
         let finalBinary;
-        if (config === null || config === void 0 ? void 0 : config.longestDimension) {
-            finalBinary = (yield getBlobWithModifiedImageSize(binary, { longestDimension: config.longestDimension }));
+        if (config === null || config === void 0 ? void 0 : config.maxSize) {
+            finalBinary = (yield getBlobWithModifiedImageSize(binary, { maxSize: config.maxSize }));
         }
         else {
             finalBinary = binary;
@@ -23,13 +23,13 @@ export function binaryToImage(binary, config) {
         return image;
     });
 }
-export function getBlobWithModifiedImageSize(binary, { longestDimension }) {
+export function getBlobWithModifiedImageSize(binary, config) {
     return __awaiter(this, void 0, void 0, function* () {
         const image = new Image();
         image.src = URL.createObjectURL(binary);
         yield new Promise((res) => image.onload = res);
-        const deducedDimensions = getScaledDimensions({ width: image.width, height: image.height, longestDimension });
-        debugger;
+        const deducedDimensions = getScaledDimensions({ width: image.width, height: image.height, maxSize: config.maxSize });
+        // debugger;
         const blob = yield imageToBlob(image, deducedDimensions);
         return blob;
     });
@@ -37,36 +37,36 @@ export function getBlobWithModifiedImageSize(binary, { longestDimension }) {
 /**
  * Reduce the dimensions of an image, while maintaning its ratio.
  */
-export function getScaledDimensions({ width: w, height: h, longestDimension }) {
+export function getScaledDimensions({ width: w, height: h, maxSize }) {
     let width = w;
     let height = h;
     if (width > height) {
-        if (width > longestDimension) {
-            height *= longestDimension / width;
-            width = longestDimension;
+        if (width > maxSize) {
+            height *= maxSize / width;
+            width = maxSize;
         }
     }
     else {
-        if (height > longestDimension) {
-            width *= longestDimension / height;
-            height = longestDimension;
+        if (height > maxSize) {
+            width *= maxSize / height;
+            height = maxSize;
         }
     }
     return { width, height };
 }
-export function imageToBlob(image, assertDimensions, config) {
+export function imageToBlob(image, config) {
     return __awaiter(this, void 0, void 0, function* () {
-        debugger;
-        const height = (assertDimensions === null || assertDimensions === void 0 ? void 0 : assertDimensions.height) || image.height;
-        const width = (assertDimensions === null || assertDimensions === void 0 ? void 0 : assertDimensions.width) || image.width;
+        // debugger
+        const height = (config === null || config === void 0 ? void 0 : config.height) || image.height;
+        const width = (config === null || config === void 0 ? void 0 : config.width) || image.width;
         const type = (config === null || config === void 0 ? void 0 : config.type) || 'image/png';
-        const canvas = createCanvas(image, { height, width });
+        const canvas = imageToCanvas(image, { height, width });
         const blob = yield new Promise((res) => canvas.toBlob(res, type));
-        debugger;
+        // debugger;
         return blob;
     });
 }
-export function createCanvas(image, config) {
+export function imageToCanvas(image, config) {
     const canvas = document.createElement("canvas"); //Create a canvas, in order to get Blob from the original image.
     canvas.width = config.width;
     canvas.height = config.height;

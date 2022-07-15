@@ -1,9 +1,9 @@
 export default class ArrayBufferConverter {
     private original;
     constructor(original: ArrayBuffer);
-    toImage({ type, longestDimension }?: {
+    toImage({ type, maxSize }?: {
         type?: string;
-        longestDimension?: number;
+        maxSize?: number;
     }): Promise<HTMLImageElement>;
     toUint8Array(): Uint8Array;
     toInt8Array(): Int8Array;

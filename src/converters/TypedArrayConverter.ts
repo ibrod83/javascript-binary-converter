@@ -46,7 +46,7 @@ export default class TypedArrayConverter {
         return new BlobClass([this.original])
     }
 
-    async toImage(config?: { longestDimension: number }) {
+    async toImage(config?: { maxSize: number }) {
         return binaryToImage(this.toBlob(), config && config)
     }
 

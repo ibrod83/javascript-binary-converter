@@ -13,9 +13,9 @@ export default class FileConverter extends BlobConverter {
 
     /**
      * Convert a File object to an image, whose src is a Blob.
-     * Optionally supply a config object with longestDimension, refering to the maximal height or width(depending on the proportions).
+     * Optionally supply a config object with maxSize, refering to the maximal height or width(depending on the proportions).
      */
-    async toImage(config?: { longestDimension: number, validateImage?: boolean }) {
+    async toImage(config?: { maxSize: number, validateImage?: boolean }) {
         // debugger;
         if (config?.validateImage !== false && !this.original.type.match(/image.*/)) {
             // debugger

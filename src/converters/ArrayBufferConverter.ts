@@ -4,10 +4,10 @@ export default class ArrayBufferConverter{
 
     constructor(private original:ArrayBuffer){}//
 
-    async toImage({ type= 'image/jpeg',longestDimension=undefined }: {type?:string,longestDimension?:number } = {}){
+    async toImage({ type= 'image/jpeg',maxSize=undefined }: {type?:string,maxSize?:number } = {}){
         const uint8 = new Uint8Array(this.original)
         const blob = new Blob([uint8],{type})
-        const image = longestDimension  ? await binaryToImage(blob,{longestDimension}) :  await binaryToImage(blob)    
+        const image = maxSize  ? await binaryToImage(blob,{maxSize}) :  await binaryToImage(blob)    
         return image;
     }
 

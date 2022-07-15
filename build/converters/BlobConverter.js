@@ -7,8 +7,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { isNode } from "../utils/crossPlatform.js";
-import { binaryToImage } from "../utils/image.js";
+import { blobToBase64 } from "../utils/blob.js";
+import * as blobUtils from "../utils/image.js";
 export default class BlobConverter {
     constructor(original) {
         this.original = original;
@@ -32,32 +32,15 @@ export default class BlobConverter {
     }
     toImage(config) {
         return __awaiter(this, void 0, void 0, function* () {
-            return binaryToImage(this.original, config ? config : undefined);
+            return blobUtils.binaryToImage(this.original, config ? config : undefined);
         });
     }
     /**
-     * In the browser this will return a full dataurl string. In node, the base64 portion only is returned!
+     * Returns a base64 string. If you want a dataUrl appended to it, pass {appendDataUrl:true}
+     * In Node will always return plain base64
      */
-    toBase64() {
-        if (isNode) {
-            return this.toBase64_Node();
-        }
-        return new Promise((resolve) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(this.original);
-            reader.onloadend = () => {
-                const dataUrl = reader.result;
-                debugger;
-                resolve(dataUrl);
-            };
-        });
-    }
-    toBase64_Node() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const arrayBuffer = yield this.original.arrayBuffer();
-            const uint8 = new Uint8Array(arrayBuffer);
-            return Buffer.from(uint8).toString('base64'); //TODO: this might be problematic. Explore a different solution.
-        });
+    toBase64(config = { appendDataUrl: false }) {
+        return blobToBase64(this.original, config);
     }
 }
 //# sourceMappingURL=BlobConverter.js.map

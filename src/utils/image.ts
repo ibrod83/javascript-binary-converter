@@ -1,19 +1,33 @@
 
 type ImageTypes = 'image/png' | 'image/jpeg'
 
-interface AssertDimensions{
-    height: number, width: number
+
+type ImageToBlobConfig = {
+    type?: ImageTypes
+    height?: number
+    width?: number
 }
 
-interface ImageToBlobConfig{
-    type?:ImageTypes
+interface ImageCreationConfig {
+    maxSize: number
+    type: 'image/png' | 'image/jpeg'
 }
 
-export async function binaryToImage(binary: Blob | File, config?: { longestDimension: number }) {
+type ScaledDimensionsConfig = Pick<ImageCreationConfig,'maxSize'> & Dimensions
+
+type Dimensions = {
+    width: number
+    height: number
+}
+
+type PartialImageCreationConfig = Partial<ImageCreationConfig>
+
+export async function binaryToImage(binary: Blob | File, config?: PartialImageCreationConfig) {
     // debugger
+
     let finalBinary!: Blob | File;
-    if (config?.longestDimension) {
-        finalBinary = await getBlobWithModifiedImageSize(binary, { longestDimension: config.longestDimension }) as Blob | File;
+    if (config?.maxSize) {
+        finalBinary = await getBlobWithModifiedImageSize(binary, { maxSize: config.maxSize }) as Blob | File;
     } else {
         finalBinary = binary
     }
@@ -25,7 +39,7 @@ export async function binaryToImage(binary: Blob | File, config?: { longestDimen
 
 }
 
-export async function getBlobWithModifiedImageSize(binary: Blob | File, { longestDimension }: { longestDimension: number }) {
+export async function getBlobWithModifiedImageSize(binary: Blob | File, config: Required<Omit<PartialImageCreationConfig, 'type'>>) {
 
     const image = new Image();
 
@@ -33,8 +47,8 @@ export async function getBlobWithModifiedImageSize(binary: Blob | File, { longes
 
     await new Promise<Event>((res) => image.onload = res);
 
-    const deducedDimensions = getScaledDimensions({ width: image.width, height: image.height, longestDimension })
-    debugger;
+    const deducedDimensions = getScaledDimensions({ width: image.width, height: image.height, maxSize: config.maxSize })
+    // debugger;
     const blob = await imageToBlob(image, deducedDimensions)
 
     return blob;
@@ -42,47 +56,48 @@ export async function getBlobWithModifiedImageSize(binary: Blob | File, { longes
 
 
 /**
- * Reduce the dimensions of an image, while maintaning its ratio. 
+ * Reduce the dimensions of an image, while maintaning its ratio.
  */
-export function getScaledDimensions({ width: w, height: h, longestDimension }: { width: number, height: number, longestDimension: number }) {
+export function getScaledDimensions({ width: w, height: h, maxSize }: ScaledDimensionsConfig) {
     let width = w
     let height = h
     if (width > height) {
-        if (width > longestDimension) {
-            height *= longestDimension / width;
-            width = longestDimension;
+        if (width > maxSize) {
+            height *= maxSize / width;
+            width = maxSize;
         }
     } else {
-        if (height > longestDimension) {
-            width *= longestDimension / height;
-            height = longestDimension;
+        if (height > maxSize) {
+            width *= maxSize / height;
+            height = maxSize;
         }
     }
 
     return { width, height }
 }
 
-export async function imageToBlob(image: HTMLImageElement, assertDimensions?: AssertDimensions,config?:ImageToBlobConfig) {
-   debugger
-    const height = assertDimensions?.height || image.height   
-    const width = assertDimensions?.width || image.width
+export async function imageToBlob(image: HTMLImageElement, config: ImageToBlobConfig) {
+    // debugger
+
+    const height = config?.height || image.height
+    const width = config?.width || image.width
     const type = config?.type || 'image/png'
-    const canvas = createCanvas(image,{height,width})
-    const blob = await new Promise((res) => canvas.toBlob(res,type));
-    
-    debugger;
+    const canvas = imageToCanvas(image, { height, width })
+    const blob = await new Promise((res) => canvas.toBlob(res, type));
+
+    // debugger;
     return blob
 }
 
 
-export function createCanvas(image:HTMLImageElement,config:{width:number,height:number}){
-    
+export function imageToCanvas(image: HTMLImageElement, config: Dimensions) {//
+
     const canvas = document.createElement("canvas");//Create a canvas, in order to get Blob from the original image.
-   
-    canvas.width = config.width    
+
+    canvas.width = config.width
     canvas.height = config.height
-   
+
     canvas.getContext('2d')!.drawImage(image, 0, 0, config.width, config.height);
-   
+
     return canvas;
 }

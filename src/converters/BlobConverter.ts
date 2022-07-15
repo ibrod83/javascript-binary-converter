@@ -1,5 +1,5 @@
-import { isNode } from "../utils/crossPlatform.js";
-import { binaryToImage } from "../utils/image.js";
+import { blobToBase64 } from "../utils/blob.js";
+import * as blobUtils from "../utils/image.js";
 
 
 export default class BlobConverter {
@@ -25,39 +25,18 @@ export default class BlobConverter {
 
   }
 
-  async toImage(config?: { longestDimension: number,format?:string }) {
-    return binaryToImage(this.original, config ? config : undefined)
+  async toImage(config?: { maxSize: number,format?:string }) {
+    return blobUtils.binaryToImage(this.original, config ? config : undefined)
 
   }
 
   /**
-   * In the browser this will return a full dataurl string. In node, the base64 portion only is returned!
+   * Returns a base64 string. If you want a dataUrl appended to it, pass {appendDataUrl:true}
+   * In Node will always return plain base64
    */
-  toBase64() {
-    if (isNode) {
-      return this.toBase64_Node()
-    }
-    return new Promise<string>((resolve) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(this.original)
-      reader.onloadend = () => {
-        const dataUrl = reader.result
-        debugger;
-        resolve(dataUrl as string)
-      };
-     
-    });
+  toBase64(config:{appendDataUrl?:boolean}={appendDataUrl:false}) {
+    return blobToBase64(this.original,config)
   }
 
 
-
-
-  async toBase64_Node() {
-    const arrayBuffer = await this.original.arrayBuffer()
-
-    const uint8 = new Uint8Array(arrayBuffer);
-
-    return Buffer.from(uint8).toString('base64');//TODO: this might be problematic. Explore a different solution.
-
-  }
 }

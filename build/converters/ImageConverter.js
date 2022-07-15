@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { isNode } from "../utils/crossPlatform.js";
-import { imageToBlob } from "../utils/image.js";
+import { imageToBlob, imageToCanvas } from "../utils/image.js";
 export default class ImageConverter {
     constructor(original) {
         this.original = original;
@@ -18,16 +18,30 @@ export default class ImageConverter {
     }
     toBlob(config) {
         return __awaiter(this, void 0, void 0, function* () {
-            const assertDimensions = config === null || config === void 0 ? void 0 : config.assertDimensions;
-            return imageToBlob(this.original, assertDimensions && assertDimensions);
+            return imageToBlob(this.original, { height: config === null || config === void 0 ? void 0 : config.height, width: config === null || config === void 0 ? void 0 : config.width });
+        });
+    }
+    toArrayBuffer(config) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const blob = yield this.toBlob(config);
+            return blob.arrayBuffer();
         });
     }
     toUint8Array() {
         return __awaiter(this, void 0, void 0, function* () {
-            const blob = yield this.toBlob();
-            const arrayBuffer = yield blob.arrayBuffer();
-            return new Uint8Array(arrayBuffer);
+            return new Uint8Array(yield this.toArrayBuffer());
         });
+    }
+    toInt8Array() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Int8Array(yield this.toArrayBuffer());
+        });
+    }
+    toCanvas(config) {
+        const w = (config === null || config === void 0 ? void 0 : config.width) || this.original.width;
+        const h = (config === null || config === void 0 ? void 0 : config.height) || this.original.height;
+        const canvas = imageToCanvas(this.original, { width: w, height: h });
+        return canvas;
     }
 }
 //# sourceMappingURL=ImageConverter.js.map
