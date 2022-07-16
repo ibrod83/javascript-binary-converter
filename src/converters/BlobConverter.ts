@@ -25,8 +25,8 @@ export default class BlobConverter {
 
   }
 
-  async toImage(config?: { maxSize: number,format?:string }) {
-    return blobUtils.binaryToImage(this.original, config ? config : undefined)
+  async toImage(config?: { maxSize?: number,format?:string }) {
+    return blobUtils.binaryToImage(this.original, config ? config : undefined)//
 
   }
 

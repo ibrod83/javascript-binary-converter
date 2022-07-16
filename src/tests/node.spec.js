@@ -4,6 +4,9 @@ const { TextDecoder } = require('util')
 const { Blob } = require ('node:buffer')
 
 
+/**
+ * IMPORTANT: Make sure cjs build is refreshed!
+ */
 describe('Node tests', () => {
 
     it('Should return an Int8Array, from Uint8Array', async function () {

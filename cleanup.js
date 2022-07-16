@@ -1,7 +1,5 @@
-/* eslint-disable */
 const fs = require('fs')
 const Path = require('path')
-/* eslint-enable */
 
 const deleteFolderRecursive = (path) => {
   if (fs.existsSync(path)) {
@@ -25,5 +23,4 @@ if (folder) {
   deleteFolderRecursive(Path.join(__dirname, '../build/cjs'))
   deleteFolderRecursive(Path.join(__dirname, '../build/esm'))
   deleteFolderRecursive(Path.join(__dirname, '../build/umd'))
-//   deleteFolderRecursive(Path.join(__dirname, '../build/types'))
 }

@@ -1,37 +1,47 @@
 {
   "name": "javascript-binary-converter",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "A utility package to quickly handle and convert various Javascript binary objects",
   "main": "build/cjs/index.js",
   "module": "build/esm/index.js",
 
   "scripts": {
-    "test": "mocha -p --watch ./src/tests/node.spec.js",
+    "test": "npm run build:cjs && mocha -p --watch ./src/tests/node.spec.js",
     "start": "tsc --watch",
-    "nodemon": "nodemon ./src/index.ts",
     "build": "npm run build:cjs && npm run build:esm",
     "build:cjs": "node cleanup cjs && tsc -p config/tsconfig.cjs.json",
     "build:esm": "node cleanup esm && tsc -p config/tsconfig.esm.json",
     "prepare":"npm run build"
   },
-  "author": "",
+  "author": "ibrod83",
   "license": "ISC",
+  "keywords": [
+    "javascript",
+    "binary",
+    "converter",   
+    "blob",
+    "image",
+    "typedArray",
+    "arrayBuffer",
+    "file",
+    "utility"
+  ],
   "devDependencies": {
     "@types/expect": "^24.3.0",
-    "@types/jest": "^28.1.3",
     "@types/mocha": "^9.1.1",
-    "jest": "^28.1.1",
     "mocha": "^10.0.0",
     "nodemon": "^2.0.19",
-    "ts-jest": "^28.0.5",
-    "ts-loader": "^9.3.1",
     "ts-node": "^10.8.2",
     "typescript": "^4.7.4",
-    "webpack": "^5.73.0",
-    "webpack-cli": "^4.10.0"
-  },
-  "dependencies": {
     "expect": "^28.1.1",
     "lodash": "^4.17.21"
+  },
+  "homepage": "https://github.com/ibrod83/javascript-binary-converter",
+  "bugs": {
+    "url": "https://github.com/ibrod83/javascript-binary-converter/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ibrod83/javascript-binary-converter.git"
   }
 }
