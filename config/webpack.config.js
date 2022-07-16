@@ -1,21 +1,30 @@
-const path = require('path');
+const path = require('path')
 
 module.exports = {
+  mode: 'production',
   entry: './src/index.ts',
+  output: {
+    path: path.resolve(__dirname, '../dist/umd'),
+    filename: 'index.js',
+    library: 'exampleTypescriptPackage',
+    libraryTarget: 'umd',
+    globalObject: 'this',
+  },
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
+        test: /\.ts(x*)?$/,
         exclude: /node_modules/,
+        use: {
+          loader: 'ts-loader',
+          options: {
+            configFile: 'config/tsconfig.umd.json',
+          },
+        },
       },
     ],
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
+    extensions: ['.ts', '.js', '.tsx', '.jsx'],
   },
-  output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
-  },
-};
+}
