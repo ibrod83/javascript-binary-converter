@@ -1,6 +1,6 @@
 {
   "name": "javascript-binary-converter",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A utility package to quickly handle and convert various Javascript binary objects",
   "main": "build/cjs/index.js",
   "module": "build/esm/index.js",
@@ -14,9 +14,6 @@
     "build:esm": "node cleanup esm && tsc -p config/tsconfig.esm.json",
     "prepare":"npm run build"
   },
-  "files": [
-    "build"
-  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
