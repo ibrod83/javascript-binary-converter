@@ -4,16 +4,14 @@
   "description": "A utility package to quickly handle and convert various Javascript binary objects",
   "main": "build/cjs/index.js",
   "module": "build/esm/index.js",
-  "umd:main": "build/umd/index.js",
+
   "scripts": {
     "test": "mocha -p --watch ./src/tests/node.spec.js",
     "start": "tsc --watch",
     "nodemon": "nodemon ./src/index.ts",
-    "build": "npm run build:cjs && npm run build:esm && npm run build:umd",
+    "build": "npm run build:cjs && npm run build:esm",
     "build:cjs": "node cleanup cjs && tsc -p config/tsconfig.cjs.json",
-    "build:esm": "node cleanup esm && tsc -p config/tsconfig.esm.json",
-    "build:umd": "node cleanup umd && webpack --config config/webpack.config.js",
-    "build:browser":"webpack --config config/webpack.config.js"
+    "build:esm": "node cleanup esm && tsc -p config/tsconfig.esm.json"
   },
   "files": [
     "build"
