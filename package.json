@@ -11,7 +11,8 @@
     "nodemon": "nodemon ./src/index.ts",
     "build": "npm run build:cjs && npm run build:esm",
     "build:cjs": "node cleanup cjs && tsc -p config/tsconfig.cjs.json",
-    "build:esm": "node cleanup esm && tsc -p config/tsconfig.esm.json"
+    "build:esm": "node cleanup esm && tsc -p config/tsconfig.esm.json",
+    "prepare":"npm run build"
   },
   "files": [
     "build"
