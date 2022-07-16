@@ -68,8 +68,6 @@ import converter from 'javascript-binary-converter';
 
 #### Blob to Image
 
-If the response headers contain information about the file size, onProgress hook can be used. If the file size cannot be determined, "percentage" and "remainingSize" arguments will be called with NaN.
-
 ```javascript
   import converter from 'javascript-binary-converter';
 
