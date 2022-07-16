@@ -1,5 +1,5 @@
-import { getBlobClass } from '../utils/crossPlatform.js'
-import { binaryToImage } from '../utils/image.js'
+import { getBlobClass } from '../utils/crossPlatform'
+import { binaryToImage } from '../utils/image'
 
 type TypedArray = Int8Array | Uint8Array | Int16Array | Uint16Array | Int32Array | Uint32Array
 
@@ -20,7 +20,7 @@ export default class TypedArrayConverter {
         return int16;
     }
 
-    toUint16Array() {
+    toUint16Array() {//
         const uint16 = new Uint16Array(this.original)
 
         return uint16

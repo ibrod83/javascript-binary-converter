@@ -1,5 +1,5 @@
-import { isNode } from "../utils/crossPlatform.js";
-import { binaryToImage, imageToBlob, imageToCanvas } from "../utils/image.js";
+import { isNode } from "../utils/crossPlatform";
+import { binaryToImage, imageToBlob, imageToCanvas } from "../utils/image";
 
 
 interface ImageConversionConfig{
@@ -24,7 +24,7 @@ export default class ImageConverter {
     }
 
     async toUint8Array(){
-        return new Uint8Array(await this.toArrayBuffer());
+        return new Uint8Array(await this.toArrayBuffer());//
     }
 
     async toInt8Array(){

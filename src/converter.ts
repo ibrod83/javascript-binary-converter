@@ -1,9 +1,9 @@
-import BlobConverter from "./converters/BlobConverter.js";
-import TypedArrayConverter from "./converters/TypedArrayConverter.js";
-import FileConverter from "./converters/FileConverter.js";
-import ArrayBufferConverter from "./converters/ArrayBufferConverter.js";
-import { getBlobClass, isNode } from "./utils/crossPlatform.js";
-import ImageConverter from "./converters/ImageConverter.js";
+import BlobConverter from "./converters/BlobConverter";
+import TypedArrayConverter from "./converters/TypedArrayConverter";
+import FileConverter from "./converters/FileConverter";
+import ArrayBufferConverter from "./converters/ArrayBufferConverter";
+import { getBlobClass, isNode } from "./utils/crossPlatform";
+import ImageConverter from "./converters/ImageConverter";
 
 
 

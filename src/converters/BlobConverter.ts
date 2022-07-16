@@ -1,5 +1,5 @@
-import { blobToBase64 } from "../utils/blob.js";
-import * as blobUtils from "../utils/image.js";
+import { blobToBase64 } from "../utils/blob";
+import * as blobUtils from "../utils/image";
 
 
 export default class BlobConverter {

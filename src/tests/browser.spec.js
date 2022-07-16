@@ -1,7 +1,7 @@
 
 var expect = chai.expect;
-import converter from '../../build/converter.js'
-import { imageToCanvas, imageToBlob } from '../../build/utils/image.js';
+import converter from '../../build/esm/converter.js'
+import { imageToCanvas, imageToBlob } from '../../build/esm/utils/image.js';
 
 
 describe('Browser tests', () => {

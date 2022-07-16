@@ -1,7 +1,7 @@
-import { expect } from 'expect';
-import converter from '../../build/converter.js';
-import { TextDecoder } from 'util'
-import { Blob } from 'node:buffer'
+const { expect } =require('expect');
+const converter= require('../../build/cjs/converter.js').default;
+const { TextDecoder } = require('util')
+const { Blob } = require ('node:buffer')
 
 
 describe('Node tests', () => {
@@ -24,7 +24,7 @@ describe('Node tests', () => {
 
     });
 
-    it('Should return an Int16Array, from Int8Array', async function () {
+    it('Should return an Int16Array, from Int8Array', async function () {//
 
         const int8 = new Int8Array([-50, -122])
         const int16 = converter(int8).toInt16Array()
