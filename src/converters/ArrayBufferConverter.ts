@@ -1,4 +1,4 @@
-import { binaryToImage } from "../utils/image";
+import { binaryToImage } from "../utils/image.js";
 
 export default class ArrayBufferConverter{
 

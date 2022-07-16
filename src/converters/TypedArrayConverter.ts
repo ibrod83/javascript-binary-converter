@@ -1,5 +1,5 @@
-import { getBlobClass } from '../utils/crossPlatform'
-import { binaryToImage } from '../utils/image'
+import { getBlobClass } from '../utils/crossPlatform.js'
+import { binaryToImage } from '../utils/image.js'
 
 type TypedArray = Int8Array | Uint8Array | Int16Array | Uint16Array | Int32Array | Uint32Array
 

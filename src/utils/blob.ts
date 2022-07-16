@@ -1,4 +1,4 @@
-import { isNode } from "./crossPlatform";
+import { isNode } from "./crossPlatform.js";
 
 export function blobToBase64(blob:Blob,config:{appendDataUrl?:boolean}={appendDataUrl:false}) {
     if (isNode) {

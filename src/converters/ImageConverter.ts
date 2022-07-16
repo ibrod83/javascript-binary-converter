@@ -1,5 +1,5 @@
-import { isNode } from "../utils/crossPlatform";
-import { binaryToImage, imageToBlob, imageToCanvas } from "../utils/image";
+import { isNode } from "../utils/crossPlatform.js";
+import { binaryToImage, imageToBlob, imageToCanvas } from "../utils/image.js";
 
 
 interface ImageConversionConfig{

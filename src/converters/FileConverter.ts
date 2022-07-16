@@ -1,6 +1,6 @@
-import { isNode } from "../utils/crossPlatform";
-import { binaryToImage } from "../utils/image";
-import BlobConverter from "./BlobConverter";
+import { isNode } from "../utils/crossPlatform.js";
+import { binaryToImage } from "../utils/image.js";
+import BlobConverter from "./BlobConverter.js";
 
 export default class FileConverter extends BlobConverter {
 
@@ -19,7 +19,7 @@ export default class FileConverter extends BlobConverter {
         // debugger;
         if (config?.validateImage !== false && !this.original.type.match(/image.*/)) {
             // debugger
-            throw new Error('File supplied is not an image')//
+            throw new Error('File supplied is not an image')//.js
         }
         // debugger;
         return binaryToImage(this.original, config ? config : undefined)
