@@ -1,10 +1,11 @@
+import { ImageCreationConfig } from "../sharedTypes.js";
 import { binaryToImage } from "../utils/image.js";
 
 export default class ArrayBufferConverter{
 
     constructor(private original:ArrayBuffer){}//
 
-    async toImage({ type= 'image/jpeg',maxSize=undefined }: {type?:string,maxSize?:number } = {}){
+    async toImage({ type= 'image/jpeg',maxSize=undefined }: ImageCreationConfig = {}){
         const uint8 = new Uint8Array(this.original)
         const blob = new Blob([uint8],{type})
         const image = maxSize  ? await binaryToImage(blob,{maxSize}) :  await binaryToImage(blob)    

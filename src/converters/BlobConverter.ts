@@ -1,4 +1,5 @@
-import { blobToBase64 } from "../utils/blob.js";
+import { ImageCreationConfig } from "../sharedTypes.js";
+import { blobToBase64, blobToCanvas } from "../utils/blob.js";
 import * as blobUtils from "../utils/image.js";
 
 
@@ -25,9 +26,13 @@ export default class BlobConverter {
 
   }
 
-  async toImage(config?: { maxSize?: number,format?:string }) {
+  async toImage(config?: ImageCreationConfig) {
     return blobUtils.binaryToImage(this.original, config ? config : undefined)//
 
+  }
+
+  async toCanvas(){
+    return blobToCanvas(this.original)
   }
 
   /**

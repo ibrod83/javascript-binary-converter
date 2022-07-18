@@ -1,3 +1,4 @@
+import { ImageCreationConfig } from "../sharedTypes"
 
 type ImageTypes = 'image/png' | 'image/jpeg'
 
@@ -8,26 +9,19 @@ type ImageToBlobConfig = {
     width?: number
 }
 
-interface ImageCreationConfig {
-    maxSize: number
-    type: 'image/png' | 'image/jpeg'
-}
-
-type ScaledDimensionsConfig = Pick<ImageCreationConfig,'maxSize'> & Dimensions
+type ScaledDimensionsConfig = Required<Pick<ImageCreationConfig,'maxSize'>> & Dimensions
 
 type Dimensions = {
     width: number
     height: number
 }
 
-type PartialImageCreationConfig = Partial<ImageCreationConfig>
 
-export async function binaryToImage(binary: Blob | File, config?: PartialImageCreationConfig) {
-    // debugger
+export async function binaryToImage(binary: Blob | File, config?: ImageCreationConfig) {
 
     let finalBinary!: Blob | File;
     if (config?.maxSize) {
-        finalBinary = await getBlobWithModifiedImageSize(binary, { maxSize: config.maxSize }) as Blob | File;
+        finalBinary = await getBlobWithModifiedImageSize(binary, { maxSize: config.maxSize as number }) as Blob | File;
     } else {
         finalBinary = binary
     }
@@ -39,7 +33,7 @@ export async function binaryToImage(binary: Blob | File, config?: PartialImageCr
 
 }
 
-export async function getBlobWithModifiedImageSize(binary: Blob | File, config: Required<Omit<PartialImageCreationConfig, 'type'>>) {
+export async function getBlobWithModifiedImageSize(binary: Blob | File, config: Required<Omit<ImageCreationConfig, 'type'>>) {
 
     const image = new Image();
 

@@ -1,3 +1,4 @@
+import { ImageCreationConfig } from '../sharedTypes.js'
 import { getBlobClass } from '../utils/crossPlatform.js'
 import { binaryToImage } from '../utils/image.js'
 
@@ -46,7 +47,7 @@ export default class TypedArrayConverter {
         return new BlobClass([this.original])
     }
 
-    async toImage(config?: { maxSize: number }) {
+    async toImage(config?: ImageCreationConfig) {
         return binaryToImage(this.toBlob(), config && config)
     }
 
