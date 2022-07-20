@@ -1,4 +1,5 @@
 import { ImageCreationConfig } from '../sharedTypes.js'
+import { uint8ToBytes } from '../utils/binary.js'
 import { getBlobClass } from '../utils/crossPlatform.js'
 import { binaryToImage } from '../utils/image.js'
 
@@ -50,5 +51,11 @@ export default class TypedArrayConverter {
     async toImage(config?: ImageCreationConfig) {
         return binaryToImage(this.toBlob(), config && config)
     }
+
+    toBytes(){
+        const bytes = this.original instanceof Uint8Array ? uint8ToBytes(this.original) : uint8ToBytes(new Uint8Array(this.original))
+        return bytes;
+    }
+
 
 }

@@ -1,4 +1,5 @@
 import { ImageCreationConfig } from "../sharedTypes.js";
+import { uint8ToBytes } from "../utils/binary.js";
 import { blobToBase64, blobToCanvas } from "../utils/blob.js";
 import * as blobUtils from "../utils/image.js";
 
@@ -33,6 +34,11 @@ export default class BlobConverter {
 
   async toCanvas(){
     return blobToCanvas(this.original)
+  }
+
+  async toBytes(){
+    const uint8 = await this.toUint8Array()
+    return uint8ToBytes(uint8)
   }
 
   /**

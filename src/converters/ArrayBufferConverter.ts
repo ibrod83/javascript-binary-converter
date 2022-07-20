@@ -1,45 +1,51 @@
 import { ImageCreationConfig } from "../sharedTypes.js";
+import { uint8ToBytes } from "../utils/binary.js";
 import { binaryToImage } from "../utils/image.js";
 
-export default class ArrayBufferConverter{
+export default class ArrayBufferConverter {
 
-    constructor(private original:ArrayBuffer){}//
+    constructor(private original: ArrayBuffer) { }//
 
-    async toImage({ type= 'image/jpeg',maxSize=undefined }: ImageCreationConfig = {}){
+    async toImage({ type = 'image/jpeg', maxSize = undefined }: ImageCreationConfig = {}) {
         const uint8 = new Uint8Array(this.original)
-        const blob = new Blob([uint8],{type})
-        const image = maxSize  ? await binaryToImage(blob,{maxSize}) :  await binaryToImage(blob)    
+        const blob = new Blob([uint8], { type })
+        const image = maxSize ? await binaryToImage(blob, { maxSize }) : await binaryToImage(blob)
         return image;
     }
 
-    toUint8Array(){
+    toUint8Array() {
 
         return new Uint8Array(this.original)
     }
 
-    toInt8Array(){
+    toInt8Array() {
 
         return new Int8Array(this.original)
     }
 
-    toUint16Array(){
+    toUint16Array() {
 
         return new Uint16Array(this.original)
     }
 
-    toInt16Array(){
+    toInt16Array() {
 
         return new Int16Array(this.original)
     }
 
-    toInt32Array(){
+    toInt32Array() {
 
         return new Int32Array(this.original)
     }
 
-    toUint32Array(){
+    toUint32Array() {
 
         return new Uint32Array(this.original)
-    }   
+    }
+
+    toBytes() {
+        const uint8 = this.toUint8Array()
+        return uint8ToBytes(uint8)
+    }
 
 }
