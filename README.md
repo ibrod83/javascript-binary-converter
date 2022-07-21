@@ -47,8 +47,9 @@ converter is a function that accepts any of the convertable objects, recognize t
 Just pass the object you want to convert, and call the appropriate method.
 
 ## Usage in Node
-Not all convertion functionality is available in Node, due to natural limitations. For instance, Image conversion is unavailable, because this object 
+Not all conversion functionality is available in Node, due to natural limitations. For instance, Image conversion is unavailable, because this object 
 simply doesn't exist in Node(same goes for the File object). The program will throw an exception in these cases.
+If, for some reason, you need to convert a Blob object(available in Node since version 15) to some other type, import BlobConverter directly, instead of using the generic converter function, which will show incorrect method signatures in this case(some internal limitations).
 
 ## Examples
 
@@ -67,9 +68,9 @@ document
 
     //Image/HtmlImageElement object
     const image = await converter(files[0]).toImage({ maxSize: 200 }); //maxSize will scale down the image, while maintaining its proportions.
-    //Omit if the original size is prefered.
+    //Omit if the original size is preferred.
 
-    document.queryselector("#image-preview").appendChild(image);
+    document.querySelector("#image-preview").appendChild(image);
   });
 ```
 

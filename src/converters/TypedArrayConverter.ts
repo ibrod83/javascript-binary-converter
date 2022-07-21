@@ -42,14 +42,13 @@ export default class TypedArrayConverter {
     }
 
 
-    toBlob(): Blob {
-        const BlobClass = getBlobClass()
-
+    async toBlob(): Promise<Blob> {
+        const BlobClass =await  getBlobClass()
         return new BlobClass([this.original])
     }
 
     async toImage(config?: ImageCreationConfig) {
-        return binaryToImage(this.toBlob(), config && config)
+        return binaryToImage(await this.toBlob(), config && config)
     }
 
     toBytes(){

@@ -1,15 +1,15 @@
-var blob:typeof Blob;
 
 export const isNode = typeof window === 'undefined'
 
-if (isNode) {//In case it's Node
-     //@ts-ignore 
-    eval(`import('node:buffer').then(({Blob})=>blob = Blob)`)//Using eval to prevent Webpack problems with node:buffer
-}else{//In case it's the browser
-    blob = Blob;//
-}
-
-export function getBlobClass() {
-   return blob;
+export async function getBlobClass() {
+    await Promise.resolve();
+    if(!isNode){
+        return Blob as typeof Blob
+      
+    }else{
+        let prom= eval(`import('node:buffer')`)
+        const {Blob:BlobClass} = await prom
+         return BlobClass as typeof Blob
+    }
 }
 

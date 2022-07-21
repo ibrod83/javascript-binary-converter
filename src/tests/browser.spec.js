@@ -31,14 +31,16 @@ describe('Browser tests', () => {
     it('Should return a Blob, that is converted to "Ά", from Uint8Array', async function () {
 
         const int8 = new Uint8Array([206, 134])
-        const text = await converter(int8).toBlob().text()
+        const blob = await converter(int8).toBlob()
+        const text = await blob.text()
         expect(text).to.equal('Ά')
     });
 
     it('Should return a Blob, that is converted to "Ά", from Int8Array', async function () {
 
         const int8 = new Int8Array([-50, -122])
-        const text = await converter(int8).toBlob().text()
+        const blob = await converter(int8).toBlob()
+        const text = await blob.text()
         expect(text).to.equal('Ά')
     });
 
@@ -69,7 +71,7 @@ describe('Browser tests', () => {
     it('Should return a canvas, from a Blob', async function () {
         const { blob } = await createObjectsForFileDummyTests('#small')
 
-        const canvas = await converter(blob).toCanvas();
+        const canvas = await converter(blob).toCanvas()
         document.body.appendChild(canvas)
         expect(canvas instanceof HTMLCanvasElement).to.equal(true)
         expect(canvas.width === 24 && canvas.height === 29).to.equal(true)

@@ -2,7 +2,7 @@ import BlobConverter from "./converters/BlobConverter.js";
 import TypedArrayConverter from "./converters/TypedArrayConverter.js";
 import FileConverter from "./converters/FileConverter.js";
 import ArrayBufferConverter from "./converters/ArrayBufferConverter.js";
-import { getBlobClass, isNode } from "./utils/crossPlatform.js";
+import { isNode } from "./utils/crossPlatform.js";
 import ImageConverter from "./converters/ImageConverter.js";
 
 
@@ -22,19 +22,21 @@ function converter(original: HTMLImageElement): ImageConverter
 
 
 function converter(original: Convertable) {
+    if(isNode && original.constructor.name === 'Blob'){
+       throw new Error('In order to convert a Blob in Node, import BlobConverter directly') 
+    }
 
     if (original instanceof Int8Array || original instanceof Uint8Array) return new TypedArrayConverter(original)    
 
     if (!isNode) {
         if (original instanceof File) return new FileConverter(original as File)
-        // debugger;
-        if (original instanceof HTMLImageElement) return new ImageConverter(original)
-    }
 
-    if (original instanceof getBlobClass()) return new BlobConverter(original as Blob)
+        if (original instanceof HTMLImageElement) return new ImageConverter(original)     
+        
+        if ( original instanceof Blob ) return new BlobConverter(original as Blob)
+    }      
 
     if (original instanceof ArrayBuffer) return new ArrayBufferConverter(original)
-
 }
 
 export default converter;
