@@ -43,7 +43,7 @@ const converter = require("javascript-binary-converter").default;
 
 ## Concept
 
-converter is a function that accepts any of the convertable objects, recognize the type, and expose the conversion methods that exist for this specific object.
+converter is a function that accepts any of the convertible objects, recognize the type, and expose the conversion methods that exist for this specific object.
 Just pass the object you want to convert, and call the appropriate method.
 
 ## Usage in Node

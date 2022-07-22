@@ -4,11 +4,13 @@ import FileConverter from "./converters/FileConverter.js";
 import ArrayBufferConverter from "./converters/ArrayBufferConverter.js";
 import { isNode } from "./utils/crossPlatform.js";
 import ImageConverter from "./converters/ImageConverter.js";
+import { BytesArray, TypedArray } from "./sharedTypes.js";
+import BytesConverter from "./converters/BytesConverter.js";
+import { isNumeric } from "./utils/number.js";
 
 
 
-type TypedArray = Int8Array | Uint8Array
-type Convertable = TypedArray | Blob | File | ArrayBuffer | HTMLImageElement;//Types supported.
+type Convertable = TypedArray | Blob | File | ArrayBuffer | HTMLImageElement | BytesArray;//Types supported.
 
 
 /**
@@ -19,6 +21,7 @@ function converter(original: File): FileConverter
 function converter(original: Blob): BlobConverter
 function converter(original: ArrayBuffer): ArrayBufferConverter
 function converter(original: HTMLImageElement): ImageConverter
+function converter(original: BytesArray): BytesConverter
 
 
 function converter(original: Convertable) {
@@ -37,6 +40,10 @@ function converter(original: Convertable) {
     }      
 
     if (original instanceof ArrayBuffer) return new ArrayBufferConverter(original)
+
+    if(Array.isArray(original) && original.every(element=>isNumeric(element)))return new BytesConverter(original)
+
+    throw new Error('The argument supplied is not a convertible')
 }
 
 export default converter;

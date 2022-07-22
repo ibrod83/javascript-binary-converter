@@ -1,9 +1,8 @@
-import { ImageCreationConfig } from '../sharedTypes.js'
+import { ImageCreationConfig, TypedArray } from '../sharedTypes.js'
 import { uint8ToBytes } from '../utils/binary.js'
 import { getBlobClass } from '../utils/crossPlatform.js'
 import { binaryToImage } from '../utils/image.js'
 
-type TypedArray = Int8Array | Uint8Array | Int16Array | Uint16Array | Int32Array | Uint32Array
 
 export default class TypedArrayConverter {
 

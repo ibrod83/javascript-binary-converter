@@ -10,7 +10,6 @@ type ToImageConfig = Required<Pick<ImageCreationConfig,'maxSize'>> & {
 export default class FileConverter extends BlobConverter {
 
     constructor(original: File) {
-        debugger;
         super(original)
         
         if (isNode)
