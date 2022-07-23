@@ -18,6 +18,9 @@ describe('Browser binary tests', () => {
         
         var decimal = binaryToDecimal('00101')
         expect(decimal).to.equal(5)
+
+        var decimal = binaryToDecimal('101')
+        expect(decimal).to.equal(5)
         
     });
 
@@ -48,6 +51,7 @@ describe('Browser binary tests', () => {
 
         var decimal = binaryToDecimal('01110111',true)
         expect(decimal).to.equal(119)
+        
         
     });
 
