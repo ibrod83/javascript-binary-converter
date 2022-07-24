@@ -4,15 +4,15 @@ export function decimalToBinary(decimal: number) {
 
 }
 
-export function binaryToDecimal(binary:string,isSigned:boolean=false){
+export function binaryToDecimal(binary: string, isSigned: boolean = false) {
 
-    if(binary.length > 32)throw new Error('binaryToDecimal does not support bigint')
+    if (binary.length > 32) throw new Error('binaryToDecimal does not support bigint')
 
-    return isSigned ? getSignedInteger(binary) :   parseInt(binary, 2);
+    return isSigned ? getSignedInteger(binary) : parseInt(binary, 2);
 
 }
 
-function getSignedInteger(bits:string) {
+function getSignedInteger(bits: string) {
 
     const negative = (bits[0] === '1');
     if (negative) {
@@ -22,7 +22,6 @@ function getSignedInteger(bits:string) {
         }
         return (parseInt(inverse, 2) + 1) * -1;
     } else {
-        debugger;
         return parseInt(bits, 2);
     }
 }
@@ -44,4 +43,25 @@ export function uint8ToBytes(uint8: Uint8Array) {
         bytes.push(appendZeros(decimalToBinary(decimal)))
     }
     return bytes
+}
+    //      var bytes = ['11101111', '10111111', '00000001', '00000000']
+
+export function groupBytes(bytes: Array<string>, groupSize: number) {
+    // debugger;
+    // const indexToStop = bytes.length - (groupSize-1);
+    const normalizedArray: Array<string> = []
+    let currentBitString = ""
+    for (let i = 1; i <= bytes.length; i++) {
+        currentBitString+=bytes[i-1]
+        if(i % groupSize=== 0){
+            normalizedArray.push(currentBitString)
+            currentBitString=""
+        }
+        
+        
+    }
+    // debugger
+    return normalizedArray
+    // var match =  
+    // return bytes.join("").match(/.{1,16}/g)
 }

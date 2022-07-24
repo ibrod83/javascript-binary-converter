@@ -1,11 +1,17 @@
-import { BytesArray } from "../sharedTypes.js"
-import { binaryToDecimal } from "../utils/binary.js"
+import { BytesArray, ImageCreationConfig } from "../sharedTypes.js"
+import { binaryToDecimal, groupBytes } from "../utils/binary.js"
+import { getBlobClass } from "../utils/crossPlatform.js"
+import { binaryToImage } from "../utils/image.js"
 
 
 
 export default class BytesConverter {
 
-    constructor(private original: BytesArray) { }
+    constructor(private original: BytesArray) {
+        if(!original.every(byte=>byte.length === 8)){
+            throw new Error('Each element must be a "byte" - a string of 8 characters')
+        }
+     }
 
     toUint8Array() {
         // return new Uint8Array(this.original)
@@ -18,25 +24,32 @@ export default class BytesConverter {
     }
 
     toInt16Array() {
-        return new Int16Array(this.original.map(binary=>binaryToDecimal(binary,true)))
+        const normalizedBytes = groupBytes(this.original,2)
+        return new Int16Array(normalizedBytes.map(binary=>binaryToDecimal(binary,true)))
     }
 
     toUint16Array() {//
-        return new Uint16Array(this.original.map(binary=>binaryToDecimal(binary)))
+        debugger;
+        const normalizedBytes = groupBytes(this.original,2)
+        return new Uint16Array(normalizedBytes.map(binary=>binaryToDecimal(binary)))
     }
 
     toInt32Array() {
-        return new Int32Array(this.original.map(binary=>binaryToDecimal(binary,true)))
+        const normalizedBytes = groupBytes(this.original,4)
+        return new Int32Array(normalizedBytes.map(binary=>binaryToDecimal(binary,true)))
     }
 
-    // toUint32Array() {
-    //     return new Uint32Array(this.original)
-    // }
+    toUint32Array() {
+        const normalizedBytes = groupBytes(this.original,4)
+        return new Uint32Array(normalizedBytes.map(binary=>binaryToDecimal(binary,true)))
+    }
 
-    // toText() {
-    //     const decoder = new TextDecoder()
-    //     return decoder.decode(this.original)
-    // }
+    toText() {
+        const uint8 = this.toUint8Array()
+
+        const decoder = new TextDecoder()
+        return decoder.decode(uint8)
+    }
 
 
     // async toBlob(): Promise<Blob> {
@@ -44,9 +57,11 @@ export default class BytesConverter {
     //     return new BlobClass([this.original])
     // }
 
-    // async toImage(config?: ImageCreationConfig) {
-    //     return binaryToImage(await this.toBlob(), config && config)
-    // }
+    async toImage(config?: ImageCreationConfig) {
+        const BlobClass =await  getBlobClass()
+        const blob= new BlobClass([this.toUint8Array()])
+        return binaryToImage(blob, config && config)
+    }
 
     // toBytes(){
     //     const bytes = this.original instanceof Uint8Array ? uint8ToBytes(this.original) : uint8ToBytes(new Uint8Array(this.original))
