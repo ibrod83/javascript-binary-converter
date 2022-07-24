@@ -1,4 +1,4 @@
-javascript-binary-converter is a simple utility to convert various binary data objects in Javascript, like Blob, File, TypedArray and others. Works both in the browser and in Node.js(with limitations)
+javascript-binary-converter is a simple utility to convert various binary data objects in Javascript, like Blob, File, TypedArray and others. Works both in the browser and in Node.js(with limitations). It also provides some conversion abilities of raw bytes.
 
 If you encounter any bugs or have a question, please don't hesitate to open an issue.
 
@@ -40,6 +40,7 @@ const converter = require("javascript-binary-converter").default;
   - [Image to Uint8Array](#image-to-uint8array)
   - [Image to bytes](#image-to-bytes)
   - [Uint8Array to Image](#uint8array-to-image)
+  - [Converting raw bytes](#converting-raw-bytes)
 
 ## Concept
 
@@ -141,7 +142,7 @@ const bytes = await converter(image).toBytes(); //Will return an array of string
 Suppose you have an array of decimals, each representing a byte, in an unsigned 8 bit integer. You can convert those bytes into an html image(assuming the bytes represent an actual image):
 
 ```javascript
-const dummyImageBytes = [
+const dummyImageByteDecimals = [
   //These decimals(bytes) represent a tiny image
   137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 0, 5, 0, 0,
   0, 6, 8, 6, 0, 0, 0, 11, 251, 84, 75, 0, 0, 0, 1, 115, 82, 71, 66, 0, 174, 206,
@@ -156,9 +157,29 @@ const dummyImageBytes = [
   174, 66, 96, 130,
 ];
 
-const uint8 = new Uint8Array(dummyImageBytes);
+const uint8 = new Uint8Array(dummyImageByteDecimals);
 
 const image = await converter(uint8).toImage();
 
 document.body.appendChild(image); //You can see the image in the DOM
+```
+
+&nbsp;
+
+#### Converting raw bytes
+
+The program supports the conversion of raw bytes to other formats. Currently, this can be done only with an array of strings, each representing a byte:
+```javascript
+  var bytes = ['11111111', '11011011', '11110111']
+```
+Each element must be a string of 8 bits. Do not pass partial bytes, like '10111'.
+
+An example:
+
+```javascript
+  var bytes = ['11111111', '11111111', '11110111', '11110111', '10000000', '00000000'...]//Some bytes that logically represent an image.
+
+ var image = await converter(bytes).toImage()//Returns an HTMLImageElement
+
+ documet.body.appendChild(image)
 ```

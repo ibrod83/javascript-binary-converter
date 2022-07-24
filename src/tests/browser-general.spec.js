@@ -118,7 +118,20 @@ describe('Browser general tests', () => {
         expect(uint8.buffer === buffer).to.equal(true)
     });
    
+    it('Should return bytes, from an ArrayBuffer', async function () {
+        const { blob} = await createObjectsForFileDummyTests('#extra-small')
+        const buffer = await converter(blob).toArrayBuffer()
+        const bytes = converter(buffer).toBytes() 
+        expect(bytes.length).to.equal(buffer.byteLength)
+    });
 
+    it('Should return Blob, from an ArrayBuffer', async function () {
+        const int8 = new Int8Array([1])
+        const blob = await converter(int8).toBlob({type:"application/octet-stream"})
+        console.log(blob)
+        expect(blob.type).to.equal('application/octet-stream')
+        expect(blob.size).to.equal(1)
+    });
 
     it('Should return bytes, from a Blob', async function () {
         const { blob} = await createObjectsForFileDummyTests('#extra-small')
@@ -126,12 +139,7 @@ describe('Browser general tests', () => {
         expect(bytes.length).to.equal(blob.size)
     });
 
-    it('Should return bytes, from an ArrayBuffer', async function () {
-        const { blob} = await createObjectsForFileDummyTests('#extra-small')
-        const buffer = await converter(blob).toArrayBuffer()
-        const bytes = converter(buffer).toBytes() 
-        expect(bytes.length).to.equal(buffer.byteLength)
-    });
+   
 
     it('Should return bytes, from an Int8Array', async function () {
         const { blob} = await createObjectsForFileDummyTests('#extra-small')

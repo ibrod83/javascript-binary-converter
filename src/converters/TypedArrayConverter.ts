@@ -1,4 +1,4 @@
-import { ImageCreationConfig, TypedArray } from '../sharedTypes.js'
+import { BlobCreationConfig, ImageCreationConfig, TypedArray } from '../sharedTypes.js'
 import { uint8ToBytes } from '../utils/binary.js'
 import { getBlobClass } from '../utils/crossPlatform.js'
 import { binaryToImage } from '../utils/image.js'
@@ -41,9 +41,9 @@ export default class TypedArrayConverter {
     }
 
 
-    async toBlob(): Promise<Blob> {
+    async toBlob(config?:BlobCreationConfig): Promise<Blob> {
         const BlobClass =await  getBlobClass()
-        return new BlobClass([this.original])
+        return new BlobClass([this.original],config)
     }
 
     async toImage(config?: ImageCreationConfig) {

@@ -1,4 +1,4 @@
-import { BytesArray, ImageCreationConfig } from "../sharedTypes.js"
+import { BlobCreationConfig, BytesArray, ImageCreationConfig } from "../sharedTypes.js"
 import { binaryToDecimal, groupBytes } from "../utils/binary.js"
 import { getBlobClass } from "../utils/crossPlatform.js"
 import { binaryToImage } from "../utils/image.js"
@@ -28,8 +28,7 @@ export default class BytesConverter {
         return new Int16Array(normalizedBytes.map(binary=>binaryToDecimal(binary,true)))
     }
 
-    toUint16Array() {//
-        debugger;
+    toUint16Array() {
         const normalizedBytes = groupBytes(this.original,2)
         return new Uint16Array(normalizedBytes.map(binary=>binaryToDecimal(binary)))
     }
@@ -52,10 +51,10 @@ export default class BytesConverter {
     }
 
 
-    // async toBlob(): Promise<Blob> {
-    //     const BlobClass =await  getBlobClass()
-    //     return new BlobClass([this.original])
-    // }
+    async toBlob(config?:BlobCreationConfig): Promise<Blob> {
+        const BlobClass =await  getBlobClass()
+        return new BlobClass([this.toUint8Array()],config)
+    }
 
     async toImage(config?: ImageCreationConfig) {
         const BlobClass =await  getBlobClass()

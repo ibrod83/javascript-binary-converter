@@ -1,5 +1,6 @@
-import { ImageCreationConfig } from "../sharedTypes.js";
+import { BlobCreationConfig, ImageCreationConfig } from "../sharedTypes.js";
 import { uint8ToBytes } from "../utils/binary.js";
+import { getBlobClass } from "../utils/crossPlatform.js";
 import { binaryToImage } from "../utils/image.js";
 
 export default class ArrayBufferConverter {
@@ -11,6 +12,11 @@ export default class ArrayBufferConverter {
         const blob = new Blob([uint8], { type })
         const image = maxSize ? await binaryToImage(blob, { maxSize }) : await binaryToImage(blob)
         return image;
+    }
+
+    async toBlob(config?:BlobCreationConfig): Promise<Blob> {
+        const BlobClass =await  getBlobClass()
+        return new BlobClass([this.toUint8Array()],config)
     }
 
     toUint8Array() {
