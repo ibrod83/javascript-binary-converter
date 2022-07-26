@@ -1,3 +1,4 @@
+import { TypedArray } from "../sharedTypes";
 
 export function decimalToBinary(decimal: number) {
     return (decimal >>> 0).toString(2);
@@ -44,24 +45,25 @@ export function uint8ToBytes(uint8: Uint8Array) {
     }
     return bytes
 }
-    //      var bytes = ['11101111', '10111111', '00000001', '00000000']
 
 export function groupBytes(bytes: Array<string>, groupSize: number) {
-    // debugger;
-    // const indexToStop = bytes.length - (groupSize-1);
     const normalizedArray: Array<string> = []
     let currentBitString = ""
     for (let i = 1; i <= bytes.length; i++) {
-        currentBitString+=bytes[i-1]
-        if(i % groupSize=== 0){
+        currentBitString += bytes[i - 1]
+        if (i % groupSize === 0) {
             normalizedArray.push(currentBitString)
-            currentBitString=""
+            currentBitString = ""
         }
-        
-        
     }
-    // debugger
     return normalizedArray
-    // var match =  
-    // return bytes.join("").match(/.{1,16}/g)
+
+}
+
+export function typedArrayToDecimals(typedArray: TypedArray) {
+    const decimals = []
+    for (let decimal of typedArray) {
+        decimals.push(decimal)
+    }
+    return decimals;
 }

@@ -128,7 +128,7 @@ describe('Browser general tests', () => {
     it('Should return Blob, from an ArrayBuffer', async function () {
         const int8 = new Int8Array([1])
         const blob = await converter(int8).toBlob({type:"application/octet-stream"})
-        console.log(blob)
+
         expect(blob.type).to.equal('application/octet-stream')
         expect(blob.size).to.equal(1)
     });
@@ -145,8 +145,9 @@ describe('Browser general tests', () => {
         const { blob} = await createObjectsForFileDummyTests('#extra-small')
         const int8 = await converter(blob).toInt8Array()
         const bytes = converter(int8).toBytes() 
+      
         expect(bytes.length).to.equal(int8.byteLength)
-        console.log(bytes)
+    
     });
 
 

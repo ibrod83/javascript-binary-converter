@@ -1,4 +1,4 @@
-import { BlobCreationConfig, ImageCreationConfig } from "../sharedTypes.js";
+import { BlobCreationConfig, BytesArray, ImageCreationConfig } from "../sharedTypes.js";
 import { uint8ToBytes } from "../utils/binary.js";
 import { getBlobClass } from "../utils/crossPlatform.js";
 import { binaryToImage } from "../utils/image.js";
@@ -49,7 +49,7 @@ export default class ArrayBufferConverter {
         return new Uint32Array(this.original)
     }
 
-    toBytes() {
+    toBytes():BytesArray {
         const uint8 = this.toUint8Array()
         return uint8ToBytes(uint8)
     }

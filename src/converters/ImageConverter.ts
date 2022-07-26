@@ -1,3 +1,4 @@
+import { BytesArray } from "../sharedTypes.js";
 import { appendZeros, decimalToBinary, uint8ToBytes } from "../utils/binary.js";
 import { isNode } from "../utils/crossPlatform.js";
 import { binaryToImage, imageToBlob, imageToCanvas } from "../utils/image.js";
@@ -36,7 +37,7 @@ export default class ImageConverter {
     /**
      * Returns an array of number-like strings, each representing 8 bits.
      */
-    async toBytes() {
+    async toBytes():Promise<BytesArray> {
         const uint8 = await this.toUint8Array()
         const bytes = uint8ToBytes(uint8)
         return bytes

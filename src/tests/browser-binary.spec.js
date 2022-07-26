@@ -215,10 +215,54 @@ describe('Browser binary tests', () => {
         expect(blob.size === bytes.length).to.equal(true)
     });
 
+    it('Should return decimals, from bytes', async function () {       
+        var bytes = getBytes()
+        console.log('bytes',bytes)
+        var decimals = converter(bytes).toDecimals()
+        // console.log(decimals)
+        var decimalsCorrect = decimals.every((decimal,index)=>extraSmallImageByteDecimals[index] === decimal)
+        expect(decimalsCorrect).to.equal(true)
+
+  
+        var decimals = converter(bytes).toDecimals({isSigned:true})
+     
+        var decimalsCorrect = decimals.every((decimal,index)=>twosComplementExtraSmallImageBytes[index] === decimal)
+        expect(decimalsCorrect).to.equal(true)
+
+        var bytes = ['01010100','01010100','11010100','01010100']
+        var decimals = converter(bytes).toDecimals({isSigned:false,integerSize:16})
+     
+        expect(decimals[0]).to.equal(21588)
+        expect(decimals[1]).to.equal(54356)
+
+        var decimals = converter(bytes).toDecimals({isSigned:true,integerSize:16})
+    
+        expect(decimals[0]).to.equal(21588)
+        expect(decimals[1]).to.equal(-11180)
+
+
+        var bytes = ['11010100','01010100','11010100','01010100']
+        var decimals = converter(bytes).toDecimals({isSigned:false,integerSize:32})
+        expect(decimals[0]).to.equal(3562329172)
+
+        var decimals = converter(bytes).toDecimals({isSigned:true,integerSize:32})
+        expect(decimals[0]).to.equal(-732638124)
+ 
+
+    
+    });
+
+
+
 })
 
+
+
+const extraSmallImageByteDecimals = [137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 0, 5, 0, 0, 0, 6, 8, 6, 0, 0, 0, 11, 251, 84, 75, 0, 0, 0, 1, 115, 82, 71, 66, 0, 174, 206, 28, 233, 0, 0, 0, 137, 73, 68, 65, 84, 24, 87, 1, 126, 0, 129, 255, 1, 255, 106, 48, 255, 213, 212, 208, 0, 0, 254, 0, 0, 43, 47, 29, 0, 0, 14, 18, 0, 1, 255, 113, 56, 255, 219, 204, 200, 0, 37, 43, 31, 0, 249, 245, 242, 0, 1, 8, 13, 0, 1, 251, 79, 26, 255, 217, 218, 230, 0, 43, 68, 39, 0, 220, 198, 217, 0, 36, 40, 26, 0, 1, 255, 85, 39, 255, 198, 199, 217, 0, 48, 52, 16, 0, 240, 241, 240, 0, 250, 247, 1, 0, 1, 249, 94, 58, 255, 183, 187, 198, 0, 37, 45, 16, 0, 37, 36, 36, 0, 217, 208, 221, 0, 1, 224, 77, 47, 255, 11, 16, 9, 0, 20, 66, 54, 0, 0, 235, 236, 0, 226, 197, 211, 0, 66, 133, 49, 43, 23, 66, 67, 118, 0, 0, 0, 0, 73, 69, 78, 68, 174, 66, 96, 130];
+const twosComplementExtraSmallImageBytes = [ -119, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 0, 5, 0, 0, 0, 6, 8, 6, 0, 0, 0, 11, -5, 84, 75, 0, 0, 0, 1, 115, 82, 71, 66, 0, -82, -50, 28, -23, 0, 0, 0, -119, 73, 68, 65, 84, 24, 87, 1, 126, 0, -127, -1, 1, -1, 106, 48, -1, -43, -44, -48, 0, 0, -2, 0, 0, 43, 47, 29, 0, 0, 14, 18, 0, 1, -1, 113, 56, -1, -37, -52, -56, 0, 37, 43, 31, 0, -7, -11, -14, 0, 1, 8, 13, 0, 1, -5, 79, 26, -1, -39, -38, -26, 0, 43, 68, 39, 0, -36, -58, -39, 0, 36, 40, 26, 0, 1, -1, 85, 39, -1, -58, -57, -39, 0, 48, 52, 16, 0, -16, -15, -16, 0, -6, -9, 1, 0, 1, -7, 94, 58, -1, -73, -69, -58, 0, 37, 45, 16, 0, 37, 36, 36, 0, -39, -48, -35, 0, 1, -32, 77, 47, -1, 11, 16, 9, 0, 20, 66, 54, 0, 0, -21, -20, 0, -30, -59, -45, 0, 66, -123, 49, 43, 23, 66, 67, 118, 0, 0, 0, 0, 73, 69, 78, 68, -82, 66, 96, -126 ]
+
 function getBytes() {
-    const extraSmallImageByteDecimals = [137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 0, 5, 0, 0, 0, 6, 8, 6, 0, 0, 0, 11, 251, 84, 75, 0, 0, 0, 1, 115, 82, 71, 66, 0, 174, 206, 28, 233, 0, 0, 0, 137, 73, 68, 65, 84, 24, 87, 1, 126, 0, 129, 255, 1, 255, 106, 48, 255, 213, 212, 208, 0, 0, 254, 0, 0, 43, 47, 29, 0, 0, 14, 18, 0, 1, 255, 113, 56, 255, 219, 204, 200, 0, 37, 43, 31, 0, 249, 245, 242, 0, 1, 8, 13, 0, 1, 251, 79, 26, 255, 217, 218, 230, 0, 43, 68, 39, 0, 220, 198, 217, 0, 36, 40, 26, 0, 1, 255, 85, 39, 255, 198, 199, 217, 0, 48, 52, 16, 0, 240, 241, 240, 0, 250, 247, 1, 0, 1, 249, 94, 58, 255, 183, 187, 198, 0, 37, 45, 16, 0, 37, 36, 36, 0, 217, 208, 221, 0, 1, 224, 77, 47, 255, 11, 16, 9, 0, 20, 66, 54, 0, 0, 235, 236, 0, 226, 197, 211, 0, 66, 133, 49, 43, 23, 66, 67, 118, 0, 0, 0, 0, 73, 69, 78, 68, 174, 66, 96, 130];
     const bytes = extraSmallImageByteDecimals.map(decimal => appendZeros(decimalToBinary(decimal)))
     return bytes
 }
+

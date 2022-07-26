@@ -168,7 +168,7 @@ document.body.appendChild(image); //You can see the image in the DOM
 
 #### Converting raw bytes
 
-The program supports the conversion of raw bytes to other formats. Currently, this can be done only with an array of strings, each representing a byte:
+Just like you can get bytes from other formats, you can convert bytes to others. Currently, this can be done only with an array of strings, each representing a byte:
 ```javascript
   var bytes = ['11111111', '11011011', '11110111']
 ```
