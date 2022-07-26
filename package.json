@@ -4,21 +4,20 @@
   "description": "A utility package to quickly handle and convert various Javascript binary objects",
   "main": "build/cjs/index.js",
   "module": "build/esm/index.js",
-
   "scripts": {
     "test": "npm run build:cjs && mocha -p --watch ./src/tests/node.spec.js",
     "start": "tsc --watch",
     "build": "npm run build:cjs && npm run build:esm",
     "build:cjs": "node cleanup cjs && tsc -p config/tsconfig.cjs.json",
     "build:esm": "node cleanup esm && tsc -p config/tsconfig.esm.json",
-    "prepare":"npm run build"
+    "prepare": "npm run build"
   },
   "author": "ibrod83",
   "license": "ISC",
   "keywords": [
     "javascript",
     "binary",
-    "converter",   
+    "converter",
     "blob",
     "image",
     "typedArray",
@@ -29,12 +28,11 @@
   "devDependencies": {
     "@types/expect": "^24.3.0",
     "@types/mocha": "^9.1.1",
+    "lodash": "^4.17.21",
     "mocha": "^10.0.0",
     "nodemon": "^2.0.19",
     "ts-node": "^10.8.2",
-    "typescript": "^4.7.4",
-    "expect": "^28.1.1",
-    "lodash": "^4.17.21"
+    "typescript": "^4.7.4"
   },
   "homepage": "https://github.com/ibrod83/javascript-binary-converter",
   "bugs": {

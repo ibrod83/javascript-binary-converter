@@ -66,7 +66,7 @@ export default class BytesConverter {
      * Defaults: isSigned = false, integerSize = 8
      */
     toDecimals({ isSigned = false, integerSize = 8 }: { isSigned?: boolean, integerSize?: 8 | 16 | 32 } = {}) {
-        debugger
+
         let typedArray:TypedArray;
         switch (integerSize) {
             
