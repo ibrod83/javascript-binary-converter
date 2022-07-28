@@ -174,12 +174,6 @@ document.body.appendChild(image); //You can see the image in the DOM
 Just like you can get bytes from other formats, you can convert bytes to others. Currently, this can be done only with an array of strings, each representing a byte. Some of the methods available:
 
 #### Bytes to image
-```javascript
-  var bytes = ['11111111', '11011011', '11110111']
-```
-Each element must be a string of 8 bits. Do not pass partial bytes, like '10111'.
-
-An example:
 
 ```javascript
   var bytes = ['11111111', '11111111', '11110111', '11110111', '10000000', '00000000'...]//Some bytes that logically represent an image.
