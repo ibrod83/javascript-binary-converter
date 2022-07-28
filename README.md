@@ -198,7 +198,7 @@ Just like you can get bytes from other formats, you can convert bytes to others.
 ```javascript
    var bytes = ['11010100', '11111100','10001000']
 
-  var hexes = converter(bytes).toDecimals({isSigned:false})//Can be signed or unsigned. Default is false.
+  var hexes = converter(bytes).toHex({isSigned:false})//Can be signed or unsigned. Default is false.
   //['D4','FC','88']
  
 ```
