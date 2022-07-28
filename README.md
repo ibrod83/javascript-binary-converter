@@ -41,6 +41,9 @@ const converter = require("javascript-binary-converter").default;
   - [Image to bytes](#image-to-bytes)
   - [Uint8Array to Image](#uint8array-to-image)
   - [Converting raw bytes](#converting-raw-bytes)
+    - [Bytes to image](#bytes-to-image)
+    - [Bytes to decimals](#bytes-to-decimals)
+    - [Bytes to hex](#bytes-to-hex)
 
 ## Concept
 
@@ -168,7 +171,9 @@ document.body.appendChild(image); //You can see the image in the DOM
 
 #### Converting raw bytes
 
-Just like you can get bytes from other formats, you can convert bytes to others. Currently, this can be done only with an array of strings, each representing a byte:
+Just like you can get bytes from other formats, you can convert bytes to others. Currently, this can be done only with an array of strings, each representing a byte. Some of the methods available:
+
+#### Bytes to image
 ```javascript
   var bytes = ['11111111', '11011011', '11110111']
 ```
@@ -179,7 +184,27 @@ An example:
 ```javascript
   var bytes = ['11111111', '11111111', '11110111', '11110111', '10000000', '00000000'...]//Some bytes that logically represent an image.
 
- var image = await converter(bytes).toImage()//Returns an HTMLImageElement
+  var image = await converter(bytes).toImage()//Returns an HTMLImageElement
 
  documet.body.appendChild(image)
+```
+
+#### Bytes to decimals
+
+```javascript
+  var bytes = ['11111111', '11111111', '11110111']
+
+  var decimals = converter(bytes).toDecimals({isSigned:true})//Can be signed or unsigned. You can also assert the integer size(Default is 8)
+  //[-1,-1,-9]
+ 
+```
+
+#### Bytes to hex
+
+```javascript
+   var bytes = ['11010100', '11111100','10001000']
+
+  var hexes = converter(bytes).toDecimals({isSigned:false})//Can be signed or unsigned. Default is false.
+  //['D4','FC','88']
+ 
 ```

@@ -42,7 +42,7 @@ export async function getBlobWithModifiedImageSize(binary: Blob | File, config: 
     await new Promise<Event>((res) => image.onload = res);
 
     const deducedDimensions = getScaledDimensions({ width: image.width, height: image.height, maxSize: config.maxSize })
-    // debugger;
+
     const blob = await imageToBlob(image, deducedDimensions)
 
     return blob;
@@ -71,7 +71,6 @@ export function getScaledDimensions({ width: w, height: h, maxSize }: ScaledDime
 }
 
 export async function imageToBlob(image: HTMLImageElement, config: ImageToBlobConfig) {
-    // debugger
 
     const height = config?.height || image.height
     const width = config?.width || image.width
@@ -79,7 +78,7 @@ export async function imageToBlob(image: HTMLImageElement, config: ImageToBlobCo
     const canvas = imageToCanvas(image, { height, width })
     const blob = await new Promise((res) => canvas.toBlob(res, type));
 
-    // debugger;
+    
     return blob
 }
 

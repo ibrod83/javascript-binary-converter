@@ -67,3 +67,36 @@ export function typedArrayToDecimals(typedArray: TypedArray) {
     }
     return decimals;
 }
+
+export function decimalToHexaDecimal(decimal: number) {
+    return  ((decimal)>>>0).toString(16).toUpperCase()
+}
+
+
+// function DecimalHexTwosComplement(decimal:number) {
+//     var size = 8;
+  
+//     if (decimal >= 0) {
+//       var hexadecimal = decimal.toString(16);
+  
+//       while ((hexadecimal.length % size) != 0) {
+//         hexadecimal = "" + 0 + hexadecimal;
+//       }
+  
+//       return hexadecimal;
+//     } else {
+//       var hexadecimal = Math.abs(decimal).toString(16);
+//       debugger
+//       while ((hexadecimal.length % size) != 0) {
+//         hexadecimal = "" + 0 + hexadecimal;
+//       }
+  
+//       var output = '';
+//       for (let i = 0; i < hexadecimal.length; i++) {
+//         output += (0x0F - parseInt(hexadecimal[i], 16)).toString(16);
+//       }
+  
+//       output = (0x01 + parseInt(output, 16)).toString(16);
+//       return output.toUpperCase();
+//     }
+//   }

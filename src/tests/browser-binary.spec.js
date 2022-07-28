@@ -1,7 +1,7 @@
 
-import { appendZeros, binaryToDecimal, decimalToBinary, groupBytes } from '../../build/dev/utils/binary.js';
+import {  binaryToDecimal,  decimalToHexaDecimal,  groupBytes } from '../../build/dev/utils/binary.js';
 import converter from '../../build/dev/converter.js'
-import {mockExpect as expect, getBytes, extraSmallImageByteDecimals, twosComplementExtraSmallImageBytes} from './test-utils.js'
+import { mockExpect as expect, getBytes, extraSmallImageByteDecimals, twosComplementExtraSmallImageBytes } from './test-utils.js'
 
 
 
@@ -208,48 +208,104 @@ describe('Browser binary tests', () => {
     });
 
 
-    it('Should return a Blob, from bytes', async function () {       
+    it('Should return a Blob, from bytes', async function () {
         const bytes = getBytes()
         var blob = await converter(bytes).toBlob()
         expect(blob instanceof Blob).toBe(true)
         expect(blob.size === bytes.length).toBe(true)
     });
 
-    it('Should return decimals, from bytes', async function () {       
+    it('Should return decimals, from bytes', async function () {
         var bytes = getBytes()
-        console.log('bytes',bytes)
+        console.log('bytes', bytes)
         var decimals = converter(bytes).toDecimals()
         // console.log(decimals)
-        var decimalsCorrect = decimals.every((decimal,index)=>extraSmallImageByteDecimals[index] === decimal)
+        var decimalsCorrect = decimals.every((decimal, index) => extraSmallImageByteDecimals[index] === decimal)
         expect(decimalsCorrect).toBe(true)
 
-  
-        var decimals = converter(bytes).toDecimals({isSigned:true})
-     
-        var decimalsCorrect = decimals.every((decimal,index)=>twosComplementExtraSmallImageBytes[index] === decimal)
+
+        var decimals = converter(bytes).toDecimals({ isSigned: true })
+
+        var decimalsCorrect = decimals.every((decimal, index) => twosComplementExtraSmallImageBytes[index] === decimal)
         expect(decimalsCorrect).toBe(true)
 
-        var bytes = ['01010100','01010100','11010100','01010100']
-        var decimals = converter(bytes).toDecimals({isSigned:false,integerSize:16})
-     
+        var bytes = ['01010100', '01010100', '11010100', '01010100']
+        var decimals = converter(bytes).toDecimals({ isSigned: false, integerSize: 16 })
+
         expect(decimals[0]).toBe(21588)
         expect(decimals[1]).toBe(54356)
 
-        var decimals = converter(bytes).toDecimals({isSigned:true,integerSize:16})
-    
+        var decimals = converter(bytes).toDecimals({ isSigned: true, integerSize: 16 })
+
         expect(decimals[0]).toBe(21588)
         expect(decimals[1]).toBe(-11180)
 
 
-        var bytes = ['11010100','01010100','11010100','01010100']
-        var decimals = converter(bytes).toDecimals({isSigned:false,integerSize:32})
+        var bytes = ['11010100', '01010100', '11010100', '01010100']
+        var decimals = converter(bytes).toDecimals({ isSigned: false, integerSize: 32 })
         expect(decimals[0]).toBe(3562329172)
 
-        var decimals = converter(bytes).toDecimals({isSigned:true,integerSize:32})
+        var decimals = converter(bytes).toDecimals({ isSigned: true, integerSize: 32 })
         expect(decimals[0]).toBe(-732638124)
- 
 
-    
+    });
+
+    it('Should return decimals, from partial bytes', async function () {
+        var bytes = getBytes()
+
+        var decimals = converter(bytes).toDecimals()
+
+        var decimalsCorrect = decimals.every((decimal, index) => extraSmallImageByteDecimals[index] === decimal)
+        expect(decimalsCorrect).toBe(true)
+
+
+        var decimals = converter(bytes).toDecimals({ isSigned: true })
+
+        var decimalsCorrect = decimals.every((decimal, index) => twosComplementExtraSmallImageBytes[index] === decimal)
+        expect(decimalsCorrect).toBe(true)
+
+        var bytes = ['1010100', '1010100', '11010100', '1010100']
+        var decimals = converter(bytes).toDecimals({ isSigned: false, integerSize: 16 })
+
+        expect(decimals[0]).toBe(21588)
+        expect(decimals[1]).toBe(54356)
+
+    });
+
+    it('Should return hex, from decimal', async function () {
+        var decimal = 1234
+        var hex = decimalToHexaDecimal(decimal)
+        expect(hex).toBe('4D2')
+
+        var decimal = -1234
+        var hex = decimalToHexaDecimal(decimal)
+        expect(hex).toBe('FFFFFB2E')
+
+        var decimal = -1234534543
+        var hex = decimalToHexaDecimal(decimal)
+        expect(hex).toBe('B66A7F71')
+
+    });
+
+    it('Should return an array of hex, from an array of bytes', async function () {
+        var bytes = ['11010100', '11111100','10001000'] //-44,-4,-120 decimals in twos complement
+        var hexes = converter(bytes).toHex()
+        expect(hexes[0]).toBe('D4')
+        expect(hexes[1]).toBe('FC')
+        expect(hexes[2]).toBe('88')
+        console.log('hexes',hexes)
+
+
+        var hexes = converter(bytes).toHex({isSigned:true})
+        
+        expect(hexes[0][hexes[0].length-1]).toBe('4')
+        expect(hexes[0][hexes[0].length-2]).toBe('D')
+
+        expect(hexes[1][hexes[1].length-1]).toBe('C')
+        expect(hexes[1][hexes[1].length-2]).toBe('F')
+        expect(hexes[2].includes('FF88')).toBe(true)
+        console.log('hexes',hexes)
+     
     });
 
 

@@ -1,5 +1,5 @@
 import { BlobCreationConfig, BytesArray, ImageCreationConfig, TypedArray } from "../sharedTypes.js"
-import { binaryToDecimal, groupBytes, typedArrayToDecimals } from "../utils/binary.js"
+import { appendZeros, binaryToDecimal, decimalToHexaDecimal, groupBytes, typedArrayToDecimals } from "../utils/binary.js"
 import { getBlobClass } from "../utils/crossPlatform.js"
 import { binaryToImage } from "../utils/image.js"
 
@@ -8,13 +8,10 @@ import { binaryToImage } from "../utils/image.js"
 export default class BytesConverter {
 
     constructor(private original: BytesArray) {
-        if (!original.every(byte => byte.length === 8)) {
-            throw new Error('Each element must be a "byte" - a string of 8 characters')
-        }
+        this.original = this.original.map(byte=> appendZeros(byte))//Make sure every byte has 8 bits, even if it's not mathematically needed
     }
 
     toUint8Array() {
-        // return new Uint8Array(this.original)
         return new Uint8Array(this.original.map(binary => binaryToDecimal(binary)))
 
     }
@@ -81,6 +78,10 @@ export default class BytesConverter {
             default:
                 throw new Error('The integer size is invalid(8,16,32 are allowed)')   
         }
+    }
+
+    toHex({ isSigned = false }: { isSigned?: boolean } = {}){       
+        return this.original.map((dec)=>decimalToHexaDecimal(binaryToDecimal(dec,isSigned)))
     }
 
 
