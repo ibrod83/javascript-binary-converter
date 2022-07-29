@@ -2,11 +2,15 @@ javascript-binary-converter is a simple utility to convert various binary data o
 
 If you encounter any bugs or have a question, please don't hesitate to open an issue.
 
+> :warning: **The API is still unstable and might undergo significant changes. Do not rely on semver, until it reaches version 1.0**
+
+
 ## Installation
 
 ```sh
 $ npm install javascript-binary-converter
 ```
+
 
 ## Usage in the browser, or under any ES6 modules environment:
 
@@ -171,7 +175,10 @@ document.body.appendChild(image); //You can see the image in the DOM
 
 #### Converting raw bytes
 
-Just like you can get bytes from other formats, you can convert bytes to others. Currently, this can be done only with an array of strings, each representing a byte. Some of the methods available:
+> :warning: **This API Currently accepts only an array of strings**
+
+
+Just like you can get bytes from other formats, you can convert bytes to others. Currently, this can be done only with an **array of strings**, each representing a byte. Some of the methods available:
 
 #### Bytes to image
 
@@ -180,7 +187,7 @@ Just like you can get bytes from other formats, you can convert bytes to others.
 
   var image = await converter(bytes).toImage()//Returns an HTMLImageElement
 
- documet.body.appendChild(image)
+ document.body.appendChild(image)
 ```
 
 #### Bytes to decimals
