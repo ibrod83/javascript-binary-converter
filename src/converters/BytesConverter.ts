@@ -40,6 +40,16 @@ export default class BytesConverter {
         return new Uint32Array(normalizedBytes.map(binary => binaryToDecimal(binary, true)))
     }
 
+    toFloat32Array(){
+     
+        const int32Array = this.toInt32Array()
+        // debugger;
+        const float32Array = new Float32Array(int32Array.buffer)
+        debugger;
+        return float32Array
+        // return new Float32Array(normalizedBytes.map(binary => binaryToDecimal(binary, true)))
+    }
+
     toText() {
         const uint8 = this.toUint8Array()
 

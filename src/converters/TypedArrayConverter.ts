@@ -35,6 +35,10 @@ export default class TypedArrayConverter {
         return new Uint32Array(this.original)
     }
 
+    toFloat32(){
+        return new Float32Array(this.original)
+    }
+
     toText() {
         const decoder = new TextDecoder()
         return decoder.decode(this.original)

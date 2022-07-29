@@ -1,5 +1,5 @@
 
-import {  binaryToDecimal,  decimalToHexaDecimal,  groupBytes } from '../../build/dev/utils/binary.js';
+import { binaryToDecimal, decimalToHexaDecimal, groupBytes } from '../../build/dev/utils/binary.js';
 import converter from '../../build/dev/converter.js'
 import { mockExpect as expect, getBytes, extraSmallImageByteDecimals, twosComplementExtraSmallImageBytes } from './test-utils.js'
 
@@ -189,6 +189,33 @@ describe('Browser binary tests', () => {
         expect(uInt32[2]).toBe(2004318071)
 
     });
+
+    it('Should return a Float32Array, from bytes', async function () {
+        var bytes = ['01000010', '00001010', '01000100', '10011100', '01000010', '00011010', '01000100', '10011100']
+        // '01000010000010100100010010011100','01000010000110100100010010011100'
+        var float32 = converter(bytes).toFloat32Array()
+        expect(float32[0].toString().includes('34.5670013')).toBe(true)
+        expect(float32[1].toString().includes('38.5670013')).toBe(true)
+
+
+        var bytes = ['11000010', '00001010', '01000100', '10011100']
+        // '11000010000010100100010010011100'
+        var float32 = converter(bytes).toFloat32Array()
+        expect(float32[0].toString().includes('-34.5670013')).toBe(true)
+
+        var bytes = ['00111111', '00010001', '00100111', '00000000']
+        // 00111111000100010010011100000000
+        var float32 = converter(bytes).toFloat32Array()
+        expect(float32[0].toString().includes('0.5670013')).toBe(true)
+
+        var bytes = ['10111111', '00010001', '00100111', '00000000']
+        // 10111111000100010010011100000000
+        var float32 = converter(bytes).toFloat32Array()
+        expect(float32[0].toString().includes('-0.5670013')).toBe(true)
+
+
+    });
+
     it('Should return a "ΆΆ" string, from bytes', async function () {
 
         var bytes = ['11001110', '10000110', '11001110', '10000110']
@@ -288,25 +315,26 @@ describe('Browser binary tests', () => {
     });
 
     it('Should return an array of hex, from an array of bytes', async function () {
-        var bytes = ['11010100', '11111100','10001000'] //-44,-4,-120 decimals in twos complement
+        var bytes = ['11010100', '11111100', '10001000'] //-44,-4,-120 decimals in twos complement
         var hexes = converter(bytes).toHex()
         expect(hexes[0]).toBe('D4')
         expect(hexes[1]).toBe('FC')
         expect(hexes[2]).toBe('88')
-        console.log('hexes',hexes)
+        console.log('hexes', hexes)
 
 
-        var hexes = converter(bytes).toHex({isSigned:true})
-        
-        expect(hexes[0][hexes[0].length-1]).toBe('4')
-        expect(hexes[0][hexes[0].length-2]).toBe('D')
+        var hexes = converter(bytes).toHex({ isSigned: true })
 
-        expect(hexes[1][hexes[1].length-1]).toBe('C')
-        expect(hexes[1][hexes[1].length-2]).toBe('F')
+        expect(hexes[0][hexes[0].length - 1]).toBe('4')
+        expect(hexes[0][hexes[0].length - 2]).toBe('D')
+
+        expect(hexes[1][hexes[1].length - 1]).toBe('C')
+        expect(hexes[1][hexes[1].length - 2]).toBe('F')
         expect(hexes[2].includes('FF88')).toBe(true)
-        console.log('hexes',hexes)
-     
+        console.log('hexes', hexes)
+
     });
+
 
 
 

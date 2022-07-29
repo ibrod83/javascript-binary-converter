@@ -267,6 +267,39 @@ describe('Node tests', () => {
         expect(uInt32[2]).toBe(2004318071)
 
     });
+
+    it('Should return a Float32Array, from bytes', async function () {
+        var bytes = ['01000010','00001010','01000100','10011100','01000010','00011010','01000100','10011100']
+        // '01000010000010100100010010011100','01000010000110100100010010011100'
+        var float32 = converter(bytes).toFloat32Array()
+        console.log(float32,float32.buffer) 
+        expect(float32[0].toString().includes('34.5670013')).toBe(true)          
+        expect(float32[1].toString().includes('38.5670013')).toBe(true)          
+        
+
+        var bytes = ['11000010','00001010','01000100','10011100'] 
+        // '11000010000010100100010010011100'
+        var float32 = converter(bytes).toFloat32Array()
+        console.log(float32,float32.buffer)
+        expect(float32[0].toString().includes('-34.5670013')).toBe(true)
+
+        var bytes = ['00111111','00010001','00100111','00000000'] 
+        // 00111111000100010010011100000000
+        var float32 = converter(bytes).toFloat32Array()
+        console.log(float32,float32.buffer)
+
+        expect(float32[0].toString().includes('0.5670013')).toBe(true)
+
+        var bytes = ['10111111','00010001','00100111','00000000'] 
+        // 10111111000100010010011100000000
+        var float32 = converter(bytes).toFloat32Array()
+        console.log(float32,float32.buffer)
+
+        expect(float32[0].toString().includes('-0.5670013')).toBe(true)
+      
+     
+    });
+
     it('Should return a "ΆΆ" string, from bytes', async function () {
 
         var bytes = ['11001110', '10000110', '11001110', '10000110']

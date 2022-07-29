@@ -151,6 +151,17 @@ describe('Browser general tests', () => {
     });
 
 
+    // it('float32', async function () {
+    //     // const uint8 = new Uint8Array([100])
+    //     // const float32 = converter(uint8).toFloat32()
+    //     // console.log('same buffer',uint8.buffer === float32.buffer)
+    //     // console.log(float32,float32.buffer)
+    //     // debugger;
+
+    
+    // });
+
+
     
 
 
