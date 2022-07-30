@@ -42,12 +42,10 @@ export default class BytesConverter {
 
     toFloat32Array(){
      
-        const int32Array = this.toInt32Array()
-        // debugger;
+        const int32Array = this.toInt32Array() 
         const float32Array = new Float32Array(int32Array.buffer)
-        debugger;
         return float32Array
-        // return new Float32Array(normalizedBytes.map(binary => binaryToDecimal(binary, true)))
+
     }
 
     toText() {

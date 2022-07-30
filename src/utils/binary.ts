@@ -13,9 +13,7 @@ export function binaryToDecimal(binary: string, isSigned: boolean = false) {
 
 }
 
-export function binaryToFloat32(binary:string){
-    
-}
+
 
 function getSignedInteger(bits: string) {
 
