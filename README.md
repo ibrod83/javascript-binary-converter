@@ -180,9 +180,6 @@ document.body.appendChild(image); //You can see the image in the DOM
 
 #### Converting raw bytes
 
-> :warning: **This API Currently accepts only an array of strings**
-
-
 "raw bytes", in this regard, is either an array of "bits"(a string of zeros and ones), or of decimal numbers, representing a byte(0 to 255 if unsigned, -128 to 127 if signed).
 
 #### Byte decimals to image
