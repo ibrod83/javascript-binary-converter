@@ -1,10 +1,14 @@
 
-import converter from '../../build/dev/converter.js'
-import { imageToBlob } from '../../build/dev/utils/image.js';
-import { createObjectsForFileDummyTests } from './test-utils.js';
-import {mockExpect as expect} from './test-utils.js'
+// import converter from '../../build/esm/converter'
+// import { imageToBlob } from '../../build/esm/utils/image';
+// import { createObjectsForFileDummyTests } from './test-utils';
+import {mockExpect as expect,createObjectsForFileDummyTests} from './test-utils.js'
+const javascriptBinaryConverter = window['javascript-binary-converter']
 
+const {converter} = javascriptBinaryConverter;
 
+const {image} = javascriptBinaryConverter.utils
+const { imageToBlob  } = image;
 
 /**
  * Some of these tests will fail on Firefox, probably due to different default quality in creation of jpeg.

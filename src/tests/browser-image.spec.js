@@ -1,8 +1,10 @@
+import {mockExpect as expect,createObjectsForFileDummyTests,dummyImageBytes ,extraSmallImageByteDecimals } from './test-utils.js'
+const javascriptBinaryConverter = window['javascript-binary-converter']
 
-import converter from '../../build/dev/converter.js'
-import { imageToCanvas, imageToBlob } from '../../build/dev/utils/image.js';
-import { createObjectsForFileDummyTests, dummyImageBytes, extraSmallImageByteDecimals } from './test-utils.js';
-import {mockExpect as expect} from './test-utils.js'
+const {converter} = javascriptBinaryConverter;
+
+const {image} = javascriptBinaryConverter.utils
+const { imageToBlob  } = image;
 
 
 

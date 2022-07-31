@@ -5,11 +5,12 @@
   "main": "build/cjs/index.js",
   "module": "build/esm/index.js",
   "scripts": {
-    "test": "npm run build:cjs && mocha -p --watch ./src/tests/node.spec.js",
-    "start": "tsc --watch",
-    "build": "npm run build:cjs && npm run build:esm",
+    "test": "mocha -p --watch ./src/tests/node.spec.js",
+    "start": "tsc --watch -p config/tsconfig.cjs.json",
+    "build": "npm run build:cjs && npm run build:esm && npm run build:umd",
     "build:cjs": "node cleanup cjs && tsc -p config/tsconfig.cjs.json",
     "build:esm": "node cleanup esm && tsc -p config/tsconfig.esm.json",
+    "build:umd": "node cleanup umd && webpack --config config/webpack.config.js",
     "prepare": "npm run build"
   },
   "author": "ibrod83",
@@ -30,8 +31,12 @@
     "lodash": "^4.17.21",
     "mocha": "^10.0.0",
     "nodemon": "^2.0.19",
+    "ts-loader": "^9.3.1",
     "ts-node": "^10.8.2",
-    "typescript": "^4.7.4"
+    "typescript": "^4.7.4",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.9.3"
   },
   "homepage": "https://github.com/ibrod83/javascript-binary-converter",
   "bugs": {

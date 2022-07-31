@@ -1,9 +1,9 @@
 const { expect } = require('expect');
-const converter = require('../../build/cjs/converter.js').default;
+const converter = require('../../build/cjs/converter').default;
 const { TextDecoder } = require('util')
 const { Blob } = require('node:buffer');
-const { appendZeros, decimalToBinary,groupBytes,binaryToDecimal  } = require('../../build/cjs/utils/binary.js');
-const { BlobConverter } = require('../../build/cjs/index.js');
+const { appendZeros, decimalToBinary,groupBytes,binaryToDecimal  } = require('../../build/cjs/utils/binary');
+const { BlobConverter } = require('../../build/cjs/index');
 
 /**
  * IMPORTANT: Make sure cjs build is refreshed!

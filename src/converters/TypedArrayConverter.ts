@@ -1,7 +1,7 @@
-import { BlobCreationConfig, BytesArray, ImageCreationConfig, TypedArray } from '../sharedTypes"
-import { uint8ToBytes } from '../utils/binary"
-import { getBlobClass } from '../utils/crossPlatform"
-import { binaryToImage } from '../utils/image"
+import { BlobCreationConfig, BytesArray, ImageCreationConfig, TypedArray } from '../sharedTypes'
+import { uint8ToBytes } from '../utils/binary'
+import { getBlobClass } from '../utils/crossPlatform'
+import { binaryToImage } from '../utils/image'
 
 
 export default class TypedArrayConverter {

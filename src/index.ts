@@ -7,14 +7,20 @@ import ArrayBufferConverter from './converters/ArrayBufferConverter'
 import BytesConverter from './converters/BytesConverter'
 import DecimalBytesConverter from './converters/DecimalBytesConverter'
 
+import * as utils from './utils/index'
+
 export default converter;
 export{
+    converter,
     BlobConverter,
     TypedArrayConverter,
     FileConverter,
     ImageConverter,
     ArrayBufferConverter,
     BytesConverter,
-    DecimalBytesConverter
+    DecimalBytesConverter,
+    utils
 }
+
+
 

@@ -22,6 +22,7 @@
     <script type="module" class="mocha-init">
         mocha.setup('bdd');
     </script>
+    <script src="../../build/umd/index.js"></script>
     <script type="module" src="./browser-general.spec.js"></script>
     <script type="module" src="./browser-bytes-converter.spec.js"></script>
     <script type="module" src="./browser-decimal-bytes-converter.spec.js"></script>
@@ -30,8 +31,8 @@
     <script type="module">
         mocha.run();
     </script>
-    <script type="module">
-        import converter from "../../build/dev/index.js";
+    <!-- <script type="module">
+        import converter from "../../build/esm/index.js";
 
         document.querySelector('input').addEventListener('change', async (event) => {
             const target = event.target
@@ -41,7 +42,7 @@
             document.body.appendChild(image)
         })
 
-    </script>
+    </script> -->
 </body>
 
 </html>
