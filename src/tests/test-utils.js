@@ -1,5 +1,5 @@
-import { imageToCanvas } from "../../build/dev/utils/image.js";
-import { appendZeros, decimalToBinary,binaryToDecimal  } from '../../build/dev/utils/binary.js';
+import { imageToCanvas } from "../../build/dev/utils/image";
+import { appendZeros, decimalToBinary,binaryToDecimal  } from '../../build/dev/utils/binary'
 
 
 

@@ -1,11 +1,11 @@
-import converter from "./converter.js";
-import BlobConverter from './converters/BlobConverter.js'
-import TypedArrayConverter from './converters/TypedArrayConverter.js'
-import FileConverter from './converters/FileConverter.js'
-import ImageConverter from './converters/ImageConverter.js'
-import ArrayBufferConverter from './converters/ArrayBufferConverter.js'
-import BytesConverter from './converters/BytesConverter.js'
-import DecimalBytesConverter from './converters/DecimalBytesConverter.js'
+import converter from "./converter";
+import BlobConverter from './converters/BlobConverter'
+import TypedArrayConverter from './converters/TypedArrayConverter'
+import FileConverter from './converters/FileConverter'
+import ImageConverter from './converters/ImageConverter'
+import ArrayBufferConverter from './converters/ArrayBufferConverter'
+import BytesConverter from './converters/BytesConverter'
+import DecimalBytesConverter from './converters/DecimalBytesConverter'
 
 export default converter;
 export{

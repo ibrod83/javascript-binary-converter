@@ -1,13 +1,13 @@
-import BlobConverter from "./converters/BlobConverter.js";
-import TypedArrayConverter from "./converters/TypedArrayConverter.js";
-import FileConverter from "./converters/FileConverter.js";
-import ArrayBufferConverter from "./converters/ArrayBufferConverter.js";
-import { isNode } from "./utils/crossPlatform.js";
-import ImageConverter from "./converters/ImageConverter.js";
-import { BytesArray, DecimalBytesArray, TypedArray } from "./sharedTypes.js";
-import BytesConverter from "./converters/BytesConverter.js";
-import { isNumeric, isNumericString } from "./utils/number.js";
-import DecimalBytesConverter from "./converters/DecimalBytesConverter.js";
+import BlobConverter from "./converters/BlobConverter";
+import TypedArrayConverter from "./converters/TypedArrayConverter";
+import FileConverter from "./converters/FileConverter";
+import ArrayBufferConverter from "./converters/ArrayBufferConverter";
+import { isNode } from "./utils/crossPlatform";
+import ImageConverter from "./converters/ImageConverter";
+import { BytesArray, DecimalBytesArray, TypedArray } from "./sharedTypes";
+import BytesConverter from "./converters/BytesConverter";
+import { isNumeric, isNumericString } from "./utils/number";
+import DecimalBytesConverter from "./converters/DecimalBytesConverter";
 
 
 

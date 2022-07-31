@@ -1,6 +1,6 @@
-import { BlobCreationConfig, BytesArray, DecimalBytesArray, ImageCreationConfig } from "../sharedTypes.js"
-import { getBlobClass } from "../utils/crossPlatform.js"
-import { binaryToImage } from "../utils/image.js"
+import { BlobCreationConfig, BytesArray, DecimalBytesArray, ImageCreationConfig } from "../sharedTypes"
+import { getBlobClass } from "../utils/crossPlatform"
+import { binaryToImage } from "../utils/image"
 
 export abstract class BaseBytesConverter{
 

@@ -1,7 +1,7 @@
-import { BytesArray, ImageCreationConfig } from "../sharedTypes.js";
-import { uint8ToBytes } from "../utils/binary.js";
-import { blobToBase64, blobToCanvas } from "../utils/blob.js";
-import * as blobUtils from "../utils/image.js";
+import { BytesArray, ImageCreationConfig } from "../sharedTypes";
+import { uint8ToBytes } from "../utils/binary";
+import { blobToBase64, blobToCanvas } from "../utils/blob";
+import * as blobUtils from "../utils/image";
 
 
 export default class BlobConverter {

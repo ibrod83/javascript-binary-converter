@@ -1,7 +1,7 @@
-import { ImageCreationConfig } from "../sharedTypes.js";
-import { isNode } from "../utils/crossPlatform.js";
-import { binaryToImage } from "../utils/image.js";
-import BlobConverter from "./BlobConverter.js";
+import { ImageCreationConfig } from "../sharedTypes";
+import { isNode } from "../utils/crossPlatform";
+import { binaryToImage } from "../utils/image";
+import BlobConverter from "./BlobConverter";
 
 
 type ToImageConfig = Required<Pick<ImageCreationConfig,'maxSize'>> & {

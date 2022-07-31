@@ -1,7 +1,7 @@
-import { BytesArray } from "../sharedTypes.js";
-import { appendZeros, decimalToBinary, uint8ToBytes } from "../utils/binary.js";
-import { isNode } from "../utils/crossPlatform.js";
-import { binaryToImage, imageToBlob, imageToCanvas } from "../utils/image.js";
+import { BytesArray } from "../sharedTypes";
+import { appendZeros, decimalToBinary, uint8ToBytes } from "../utils/binary";
+import { isNode } from "../utils/crossPlatform";
+import { binaryToImage, imageToBlob, imageToCanvas } from "../utils/image";
 
 
 interface ImageConversionConfig {

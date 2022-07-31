@@ -1,8 +1,8 @@
-import { BlobCreationConfig, BytesArray, ImageCreationConfig, TypedArray } from "../sharedTypes.js"
-import { appendZeros, binaryToDecimal, decimalToHexaDecimal, groupBytes, typedArrayToDecimals } from "../utils/binary.js"
-import { getBlobClass } from "../utils/crossPlatform.js"
-import { binaryToImage } from "../utils/image.js"
-import { BaseBytesConverter } from "./BaseBytesConverter.js"
+import { BlobCreationConfig, BytesArray, ImageCreationConfig, TypedArray } from "../sharedTypes"
+import { appendZeros, binaryToDecimal, decimalToHexaDecimal, groupBytes, typedArrayToDecimals } from "../utils/binary"
+import { getBlobClass } from "../utils/crossPlatform"
+import { binaryToImage } from "../utils/image"
+import { BaseBytesConverter } from "./BaseBytesConverter"
 
 
 
