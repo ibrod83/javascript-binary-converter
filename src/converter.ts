@@ -4,13 +4,14 @@ import FileConverter from "./converters/FileConverter.js";
 import ArrayBufferConverter from "./converters/ArrayBufferConverter.js";
 import { isNode } from "./utils/crossPlatform.js";
 import ImageConverter from "./converters/ImageConverter.js";
-import { BytesArray, TypedArray } from "./sharedTypes.js";
+import { BytesArray, DecimalBytesArray, TypedArray } from "./sharedTypes.js";
 import BytesConverter from "./converters/BytesConverter.js";
-import { isNumeric } from "./utils/number.js";
+import { isNumeric, isNumericString } from "./utils/number.js";
+import DecimalBytesConverter from "./converters/DecimalBytesConverter.js";
 
 
 
-type Convertable = TypedArray | Blob | File | ArrayBuffer | HTMLImageElement | BytesArray;//Types supported.
+type Convertable = TypedArray | Blob | File | ArrayBuffer | HTMLImageElement | BytesArray |  DecimalBytesArray;//Types supported.
 
 
 /**
@@ -21,6 +22,7 @@ function converter(original: File): FileConverter
 function converter(original: Blob): BlobConverter
 function converter(original: ArrayBuffer): ArrayBufferConverter
 function converter(original: HTMLImageElement): ImageConverter
+function converter(original: DecimalBytesArray): DecimalBytesConverter
 function converter(original: BytesArray): BytesConverter
 
 
@@ -41,7 +43,9 @@ function converter(original: Convertable) {
 
     if (original instanceof ArrayBuffer) return new ArrayBufferConverter(original)
 
-    if(Array.isArray(original) && original.every(element=>isNumeric(element)))return new BytesConverter(original)
+    if(Array.isArray(original) && typeof original[0] === 'number') return new DecimalBytesConverter(original as Array<number>) 
+
+    if(Array.isArray(original) && typeof original[0] === 'string')return new BytesConverter(original as Array<string>)
 
     throw new Error('The argument supplied is not a convertible')
 }

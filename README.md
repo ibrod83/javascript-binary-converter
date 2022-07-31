@@ -45,7 +45,8 @@ const converter = require("javascript-binary-converter").default;
   - [Image to bytes](#image-to-bytes)
   - [Uint8Array to Image](#uint8array-to-image)
   - [Converting raw bytes](#converting-raw-bytes)
-    - [Bytes to image](#bytes-to-image)
+    - [Byte decimals to image](#byte-decimals-to-image)
+    - [Byte decimals to Int16Array](#byte-decimals-to-int16array)
     - [Bytes to decimals](#bytes-to-decimals)
     - [Bytes to hex](#bytes-to-hex)
 
@@ -63,10 +64,14 @@ If, for some reason, you need to convert a Blob object(available in Node since v
 
 #### File to image
 
-Convert a File(browser object) to an Image
+Convert a File(browser object) to an Image.
+
+converter function recognizes the type passed to it, exposing the relevant methods. In this case a File object is passed,
+invoking FileConvertor behind the scenes:
 
 ```javascript
 import converter from "javascript-binary-converter";
+
 
 document
   .querySelector("#some-file-input")
@@ -178,24 +183,39 @@ document.body.appendChild(image); //You can see the image in the DOM
 > :warning: **This API Currently accepts only an array of strings**
 
 
-Just like you can get bytes from other formats, you can convert bytes to others. Currently, this can be done only with an **array of strings**, each representing a byte. Some of the methods available:
+"raw bytes", in this regard, is either an array of "bits"(a string of zeros and ones), or of decimal numbers, representing a byte(0 to 255 if unsigned, -128 to 127 if signed).
 
-#### Bytes to image
+#### Byte decimals to image
 
 ```javascript
-  var bytes = ['11111111', '11111111', '11110111', '11110111', '10000000', '00000000'...]//Some bytes that logically represent an image.
+  const bytes = [255, 255, 34, 1, 120, 111...]//Some byte decimals that logically represent an image.
 
-  var image = await converter(bytes).toImage()//Returns an HTMLImageElement
+  const image = await converter(bytes).toImage()//Returns an HTMLImageElement
 
  document.body.appendChild(image)
 ```
 
-#### Bytes to decimals
+#### Byte decimals to Int16Array
+
+Important: Being that int16 uses two bytes(16 bits) to represent 1 number, the program will "group" the bytes into groups of 2.
+In the following case, 4 bytes will result in 2 numbers: 
 
 ```javascript
-  var bytes = ['11111111', '11111111', '11110111']
+    const bytes = [-127,-127, -1, 2]
 
-  var decimals = converter(bytes).toDecimals({isSigned:true})//Can be signed or unsigned. You can also assert the integer size(Default is 8)
+    const int16 = converter(bytes).toInt16Array()
+    //The Int16Array will contain two elements:-32383 and -254.
+
+```
+
+#### Bytes to decimals
+
+As mentioned above, you can also pass real "bytes", in the form of a string. Each string needs to be 8 character long.
+
+```javascript
+  const bytes = ['11111111', '11111111', '11110111']
+
+  const decimals = converter(bytes).toDecimals({isSigned:true})//Can be signed or unsigned. You can also assert the integer size(Default is 8)
   //[-1,-1,-9]
  
 ```
@@ -203,9 +223,9 @@ Just like you can get bytes from other formats, you can convert bytes to others.
 #### Bytes to hex
 
 ```javascript
-   var bytes = ['11010100', '11111100','10001000']
+   const bytes = ['11010100', '11111100','10001000']
 
-  var hexes = converter(bytes).toHex({isSigned:false})//Can be signed or unsigned. Default is false.
+  const hexes = converter(bytes).toHex({isSigned:false})//Can be signed or unsigned. Default is false.
   //['D4','FC','88']
  
 ```

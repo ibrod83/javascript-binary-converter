@@ -1,5 +1,6 @@
 import { imageToCanvas } from "../../build/dev/utils/image.js";
-import { appendZeros, decimalToBinary,  } from '../../build/dev/utils/binary.js';
+import { appendZeros, decimalToBinary,binaryToDecimal  } from '../../build/dev/utils/binary.js';
+
 
 
 /**
@@ -38,4 +39,8 @@ export const dummyImageBytes = [137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73
 export function getBytes() {
     const bytes = extraSmallImageByteDecimals.map(decimal => appendZeros(decimalToBinary(decimal)))
     return bytes
+}
+
+export function getByteDecimals(){
+    return getBytes().map(str=>binaryToDecimal(str))
 }

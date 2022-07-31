@@ -1,9 +1,12 @@
 import { TypedArray } from "../sharedTypes";
 
 export function decimalToBinary(decimal: number) {
-    return (decimal >>> 0).toString(2);
+
+    const binary =  (decimal >>> 0).toString(2);
+    return binary;
 
 }
+
 
 export function binaryToDecimal(binary: string, isSigned: boolean = false) {
 
@@ -15,6 +18,7 @@ export function binaryToDecimal(binary: string, isSigned: boolean = false) {
 
 
 
+//relies on a string
 function getSignedInteger(bits: string) {
 
     const negative = (bits[0] === '1');
@@ -23,13 +27,15 @@ function getSignedInteger(bits: string) {
         for (let i = 0; i < bits.length; i++) {
             inverse += (bits[i] === '0' ? '1' : '0');
         }
-        return (parseInt(inverse, 2) + 1) * -1;
+        const integer =  (parseInt(inverse, 2) + 1) * -1;
+        return integer
     } else {
         return parseInt(bits, 2);
     }
 }
 
 
+//relies on a string, but relevant only for strings to begin with. 
 export function appendZeros(binary: string) {
 
     let fullString = binary
@@ -48,6 +54,7 @@ export function uint8ToBytes(uint8: Uint8Array) {
     return bytes
 }
 
+//relies on a string.seems to be relevant only for strings(not sure if must become generic)
 export function groupBytes(bytes: Array<string>, groupSize: number) {
     const normalizedArray: Array<string> = []
     let currentBitString = ""
@@ -55,6 +62,22 @@ export function groupBytes(bytes: Array<string>, groupSize: number) {
         currentBitString += bytes[i - 1]
         if (i % groupSize === 0) {
             normalizedArray.push(currentBitString)
+            currentBitString = ""
+        }
+    }
+    return normalizedArray
+
+}
+
+export function groupByteDecimals(byteDecimals: Array<number>, groupSize: number,isSigned:boolean) {
+    
+    const normalizedArray: Array<number> = []
+    let currentBitString = ""
+    for (let i = 1; i <= byteDecimals.length; i++) {
+        const binary = decimalToBinary(byteDecimals[i - 1])
+        currentBitString += binary.length < 8 ? appendZeros(binary) : binary.slice(binary.length-8);//Make sure the bit string is of length 8!   
+        if (i % groupSize === 0) {            
+            normalizedArray.push(binaryToDecimal(currentBitString,isSigned))
             currentBitString = ""
         }
     }
@@ -71,6 +94,7 @@ export function typedArrayToDecimals(typedArray: TypedArray) {
 }
 
 export function decimalToHexaDecimal(decimal: number) {
+    // debugger
     return  ((decimal)>>>0).toString(16).toUpperCase()
 }
 

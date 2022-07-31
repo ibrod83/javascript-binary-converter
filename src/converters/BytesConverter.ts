@@ -2,14 +2,18 @@ import { BlobCreationConfig, BytesArray, ImageCreationConfig, TypedArray } from 
 import { appendZeros, binaryToDecimal, decimalToHexaDecimal, groupBytes, typedArrayToDecimals } from "../utils/binary.js"
 import { getBlobClass } from "../utils/crossPlatform.js"
 import { binaryToImage } from "../utils/image.js"
+import { BaseBytesConverter } from "./BaseBytesConverter.js"
 
 
 
-export default class BytesConverter {
+export default class BytesConverter extends BaseBytesConverter {
 
-    constructor(private original: BytesArray) {
+    constructor(protected original: BytesArray) {
+        super(original)
         this.original = this.original.map(byte=> appendZeros(byte))//Make sure every byte has 8 bits, even if it's not mathematically needed
+
     }
+
 
     toUint8Array() {
         return new Uint8Array(this.original.map(binary => binaryToDecimal(binary)))
@@ -48,25 +52,6 @@ export default class BytesConverter {
 
     }
 
-    toText() {
-        const uint8 = this.toUint8Array()
-
-        const decoder = new TextDecoder()
-        return decoder.decode(uint8)
-    }
-
-
-    async toBlob(config?: BlobCreationConfig): Promise<Blob> {
-        const BlobClass = await getBlobClass()
-        return new BlobClass([this.toUint8Array()], config)
-    }
-
-    async toImage(config?: ImageCreationConfig) {
-        const BlobClass = await getBlobClass()
-        const blob = new BlobClass([this.toUint8Array()])
-        return binaryToImage(blob, config && config)
-    }
-
     /**
      * Defaults: isSigned = false, integerSize = 8
      */
@@ -88,7 +73,7 @@ export default class BytesConverter {
         }
     }
 
-    toHex({ isSigned = false }: { isSigned?: boolean } = {}){       
+    toHex({ isSigned = false }: { isSigned?: boolean } = {}){    
         return this.original.map((dec)=>decimalToHexaDecimal(binaryToDecimal(dec,isSigned)))
     }
 
