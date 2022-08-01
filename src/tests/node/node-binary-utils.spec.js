@@ -1,12 +1,9 @@
-import {mockExpect as expect,createObjectsForFileDummyTests,getBytes,getByteDecimals,extraSmallImageByteDecimals ,twosComplementExtraSmallImageBytes } from './test-utils.js'
-const javascriptBinaryConverter = window['javascript-binary-converter']
+const { expect } = require('expect');
+const { groupBytes,binaryToDecimal,decimalToHexaDecimal  } = require('../../../build/cjs/utils/binary');
 
 
-const {binary} = javascriptBinaryConverter.utils
-const {  binaryToDecimal,groupBytes,decimalToHexaDecimal   } = binary;
 
-
-describe('Browser binary utils tests',() => {
+describe('Node binary utils tests',() => {
     it('Uint8: Should return correct numbers from a string of 8 bits', async function () {
         var decimal = binaryToDecimal('11111111')
         expect(decimal).toBe(255)

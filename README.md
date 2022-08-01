@@ -12,13 +12,13 @@ $ npm install javascript-binary-converter
 ```
 
 
-## Usage in the browser, or under any ES6 modules environment:
+## Usage in an ES6 modules environment:
 
 ```javascript
 import converter from "javascript-binary-converter";
 ```
 
-## Usage in Node.js:
+## Usage in Node.js(CommonJS):
 
 ```javascript
 const converter = require("javascript-binary-converter").default;
@@ -26,13 +26,17 @@ const converter = require("javascript-binary-converter").default;
 
 ## Usage in the browser, in a classical HTML page:
 
-```html
-<script type="module">
-  import converter from "/node_modules/javascript-binary-converter/build/esm/index.js";
-  ...
-</script>
-```
+You will need to use the umd file. Note that auto complete wont work like this(every call to converter will result in "any" in your IDE). First import the program from the umd build:
 
+```html
+<script src="/node_modules/javascript-binary-converter/build/umd/index.js"></script>
+```
+This exposes the program on the window object:
+```javascript
+const javascriptBinaryConverter = window['javascript-binary-converter']
+
+const {converter} = javascriptBinaryConverter;
+```
 # Table of Contents
 
 - [Concept](#concept)
@@ -47,6 +51,7 @@ const converter = require("javascript-binary-converter").default;
   - [Converting raw bytes](#converting-raw-bytes)
     - [Byte decimals to image](#byte-decimals-to-image)
     - [Byte decimals to Int16Array](#byte-decimals-to-int16array)
+    - [Byte decimals to Uint32Array](#byte-decimals-to-uint32array)
     - [Bytes to decimals](#bytes-to-decimals)
     - [Bytes to hex](#bytes-to-hex)
 
@@ -180,7 +185,7 @@ document.body.appendChild(image); //You can see the image in the DOM
 
 #### Converting raw bytes
 
-"raw bytes", in this regard, is either an array of "bits"(a string of zeros and ones), or of decimal numbers, representing a byte(0 to 255 if unsigned, -128 to 127 if signed).
+"raw bytes", in this regard, is either an array of "bits"(a string of zeros and ones), or of decimal numbers, representing a byte(0 to 255 if unsigned, -128 to 127 if signed). Do not pass binary digits of 1 and 0, as numbers(like 10111101). If you need this, use a string("10111101"). Please note that this functionality might still have some logical flaws, so feel free to open an issue if you suspect you found one. Also, efficiency might be a problem, with very large data. 
 
 #### Byte decimals to image
 
@@ -197,11 +202,24 @@ document.body.appendChild(image); //You can see the image in the DOM
 Important: Being that int16 uses two bytes(16 bits) to represent 1 number, the program will "group" the bytes into groups of 2.
 In the following case, 4 bytes will result in 2 numbers: 
 
+Note that being that Int16 is signed, any decimal you pass will result in the two's complement binary.
+
 ```javascript
     const bytes = [-127,-127, -1, 2]
 
     const int16 = converter(bytes).toInt16Array()
     //The Int16Array will contain two elements:-32383 and -254.
+
+```
+#### Byte decimals to Uint32Array
+
+Same as in the example above, just with an unsigned 32 bit integer: 12 bytes will result in 3 numbers.
+
+```javascript
+    const bytes = [128, 0,0,0, 247, 247, 247, 247, 119, 119, 119, 119]
+
+     var uInt32 = converter(bytes).toUint32Array()
+    //The Uint32Array will contain three elements: 2147483648, 4160223223, 2004318071
 
 ```
 

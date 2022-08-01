@@ -1,6 +1,3 @@
-// import { imageToCanvas } from "../../build/esm/utils/image";
-// import { appendZeros, decimalToBinary,binaryToDecimal  } from '../../build/esm/utils/binary'
-
 const javascriptBinaryConverter = window['javascript-binary-converter']
 const {binary,image} = javascriptBinaryConverter.utils
 const { appendZeros, decimalToBinary,binaryToDecimal  } = binary;

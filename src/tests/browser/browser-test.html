@@ -12,7 +12,7 @@
 
     <div id="mocha"></div>
     <script src="https://unpkg.com/chai/chai.js"></script>
-    <script src="../../node_modules/mocha/mocha.js"></script>
+    <script src="../../../node_modules/mocha/mocha.js"></script>
     <input id="file" type="file">
    
         <img id="Koala" style="display:none;" src="./images/Koala.jpg" alt="">
@@ -22,11 +22,8 @@
     <script type="module" class="mocha-init">
         mocha.setup('bdd');
     </script>
-    <script src="../../build/umd/index.js"></script>
+    <script src="../../../build/umd/index.js"></script>
     <script type="module" src="./browser-general.spec.js"></script>
-    <script type="module" src="./browser-bytes-converter.spec.js"></script>
-    <script type="module" src="./browser-decimal-bytes-converter.spec.js"></script>
-    <script type="module" src="./browser-binary-utils.spec.js"></script>
     <script type="module" src="./browser-image.spec.js"></script>
     <script type="module">
         mocha.run();

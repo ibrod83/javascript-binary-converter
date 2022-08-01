@@ -1,4 +1,4 @@
-import {mockExpect as expect,createObjectsForFileDummyTests,dummyImageBytes ,extraSmallImageByteDecimals } from './test-utils.js'
+import {mockExpect as expect,createObjectsForFileDummyTests,dummyImageBytes ,extraSmallImageByteDecimals,getBytes,getByteDecimals } from './test-utils.js'
 const javascriptBinaryConverter = window['javascript-binary-converter']
 
 const {converter} = javascriptBinaryConverter;
@@ -119,6 +119,29 @@ describe('Browser image tests', () => {
         const image = await converter(uint8).toImage()
         document.body.appendChild(image)
     });
+
+
+    it('Should return a an image, from byte decimals', async function () {
+        const bytes = getByteDecimals()
+        var image = await converter(bytes).toImage()
+        image.id = 'image_from_byte_decimals'
+        expect(image instanceof HTMLImageElement).toBe(true)
+        expect(image.width).toBe(5)
+        document.body.appendChild(image)
+
+    });
+
+    it('Should return a an image, from bytes', async function () {
+    
+        const bytes = getBytes()
+    
+        var image = await converter(bytes).toImage()
+    
+        expect(image instanceof HTMLImageElement).toBe(true)
+        expect(image.width).toBe(5)
+    
+    });
+    
 
 
 

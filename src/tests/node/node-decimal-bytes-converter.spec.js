@@ -1,13 +1,12 @@
-
-import {mockExpect as expect,createObjectsForFileDummyTests,getBytes,getByteDecimals,extraSmallImageByteDecimals ,twosComplementExtraSmallImageBytes } from './test-utils.js'
-const javascriptBinaryConverter = window['javascript-binary-converter']
-
-const {converter} = javascriptBinaryConverter;
-
+const { expect } = require('expect');
+const converter = require('../../../build/cjs/converter').default;
+const { Blob } = require('node:buffer');
+const { getByteDecimals ,} = require('./test-utils');
 
 
 
-describe('Browser DecimalBytesConverter tests', () => {     
+
+describe('Node DecimalBytesConverter tests', () => {     
 
      it('Should return Uint8Array, and an Int8Array, from byte decimals', async function () {
         var bytes = [255, 1]
@@ -24,7 +23,7 @@ describe('Browser DecimalBytesConverter tests', () => {
         expect(int8[2]).toBe(-9)
 
         var bytes = [-127, 119, -1]
-        var int8 = converter(bytes).toInt8Array()
+        var int8 = converter(bytes).toInt8Array()//
         expect(int8 instanceof Int8Array).toBe(true)
         expect(int8[0]).toBe(-127)
         expect(int8[1]).toBe(119)
@@ -107,15 +106,7 @@ describe('Browser DecimalBytesConverter tests', () => {
         expect(text).toBe('ΆΆ')
 
     });
-    it('Should return a an image, from byte decimals', async function () {
-        const bytes = getByteDecimals()
-        var image = await converter(bytes).toImage()
-        image.id = 'image_from_byte_decimals'
-        expect(image instanceof HTMLImageElement).toBe(true)
-        expect(image.width).toBe(5)
-        document.body.appendChild(image)      
-
-    });
+   
 
 
     it('Should return a Blob, from byte decimals', async function () {

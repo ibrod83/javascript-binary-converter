@@ -1,13 +1,11 @@
-import {mockExpect as expect,createObjectsForFileDummyTests,getBytes,getByteDecimals,extraSmallImageByteDecimals ,twosComplementExtraSmallImageBytes } from './test-utils.js'
-const javascriptBinaryConverter = window['javascript-binary-converter']
-
-const {converter} = javascriptBinaryConverter;
-
-
+const { expect } = require('expect');
+const converter = require('../../../build/cjs/converter').default;
+const { Blob } = require('node:buffer');
+const { getBytes,extraSmallImageByteDecimals,twosComplementExtraSmallImageBytes} = require('./test-utils');
 
 
 
-describe('Browser BytesConverter tests', () => {
+describe('Node BytesConverter tests', () => {
 
      
 
@@ -123,16 +121,7 @@ describe('Browser BytesConverter tests', () => {
         expect(text).toBe('ΆΆ')
 
     });
-    it('Should return a an image, from bytes', async function () {
-
-        const bytes = getBytes()
-
-        var image = await converter(bytes).toImage()
-
-        expect(image instanceof HTMLImageElement).toBe(true)
-        expect(image.width).toBe(5)
-
-    });
+   ;
 
 
     it('Should return a Blob, from bytes', async function () {
