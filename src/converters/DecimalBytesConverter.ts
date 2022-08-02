@@ -1,5 +1,5 @@
 import { BlobCreationConfig, BytesArray, DecimalBytesArray, ImageCreationConfig, TypedArray } from "../sharedTypes"
-import { appendZeros, binaryToDecimal, decimalToBinary, decimalToHexaDecimal, groupByteDecimals, groupBytes, typedArrayToDecimals } from "../utils/binary"
+import { appendZeros, binaryToDecimal, decimalToBinary, decimalToHexaDecimal,  groupBytes, typedArrayToDecimals } from "../utils/binary"
 import { getBlobClass } from "../utils/crossPlatform"
 import { binaryToImage } from "../utils/image"
 import { BaseBytesConverter } from "./BaseBytesConverter"
@@ -24,25 +24,26 @@ export default class DecimalBytesConverter extends BaseBytesConverter {
    
 
     toUint16Array() {     
-        const normalizedBytes = groupByteDecimals(this.original, 2,false)
-        return new Uint16Array(normalizedBytes)
+
+        return new Uint16Array(this.toUint8Array().buffer)
+
     }
 
     toInt16Array() {
-       
-        const normalizedBytes = groupByteDecimals(this.original, 2,true)
-        return new Int16Array(normalizedBytes)
+
+        const int8 = this.toInt8Array()
+        const int16 = new Int16Array(int8.buffer)
+        return int16
     }
 
     toUint32Array() {
-       
-        const normalizedBytes = groupByteDecimals(this.original, 4,false)
-        return new Uint32Array(normalizedBytes)
+
+        return new Uint32Array(this.toUint8Array().buffer)
     }
 
-    toInt32Array() {        
-        const normalizedBytes = groupByteDecimals(this.original, 4,true)
-        return new Int32Array(normalizedBytes)
+    toInt32Array() {       
+
+        return new Int32Array(this.toInt8Array().buffer)
     }
    
     toHex(){   

@@ -38,13 +38,14 @@ describe('Node DecimalBytesConverter tests', () => {
         expect(uint16[0]).toBe(65535)
         expect(uint16[1]).toBe(0)
   
-        var bytes = [255,255, 247, 247, 128, 0]
+        // var bytes = [255,255, 247, 247, 128, 0]
+        var bytes = [-127,-127, 120, 120, 120, 0]
         var int16 = converter(bytes).toInt16Array()
       
         expect(int16 instanceof Int16Array).toBe(true)
-        expect(int16[0]).toBe(-1)
-        expect(int16[1]).toBe(-2057)
-        expect(int16[2]).toBe(-32768)
+        expect(int16[0]).toBe(-32383)
+        expect(int16[1]).toBe(30840)
+        expect(int16[2]).toBe(120)
 
 
 
@@ -56,15 +57,15 @@ describe('Node DecimalBytesConverter tests', () => {
         console.log(int16)
         expect(int16 instanceof Int16Array).toBe(true)
         expect(int16[0]).toBe(-32383)
-        expect(int16[1]).toBe(-254)
+        expect(int16[1]).toBe(767)
     
 
         var bytes = [-45,-40, -20, -21]
         var int16 = converter(bytes).toInt16Array()
       
         expect(int16 instanceof Int16Array).toBe(true)
-        expect(int16[0]).toBe(-11304)
-        expect(int16[1]).toBe(-4885)
+        expect(int16[0]).toBe(-10029)
+        expect(int16[1]).toBe(-5140)
 
 
     });
@@ -73,29 +74,29 @@ describe('Node DecimalBytesConverter tests', () => {
     it('Should return an Int32Array, from byte decimals', async function () {
 
         // var bytes = ['10000000', '00000000', '00000000', '00000000', '11110111', '11110111', '11110111', '11110111', '01110111', '01110111', '01110111', '01110111']
-        var bytes = [128, 0,0,0, 247, 247, 247, 247, 119, 119, 119, 119]
+        // var bytes = [128, 0,0,0, 247, 247, 247, 247, 119, 119, 119, 119]
+        let bytes = [120,-2,0,0]
         var int32 = converter(bytes).toInt32Array()
         expect(int32 instanceof Int32Array).toBe(true)
-        expect(int32[0]).toBe(-2147483648)
-        expect(int32[1]).toBe(-134744073)
-        expect(int32[2]).toBe(2004318071)
+        expect(int32[0]).toBe(65144)
+        // expect(int32[1]).toBe(-134744073)
+        // expect(int32[2]).toBe(2004318071)
 
-        var bytes = [-127, -127,-127,0]
+        bytes = [-127, -127,-127,0]
         var int32 = converter(bytes).toInt32Array()
         expect(int32 instanceof Int32Array).toBe(true)
-        expect(int32[0]).toBe(-2122219264)
+        expect(int32[0]).toBe(8487297)
 
     });
 
     it('Should return a Uint32Array, from byte decimals', async function () {
 
-        var bytes = [128, 0,0,0, 247, 247, 247, 247, 119, 119, 119, 119]
+        var bytes = [119, 119, 119, 1]
         var uInt32 = converter(bytes).toUint32Array()
         expect(uInt32 instanceof Uint32Array).toBe(true)
-        expect(uInt32.length).toBe(3)
-        expect(uInt32[0]).toBe(2147483648)
-        expect(uInt32[1]).toBe(4160223223)
-        expect(uInt32[2]).toBe(2004318071)
+        expect(uInt32.length).toBe(1)
+        expect(uInt32[0]).toBe(24606583)
+
 
     });
 
@@ -172,7 +173,10 @@ describe('Node DecimalBytesConverter tests', () => {
     // });
 
     
+    const bytes = ['11111111', '11111111', '11110111']
 
+  const decimals = converter(bytes).toDecimals({isSigned:true})//Can be signed or unsigned. You can also assert the integer size(Default is 8)
+    console.log('yoyo',decimals)
 
 
 

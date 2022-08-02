@@ -1,5 +1,5 @@
 const { expect } = require('expect');
-const { groupBytes,binaryToDecimal,decimalToHexaDecimal  } = require('../../../build/cjs/utils/binary');
+const { groupBytes,binaryToDecimal,decimalToHexaDecimal, decimalToBinary  } = require('../../../build/cjs/utils/binary');
 
 
 
@@ -150,6 +150,12 @@ describe('Node binary utils tests',() => {
         expect(hex).toBe('B66A7F71')
 
     });
+
+    // it('Should trim unnecessary first bytes ', async function () {
+    //     let bytes;
+    //     const decimal = decimalToBinary()
+
+    // });
 
 })
 

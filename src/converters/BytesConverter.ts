@@ -25,8 +25,9 @@ export default class BytesConverter extends BaseBytesConverter {
     }
 
     toInt16Array() {
-        const normalizedBytes = groupBytes(this.original, 2)
-        return new Int16Array(normalizedBytes.map(binary => binaryToDecimal(binary, true)))
+        // const normalizedBytes = groupBytes(this.original, 2)
+        const decimals = this.original.map(b=>binaryToDecimal(b,true))
+        return new Int16Array(new Int8Array(decimals).buffer)
     }
 
     toUint16Array() {

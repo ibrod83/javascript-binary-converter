@@ -61,7 +61,7 @@ describe('Node BytesConverter tests', () => {
         expect(int16 instanceof Int16Array).toBe(true)
         expect(int16[0]).toBe(-1)
         expect(int16[1]).toBe(-2057)
-        expect(int16[2]).toBe(-32768)
+        expect(int16[2]).toBe(128)
 
     });
     
@@ -154,7 +154,7 @@ describe('Node BytesConverter tests', () => {
         var decimals = converter(bytes).toDecimals({ isSigned: true, integerSize: 16 })
 
         expect(decimals[0]).toBe(21588)
-        expect(decimals[1]).toBe(-11180)
+        expect(decimals[1]).toBe(21716)
 
 
         var bytes = ['11010100', '01010100', '11010100', '01010100']

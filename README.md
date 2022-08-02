@@ -208,7 +208,7 @@ Note that being that Int16 is signed, any decimal you pass will result in the tw
     const bytes = [-127,-127, -1, 2]
 
     const int16 = converter(bytes).toInt16Array()
-    //The Int16Array will contain two elements:-32383 and -254.
+    //The Int16Array will contain two elements:-32383 and 767.
 
 ```
 #### Byte decimals to Uint32Array
@@ -219,7 +219,7 @@ Same as in the example above, just with an unsigned 32 bit integer: 12 bytes wil
     const bytes = [128, 0,0,0, 247, 247, 247, 247, 119, 119, 119, 119]
 
      var uInt32 = converter(bytes).toUint32Array()
-    //The Uint32Array will contain three elements: 2147483648, 4160223223, 2004318071
+    //The Uint32Array will contain three elements: 128, 4160223223, 2004318071
 
 ```
 

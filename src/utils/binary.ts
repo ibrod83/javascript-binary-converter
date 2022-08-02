@@ -18,20 +18,27 @@ export function binaryToDecimal(binary: string, isSigned: boolean = false) {
 
 
 
-//relies on a string
+
 function getSignedInteger(bits: string) {
 
     const negative = (bits[0] === '1');
     if (negative) {
-        let inverse = '';
+        const inverse = getInverseBinary(bits)
+        const integer =  (parseInt(inverse, 2) + 1) * -1;
+        return integer
+    } 
+    else {
+        return parseInt(bits, 2);
+    }
+}
+
+function getInverseBinary(bits:string){
+    let inverse = '';
         for (let i = 0; i < bits.length; i++) {
             inverse += (bits[i] === '0' ? '1' : '0');
         }
-        const integer =  (parseInt(inverse, 2) + 1) * -1;
-        return integer
-    } else {
-        return parseInt(bits, 2);
-    }
+        return inverse
+        
 }
 
 
@@ -69,21 +76,33 @@ export function groupBytes(bytes: Array<string>, groupSize: number) {
 
 }
 
-export function groupByteDecimals(byteDecimals: Array<number>, groupSize: number,isSigned:boolean) {
-    
-    const normalizedArray: Array<number> = []
-    let currentBitString = ""
-    for (let i = 1; i <= byteDecimals.length; i++) {
-        const binary = decimalToBinary(byteDecimals[i - 1])
-        currentBitString += binary.length < 8 ? appendZeros(binary) : binary.slice(binary.length-8);//Make sure the bit string is of length 8!   
-        if (i % groupSize === 0) {            
-            normalizedArray.push(binaryToDecimal(currentBitString,isSigned))
-            currentBitString = ""
-        }
-    }
-    return normalizedArray
+// export function groupByteDecimals(byteDecimals: Array<number>, groupSize: number,isSigned:boolean) {
+//     const min = isSigned ? -128 : 0
+//     const max = isSigned ? 127 : 255;
+//     if(!byteDecimals.every(byte=>byte>= min && byte<=max)){
+//         debugger;
+//         throw new Error(`A byteDecimal must be between ${min} and ${max}`)
+//     }
+   
+//     const normalizedArray: Array<number> = []
+//     let currentBitString = ""
+//     for (let i = 1; i <= byteDecimals.length; i++) {
+//         const binary = decimalToBinary(byteDecimals[i - 1])//Important: the function might return a binary of more than one byte!
+//         if(binary.length > 8){
+//             // debugger;
+//         }
+//         currentBitString += binary.length < 8 ? appendZeros(binary) : binary.slice(binary.length-8);//Make sure the bit string is of length 8!   
+//         if (i % groupSize === 0) {            
+//             normalizedArray.push(binaryToDecimal(currentBitString,isSigned))
+//             if(binary.length > 8){
+//                 // debugger;
+//             }   
+//             currentBitString = ""
+//         }
+//     }
+//     return normalizedArray
 
-}
+// }
 
 export function typedArrayToDecimals(typedArray: TypedArray) {
     const decimals = []
