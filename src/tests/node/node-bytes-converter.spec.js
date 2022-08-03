@@ -71,7 +71,7 @@ describe('Node BytesConverter tests', () => {
         var bytes = ['10000000', '00000000', '00000000', '00000000', '11110111', '11110111', '11110111', '11110111', '01110111', '01110111', '01110111', '01110111']
         var int32 = converter(bytes).toInt32Array()
         expect(int32 instanceof Int32Array).toBe(true)
-        expect(int32[0]).toBe(-2147483648)
+        expect(int32[0]).toBe(128)
         expect(int32[1]).toBe(-134744073)
         expect(int32[2]).toBe(2004318071)
 
@@ -82,7 +82,7 @@ describe('Node BytesConverter tests', () => {
         var bytes = ['10000000', '00000000', '00000000', '00000000', '11110111', '11110111', '11110111', '11110111', '01110111', '01110111', '01110111', '01110111']
         var uInt32 = converter(bytes).toUint32Array()
         expect(uInt32 instanceof Uint32Array).toBe(true)
-        expect(uInt32[0]).toBe(2147483648)
+        expect(uInt32[0]).toBe(128)
         expect(uInt32[1]).toBe(4160223223)
         expect(uInt32[2]).toBe(2004318071)
 
@@ -90,26 +90,31 @@ describe('Node BytesConverter tests', () => {
 
     it('Should return a Float32Array, from bytes', async function () {
         var bytes = ['01000010', '00001010', '01000100', '10011100', '01000010', '00011010', '01000100', '10011100']
-        // '01000010000010100100010010011100','01000010000110100100010010011100'
+        // '01000010000010100100010010011100','10011100010001000001101001000010'
+        // '10011100010001000000101001000010','01000010000110100100010010011100'//reverse byte order, default
         var float32 = converter(bytes).toFloat32Array()
-        expect(float32[0].toString().includes('34.5670013')).toBe(true)
-        expect(float32[1].toString().includes('38.5670013')).toBe(true)
+        expect(float32[0].toString().includes('-6.48642')).toBe(true)
+        expect(float32[1].toString().includes('-6.488489')).toBe(true)
 
 
         var bytes = ['11000010', '00001010', '01000100', '10011100']
         // '11000010000010100100010010011100'
+        // '10011100010001000000101011000010' reverse, default
         var float32 = converter(bytes).toFloat32Array()
-        expect(float32[0].toString().includes('-34.5670013')).toBe(true)
+     
+        expect(float32[0].toString().includes('-6.48648')).toBe(true)
 
         var bytes = ['00111111', '00010001', '00100111', '00000000']
         // 00111111000100010010011100000000
+        //00000000001001110001000100111111//reverse, default
         var float32 = converter(bytes).toFloat32Array()
-        expect(float32[0].toString().includes('0.5670013')).toBe(true)
+        expect(float32[0].toString().includes('3.58777')).toBe(true)
 
         var bytes = ['10111111', '00010001', '00100111', '00000000']
         // 10111111000100010010011100000000
+        //00000000001001110001000110111111 //reverse, default
         var float32 = converter(bytes).toFloat32Array()
-        expect(float32[0].toString().includes('-0.5670013')).toBe(true)
+        expect(float32[0].toString().includes('3.58795')).toBe(true)
 
 
     });
@@ -149,7 +154,7 @@ describe('Node BytesConverter tests', () => {
         var decimals = converter(bytes).toDecimals({ isSigned: false, integerSize: 16 })
 
         expect(decimals[0]).toBe(21588)
-        expect(decimals[1]).toBe(54356)
+        expect(decimals[1]).toBe(21716)
 
         var decimals = converter(bytes).toDecimals({ isSigned: true, integerSize: 16 })
 
@@ -158,11 +163,13 @@ describe('Node BytesConverter tests', () => {
 
 
         var bytes = ['11010100', '01010100', '11010100', '01010100']
+        //01010100110101000101010011010100
+        //01010100110101000101010011010100
         var decimals = converter(bytes).toDecimals({ isSigned: false, integerSize: 32 })
-        expect(decimals[0]).toBe(3562329172)
+        expect(decimals[0]).toBe(1423201492)
 
         var decimals = converter(bytes).toDecimals({ isSigned: true, integerSize: 32 })
-        expect(decimals[0]).toBe(-732638124)
+        expect(decimals[0]).toBe(1423201492)
 
     });
 
@@ -184,7 +191,7 @@ describe('Node BytesConverter tests', () => {
         var decimals = converter(bytes).toDecimals({ isSigned: false, integerSize: 16 })
 
         expect(decimals[0]).toBe(21588)
-        expect(decimals[1]).toBe(54356)
+        expect(decimals[1]).toBe(21716)
 
     });
 

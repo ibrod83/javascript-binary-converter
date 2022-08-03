@@ -25,24 +25,23 @@ export default class BytesConverter extends BaseBytesConverter {
     }
 
     toInt16Array() {
-        // const normalizedBytes = groupBytes(this.original, 2)
         const decimals = this.original.map(b=>binaryToDecimal(b,true))
         return new Int16Array(new Int8Array(decimals).buffer)
     }
 
     toUint16Array() {
-        const normalizedBytes = groupBytes(this.original, 2)
-        return new Uint16Array(normalizedBytes.map(binary => binaryToDecimal(binary)))
+        const decimals = this.original.map(b=>binaryToDecimal(b,false))
+          return new Uint16Array(new Uint8Array(decimals).buffer)
     }
 
     toInt32Array() {
-        const normalizedBytes = groupBytes(this.original, 4)
-        return new Int32Array(normalizedBytes.map(binary => binaryToDecimal(binary, true)))
+        const decimals = this.original.map(b=>binaryToDecimal(b,true))
+          return new Int32Array(new Int8Array(decimals).buffer)
     }
 
     toUint32Array() {
-        const normalizedBytes = groupBytes(this.original, 4)
-        return new Uint32Array(normalizedBytes.map(binary => binaryToDecimal(binary, true)))
+        const decimals = this.original.map(b=>binaryToDecimal(b,false))
+        return new Uint32Array(new Uint8Array(decimals).buffer)
     }
 
     toFloat32Array(){
