@@ -3,6 +3,9 @@ import { appendZeros, binaryToDecimal, decimalToHexaDecimal, groupBytes, typedAr
 import { getBlobClass } from "../utils/crossPlatform"
 import { binaryToImage } from "../utils/image"
 import { BaseBytesConverter } from "./BaseBytesConverter"
+import TypedArrayConverter from "./TypedArrayConverter"
+
+
 
 
 
@@ -14,35 +17,43 @@ export default class BytesConverter extends BaseBytesConverter {
 
     }
 
+    private _getDecimals(isSigned:boolean=false){
+        return this.original.map(binary => binaryToDecimal(binary,isSigned))
+    }
+
 
     toUint8Array() {
-        return new Uint8Array(this.original.map(binary => binaryToDecimal(binary)))
+        return new Uint8Array(this._getDecimals())
 
     }
 
     toInt8Array() {
-        return new Int8Array(this.original.map(binary => binaryToDecimal(binary, true)))
+        return new Int8Array(this._getDecimals(true))
     }
 
-    toInt16Array() {
-        const decimals = this.original.map(b=>binaryToDecimal(b,true))
-        return new Int16Array(new Int8Array(decimals).buffer)
-    }
+   
 
     toUint16Array() {
-        const decimals = this.original.map(b=>binaryToDecimal(b,false))
+        const decimals = this._getDecimals(false)
           return new Uint16Array(new Uint8Array(decimals).buffer)
     }
 
-    toInt32Array() {
-        const decimals = this.original.map(b=>binaryToDecimal(b,true))
-          return new Int32Array(new Int8Array(decimals).buffer)
+    toInt16Array() {
+        const decimals = this._getDecimals(true)
+        return new Int16Array(new Int8Array(decimals).buffer)
     }
 
     toUint32Array() {
-        const decimals = this.original.map(b=>binaryToDecimal(b,false))
+        const decimals = this._getDecimals(false)
         return new Uint32Array(new Uint8Array(decimals).buffer)
     }
+    
+    toInt32Array() {
+        const decimals = this._getDecimals(true)
+          return new Int32Array(new Int8Array(decimals).buffer)
+    }
+
+    
 
     toFloat32Array(){
      

@@ -9,34 +9,34 @@ export default class TypedArrayConverter {
     constructor(private original: TypedArray) { }
 
     toUint8Array() {
-        return new Uint8Array(this.original)
+        return new Uint8Array(this.original.buffer)
     }
 
     toInt8Array() {
-        return new Int8Array(this.original)
+        return new Int8Array(this.original.buffer)
     }
 
     toInt16Array() {
-        const int16 = new Int16Array(this.original)
+        const int16 = new Int16Array(this.original.buffer)
         return int16;
     }
 
     toUint16Array() {//
-        const uint16 = new Uint16Array(this.original)
+        const uint16 = new Uint16Array(this.original.buffer)
 
         return uint16
     }
 
     toInt32Array() {
-        return new Int32Array(this.original)
+        return new Int32Array(this.original.buffer)
     }
 
     toUint32Array() {
-        return new Uint32Array(this.original)
+        return new Uint32Array(this.original.buffer)
     }
 
     toFloat32(){
-        return new Float32Array(this.original)
+        return new Float32Array(this.original.buffer)
     }
 
     toText() {

@@ -187,6 +187,8 @@ document.body.appendChild(image); //You can see the image in the DOM
 
 "raw bytes", in this regard, is either an array of "bits"(a string of zeros and ones), or of decimal numbers, representing a byte(0 to 255 if unsigned, -128 to 127 if signed). Do not pass binary digits of 1 and 0, as numbers(like 10111101). If you need this, use a string("10111101"). Please note that this functionality might still have some logical flaws, so feel free to open an issue if you suspect you found one. Also, efficiency might be a problem, with very large data. 
 
+
+
 #### Byte decimals to image
 
 ```javascript
@@ -199,10 +201,10 @@ document.body.appendChild(image); //You can see the image in the DOM
 
 #### Byte decimals to Int16Array
 
-Important: Being that int16 uses two bytes(16 bits) to represent 1 number, the program will "group" the bytes into groups of 2.
-In the following case, 4 bytes will result in 2 numbers: 
+> :warning: Important: Being that int16 uses two bytes(16 bits) to represent 1 number, the program will "group" the bytes into groups of 2.
+In the following case, 4 bytes will result in 2 numbers. Note that being that Int16 is signed, any decimal you pass will result in the two's complement binary.
 
-Note that being that Int16 is signed, any decimal you pass will result in the two's complement binary.
+> :warning: About byte order: Any conversion to integers larger than 8, will rely on the system's byte order, which is usually little-endian(which might be counter intuitive).
 
 ```javascript
     const bytes = [-127,-127, -1, 2]

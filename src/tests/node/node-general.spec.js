@@ -32,6 +32,20 @@ describe('Node general tests', () => {
         const int8 = new Int8Array([-50, -122])
         const int16 = converter(int8).toInt16Array()
         expect(int16 instanceof Int16Array).toBe(true)
+        expect(int16[0]).toBe(-31026)
+
+    });
+
+
+    it('Should return a Float32Array, from Uint8Array', async function () {//
+
+        const uint8 = new Uint8Array([50, 122,1, 0])
+        //00110010 01111010 00000001 00000000
+        //00000000000000010111101000110010
+        const float32 = converter(uint8).toFloat32()
+
+        expect(float32 instanceof Float32Array).toBe(true)
+        expect(float32[0].toString().includes(1.356709147)).toBe(true)
 
     });
 
