@@ -54,7 +54,7 @@ const {converter} = javascriptBinaryConverter;
     - [Byte decimals to Uint32Array](#byte-decimals-to-uint32array)
     - [Bytes to decimals](#bytes-to-decimals)
     - [Bytes to hex](#bytes-to-hex)
-  -[Converting decimals to other notations](#converting-decimals-to-other-notations)
+  - [Converting decimals to other notations](#converting-decimals-to-other-notations)
     - [Decimal to binary](#decimal-to-binary)
     - [Decimal to bytes](#decimal-to-bytes)
 
