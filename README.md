@@ -253,7 +253,7 @@ As mentioned above, you can also pass real "bytes", in the form of a string. Eac
 
 #### Converting decimals to other notations
 
-Note that currently only 32 bit numbers are supported(both int and float)
+Note that currently only 32 bit numbers are supported. Also, float is not supported.
 
 #### Decimal to binary
 
@@ -266,8 +266,6 @@ Note that currently only 32 bit numbers are supported(both int and float)
 ```
 
 #### Decimal to bytes
-
-Floating point numbers aren't supported.
 
 ```javascript
    const bytes = converter(422).toBytes();
