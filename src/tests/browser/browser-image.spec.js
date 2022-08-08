@@ -75,7 +75,6 @@ describe('Browser image tests', () => {
         document.body.appendChild(imageFromBlob)
         expect(blob.size === originalBlob.size).toBe(true)
         expect(imageFromBlob instanceof HTMLImageElement).toBe(true)
-        // debugger;
     });
 
     it('Should return a Uint8Array and an Int8Array, from an Image', async function () {

@@ -54,6 +54,10 @@ const {converter} = javascriptBinaryConverter;
     - [Byte decimals to Uint32Array](#byte-decimals-to-uint32array)
     - [Bytes to decimals](#bytes-to-decimals)
     - [Bytes to hex](#bytes-to-hex)
+  -[Converting decimals to other notations](#converting-decimals-to-other-notations)
+    - [Decimal to binary](#decimal-to-binary)
+    - [Decimal to bytes](#decimal-to-bytes)
+
 
 ## Concept
 
@@ -244,5 +248,31 @@ As mentioned above, you can also pass real "bytes", in the form of a string. Eac
 
   const hexes = converter(bytes).toHex({isSigned:false})//Can be signed or unsigned. Default is false.
   //['D4','FC','88']
+ 
+```
+
+#### Converting decimals to other notations
+
+Note that currently only 32 bit numbers are supported(both int and float)
+
+#### Decimal to binary
+
+```javascript
+   const decimal = 4434
+
+  const binary = converter(decimal).toBinary()
+  //'1000101010010'
+ 
+```
+
+#### Decimal to bytes
+
+Floating point numbers aren't supported.
+
+```javascript
+   const bytes = converter(422).toBytes();
+
+  //['00000001','10100110']Default is big endian byte order. You can pass {endianness:'LITTLE'} to reverse it.
+
  
 ```

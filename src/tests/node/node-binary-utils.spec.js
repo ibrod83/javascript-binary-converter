@@ -1,5 +1,5 @@
 const { expect } = require('expect');
-const { groupBytes,binaryToDecimal,decimalToHexaDecimal, decimalToBinary  } = require('../../../build/cjs/utils/binary');
+const { groupBytes,binaryToDecimal,decimalToHexaDecimal, decimalToBinary,  getClosestDividable, removeRedundantSignificantBytes  } = require('../../../build/cjs/utils/binary');
 
 
 
@@ -150,6 +150,33 @@ describe('Node binary utils tests',() => {
         expect(hex).toBe('B66A7F71')
 
     });
+    it('Should closest dividable', async function () {//
+        let closest = getClosestDividable(14,8)
+        expect(closest).toBe(16,8)       
+        closest = getClosestDividable(1,8)
+        expect(closest).toBe(8,8)       
+        closest = getClosestDividable(7,8)
+        expect(closest).toBe(8,8)       
+        closest = getClosestDividable(15,8)
+        expect(closest).toBe(16,8)       
+        closest = getClosestDividable(16,8)
+        expect(closest).toBe(16,8)       
+        closest = getClosestDividable(30,8)
+        expect(closest).toBe(32,8)        
+
+    });
+
+    // it('Should remove redundant significant bytes', async function () {//
+    //     const bytes = ['00010001', '00101000', '00001000', '00000000']
+    //     let cleanBytes = removeRedundantSignificantBytes(bytes,'LITTLE')
+    //     expect(bytes[0]).toBe('00010001')    
+    //     expect(cleanBytes.length).toBe(3)     
+        
+    //     cleanBytes = removeRedundantSignificantBytes(bytes,'BIG')
+    //     expect(bytes[0]).toBe('00001000')    
+    //     expect(cleanBytes.length).toBe(3)     
+
+    // });
 
     // it('Should trim unnecessary first bytes ', async function () {
     //     let bytes;

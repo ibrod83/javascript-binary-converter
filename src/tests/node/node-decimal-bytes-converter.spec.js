@@ -47,6 +47,7 @@ describe('Node DecimalBytesConverter tests', () => {
         expect(int16[1]).toBe(30840)
         expect(int16[2]).toBe(120)
 
+    
 
 
         var bytes = [-127,-127, -1, 2]
@@ -54,7 +55,7 @@ describe('Node DecimalBytesConverter tests', () => {
         //10000001,10000001,11111111,00000010
         var int16 = converter(bytes).toInt16Array()
      
-        console.log(int16)
+        // console.log(int16)
         expect(int16 instanceof Int16Array).toBe(true)
         expect(int16[0]).toBe(-32383)
         expect(int16[1]).toBe(767)
@@ -119,13 +120,13 @@ describe('Node DecimalBytesConverter tests', () => {
 
      
 
-    it('Should return an array of hex, from an array of bytes', async function () {
+    it('Should return an array of hex, from an array of byte decimals', async function () {
         var bytes = [212, 252, 136] //-44,-4,-120 decimals in twos complement
         var hexes = converter(bytes).toHex()
         expect(hexes[0]).toBe('D4')
         expect(hexes[1]).toBe('FC')
         expect(hexes[2]).toBe('88')
-        console.log('hexes', hexes)
+        // console.log('hexes', hexes)
 
 
         var hexes = converter(bytes).toHex()
@@ -136,7 +137,28 @@ describe('Node DecimalBytesConverter tests', () => {
         expect(hexes[1][hexes[1].length - 1]).toBe('C')
         expect(hexes[1][hexes[1].length - 2]).toBe('F')
         expect(hexes[2]).toBe('88')//Inquire this !
-        console.log('hexes', hexes)
+        // console.log('hexes', hexes)
+
+    });
+
+    it('Should return an array of hex, from an array of bytes', async function () {
+        var bytes = [212, 252, 136] //-44,-4,-120 decimals in twos complement
+        var hexes = converter(bytes).toHex()
+        expect(hexes[0]).toBe('D4')
+        expect(hexes[1]).toBe('FC')
+        expect(hexes[2]).toBe('88')
+        // console.log('hexes', hexes)
+
+
+        var hexes = converter(bytes).toHex()
+    
+        expect(hexes[0][hexes[0].length - 1]).toBe('4')
+        expect(hexes[0][hexes[0].length - 2]).toBe('D')
+
+        expect(hexes[1][hexes[1].length - 1]).toBe('C')
+        expect(hexes[1][hexes[1].length - 2]).toBe('F')
+        expect(hexes[2]).toBe('88')//Inquire this !
+        // console.log('hexes', hexes)
 
     });
 
@@ -173,10 +195,10 @@ describe('Node DecimalBytesConverter tests', () => {
     // });
 
     
-    const bytes = ['11111111', '11111111', '11110111']
+    // const bytes = ['11111111', '11111111', '11110111']
 
-  const decimals = converter(bytes).toDecimals({isSigned:true})//Can be signed or unsigned. You can also assert the integer size(Default is 8)
-    console.log('yoyo',decimals)
+//   const decimals = converter(bytes).toDecimals({isSigned:true})//Can be signed or unsigned. You can also assert the integer size(Default is 8)
+    // console.log('yoyo',decimals)
 
 
 

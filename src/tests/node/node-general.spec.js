@@ -107,7 +107,11 @@ describe('Node general tests', () => {
     });    
 
 
-})
+});
+
+const uint16 = new Uint16Array([422]);
+const uint8 = converter(uint16).toUint8Array()
+
 
 
 

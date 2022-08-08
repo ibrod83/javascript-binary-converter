@@ -55,6 +55,11 @@ describe('Node BytesConverter tests', () => {
         expect(uint16[0]).toBe(65535)
         expect(uint16[1]).toBe(0)
 
+        var bytes = ['10100110','00000001', ]
+        var uint16 = converter(bytes).toUint16Array()
+        expect(uint16 instanceof Uint16Array).toBe(true)
+        expect(uint16[0]).toBe(422)
+
   
         var bytes = ['11111111', '11111111', '11110111', '11110111', '10000000', '00000000']
         var int16 = converter(bytes).toInt16Array()
@@ -138,7 +143,7 @@ describe('Node BytesConverter tests', () => {
 
     it('Should return decimals, from bytes', async function () {
         var bytes = getBytes()
-        console.log('bytes', bytes)
+        // console.log('bytes', bytes)
         var decimals = converter(bytes).toDecimals()
         // console.log(decimals)
         var decimalsCorrect = decimals.every((decimal, index) => extraSmallImageByteDecimals[index] === decimal)
@@ -203,7 +208,7 @@ describe('Node BytesConverter tests', () => {
         expect(hexes[0]).toBe('D4')
         expect(hexes[1]).toBe('FC')
         expect(hexes[2]).toBe('88')
-        console.log('hexes', hexes)
+        // console.log('hexes', hexes)
 
 
         var hexes = converter(bytes).toHex({ isSigned: true })
@@ -214,10 +219,12 @@ describe('Node BytesConverter tests', () => {
         expect(hexes[1][hexes[1].length - 1]).toBe('C')
         expect(hexes[1][hexes[1].length - 2]).toBe('F')
         expect(hexes[2].includes('FF88')).toBe(true)
-        console.log('hexes', hexes)
+        // console.log('hexes', hexes)
 
     });
 
+
+    
     
 
 

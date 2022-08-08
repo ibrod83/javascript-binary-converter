@@ -7,13 +7,33 @@ export function decimalToBinary(decimal: number) {
 
 }
 
+export function getClosestDividable(divided:number, divisor:number){
+    let modulo =divided % divisor;
+    while(modulo !== 0){       
+        divided++
+        modulo =  divided % divisor
+    }
+    return divided;
+}
+
+
+export function getBytesFromBinary(binaryString:string,{endianness='LITTLE'}:{endianness?:'BIG' | 'LITTLE'}={}){
+
+    if(binaryString.length <= 7) return [appendZeros(binaryString)];
+
+    let closestDividableOfEight = getClosestDividable(binaryString.length,8);
+    const binaryStringWithAppendedZeros = appendZeros(binaryString,closestDividableOfEight)
+    let bytes = splitBinaryStringToBytes(binaryStringWithAppendedZeros) 
+    return endianness === 'LITTLE' ?  bytes.reverse() : bytes;
+
+}
+
 
 export function binaryToDecimal(binary: string, isSigned: boolean = false) {
 
     if (binary.length > 32) throw new Error('binaryToDecimal does not support bigint')
 
     return isSigned ? getSignedInteger(binary) : parseInt(binary, 2);
-
 }
 
 
@@ -43,10 +63,10 @@ function getInverseBinary(bits:string){
 
 
 //relies on a string, but relevant only for strings to begin with. 
-export function appendZeros(binary: string) {
+export function appendZeros(binary: string,requiredLength = 8) {
 
     let fullString = binary
-    const numOfZerosMissing = 8 - binary.length
+    const numOfZerosMissing = requiredLength - binary.length
     for (let i = 0; i < numOfZerosMissing; i++) {
         fullString = "0" + fullString
     }
@@ -60,6 +80,8 @@ export function uint8ToBytes(uint8: Uint8Array) {
     }
     return bytes
 }
+
+
 
 //relies on a string.seems to be relevant only for strings(not sure if must become generic)
 export function groupBytes(bytes: Array<string>, groupSize: number) {
@@ -76,33 +98,20 @@ export function groupBytes(bytes: Array<string>, groupSize: number) {
 
 }
 
-// export function groupByteDecimals(byteDecimals: Array<number>, groupSize: number,isSigned:boolean) {
-//     const min = isSigned ? -128 : 0
-//     const max = isSigned ? 127 : 255;
-//     if(!byteDecimals.every(byte=>byte>= min && byte<=max)){
-//         debugger;
-//         throw new Error(`A byteDecimal must be between ${min} and ${max}`)
-//     }
-   
-//     const normalizedArray: Array<number> = []
-//     let currentBitString = ""
-//     for (let i = 1; i <= byteDecimals.length; i++) {
-//         const binary = decimalToBinary(byteDecimals[i - 1])//Important: the function might return a binary of more than one byte!
-//         if(binary.length > 8){
-//             // debugger;
-//         }
-//         currentBitString += binary.length < 8 ? appendZeros(binary) : binary.slice(binary.length-8);//Make sure the bit string is of length 8!   
-//         if (i % groupSize === 0) {            
-//             normalizedArray.push(binaryToDecimal(currentBitString,isSigned))
-//             if(binary.length > 8){
-//                 // debugger;
-//             }   
-//             currentBitString = ""
-//         }
-//     }
-//     return normalizedArray
+export function splitBinaryStringToBytes(binaryString:string){
+    const bytes = []
+    let currentBitString=""
+    for(let i=1;i<=binaryString.length;i++){
+        currentBitString+=binaryString[i-1]
+        if (i % 8 === 0 || i === binaryString.length) {
+            bytes.push(currentBitString)
+            currentBitString = ""
+        }
+    }
+    return bytes
+}
 
-// }
+
 
 export function typedArrayToDecimals(typedArray: TypedArray) {
     const decimals = []
@@ -113,8 +122,15 @@ export function typedArrayToDecimals(typedArray: TypedArray) {
 }
 
 export function decimalToHexaDecimal(decimal: number) {
-    // debugger
     return  ((decimal)>>>0).toString(16).toUpperCase()
+}
+
+export function getBytesFromDecimal(decimal:number,{endianness='BIG' }: { endianness?:'LITTLE' | 'BIG' } = {}){
+
+    if(!Number.isInteger(decimal))throw new Error('getBytesFromDecimal does not support floating point')
+
+    const bytes =  getBytesFromBinary(decimalToBinary(decimal),{endianness})
+    return bytes;
 }
 
 
@@ -145,3 +161,48 @@ export function decimalToHexaDecimal(decimal: number) {
 //       return output.toUpperCase();
 //     }
 //   }
+
+
+// export function removeRedundantSignificantBytes(bytes:Array<string>,endianness:'LITTLE'|'BIG'){
+//     // const counter = endianness === 'LITTLE' ? bytes.length-1 : 0 
+//     if(endianness === 'LITTLE'){
+//         // ['00010001', '00101000', '00001000', '00000000']
+//         for(let i=bytes.length-1;i>0;i--){//
+//             const currentByte = bytes[i]
+//             if(parseInt(currentByte,2) !== 0)break;
+
+//             if(parseInt(currentByte,2) === 0){
+//                 bytes.splice(i,1)                
+//             }
+//         }
+//     }else{
+//         for(let i=0;i<bytes.length;i++){//
+//             const currentByte = bytes[i]
+//             if(parseInt(currentByte,2) !== 0)break;
+
+//             if(parseInt(currentByte,2) === 0){
+//                 bytes.splice(i,1)                
+//             }
+//         }
+//     }
+//     return bytes;
+// }
+
+
+
+
+
+// export function getBytesFromDecimal(decimal:number){    
+
+//     const shouldUseSignedInteger = false
+//     if(shouldUseSignedInteger)debugger
+//     const thirtyTwoBitTypedArray = Number.isInteger(decimal) ?  new Uint32Array([decimal]) : new Float32Array([decimal])
+//     const eightBitTypedArray = new Uint8Array(thirtyTwoBitTypedArray.buffer)
+
+//     const bytes = []
+//     for(let decimal of eightBitTypedArray){
+//         bytes.push(appendZeros(decimalToBinary(decimal)))
+//     }
+    
+//     return removeRedundantSignificantBytes(bytes,'LITTLE');
+// }

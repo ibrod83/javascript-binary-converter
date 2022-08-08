@@ -21,12 +21,9 @@ export default class FileConverter extends BlobConverter {
      * Optionally supply a config object with maxSize, refering to the maximal height or width(depending on the proportions).
      */
     async toImage(config?:ToImageConfig) {
-        // debugger;
         if (config?.validateImage !== false && !this.original.type.match(/image.*/)) {
-            // debugger
             throw new Error('File supplied is not an image')
         }
-        // debugger;
         return binaryToImage(this.original, config ? config : undefined)
     }
 

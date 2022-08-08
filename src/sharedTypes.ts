@@ -11,6 +11,5 @@ export type TypedArray = Int8Array | Uint8Array | Int16Array | Uint16Array | Int
 
 export type BytesArray  = Array<string> 
 
-
 export type DecimalBytesArray = Array<number>
 
