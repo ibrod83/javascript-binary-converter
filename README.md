@@ -253,7 +253,7 @@ As mentioned above, you can also pass real "bytes", in the form of a string. Eac
 
 #### Converting decimals to other notations
 
-Note that currently only 32 bit numbers are supported. Also, float is not supported.
+> :warning Float is not currently supported.
 
 #### Decimal to binary
 

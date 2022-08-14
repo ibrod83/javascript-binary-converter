@@ -45,6 +45,16 @@ export default class DecimalBytesConverter extends BaseBytesConverter {
 
         return new Int32Array(this.toInt8Array().buffer)
     }
+
+    toBigUint64Array() {       
+
+        return new BigUint64Array(this.toUint8Array().buffer)
+    }
+    
+    toBigInt64Array() {       
+
+        return new BigInt64Array(this.toInt8Array().buffer)
+    }
    
     toHex(){   
 

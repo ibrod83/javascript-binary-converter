@@ -161,6 +161,7 @@ describe('Node DecimalBytesConverter tests', () => {
         // console.log('hexes', hexes)
 
     });
+    
 
 
     // it('Should return a Float32Array, from bytes', async function () {

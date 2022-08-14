@@ -1,5 +1,5 @@
 import { BlobCreationConfig, BytesArray, ImageCreationConfig } from "../sharedTypes";
-import { uint8ToBytes } from "../utils/binary";
+import { arrayBufferToBytes, uint8ToBytes } from "../utils/binary";
 import { getBlobClass } from "../utils/crossPlatform";
 import { binaryToImage } from "../utils/image";
 
@@ -49,9 +49,18 @@ export default class ArrayBufferConverter {
         return new Uint32Array(this.original)
     }
 
+    toBigUint64() {
+
+        return new BigUint64Array(this.original)
+    }
+
+    toBigInt64() {
+
+        return new BigInt64Array(this.original)
+    }
+
     toBytes():BytesArray {
-        const uint8 = this.toUint8Array()
-        return uint8ToBytes(uint8)
+        return arrayBufferToBytes(this.original)//
     }
 
 }

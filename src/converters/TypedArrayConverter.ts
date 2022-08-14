@@ -35,6 +35,14 @@ export default class TypedArrayConverter {
         return new Uint32Array(this.original.buffer)
     }
 
+    toBigUint64Array() {
+        return new BigUint64Array(this.original.buffer)
+    }
+
+    toBigInt64Array() {
+        return new BigInt64Array(this.original.buffer)
+    }
+
     toFloat32(){
         return new Float32Array(this.original.buffer)
     }

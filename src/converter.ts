@@ -12,7 +12,7 @@ import DecimalConverter from "./converters/DecimalConverter";
 
 
 
-type Convertable = TypedArray | Blob | File | ArrayBuffer | HTMLImageElement | BytesArray |  DecimalBytesArray | number;//Types supported.
+type Convertable = TypedArray | Blob | File | ArrayBuffer | HTMLImageElement | BytesArray |  DecimalBytesArray | number | bigint;//Types supported.
 
 
 /**
@@ -24,7 +24,7 @@ function converter(original: Blob): BlobConverter
 function converter(original: ArrayBuffer): ArrayBufferConverter
 function converter(original: HTMLImageElement): ImageConverter
 function converter(original: DecimalBytesArray): DecimalBytesConverter
-function converter(original: number): DecimalConverter
+function converter(original: number|bigint): DecimalConverter
 function converter(original: BytesArray): BytesConverter
 
 
@@ -45,7 +45,7 @@ function converter(original: Convertable) {
 
     if (original instanceof ArrayBuffer) return new ArrayBufferConverter(original)
 
-    if(typeof original === 'number')return new DecimalConverter(original) 
+    if(typeof original === 'number' || typeof original === 'bigint')return new DecimalConverter(original) 
 
     if(Array.isArray(original) && typeof original[0] === 'number') return new DecimalBytesConverter(original as Array<number>) 
 

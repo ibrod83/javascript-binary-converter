@@ -55,13 +55,13 @@ describe('Node BytesConverter tests', () => {
         expect(uint16[0]).toBe(65535)
         expect(uint16[1]).toBe(0)
 
-        var bytes = ['10100110','00000001', ]
+        var bytes = ['10100110','00000001', ]//little endian
         var uint16 = converter(bytes).toUint16Array()
         expect(uint16 instanceof Uint16Array).toBe(true)
         expect(uint16[0]).toBe(422)
 
   
-        var bytes = ['11111111', '11111111', '11110111', '11110111', '10000000', '00000000']
+        var bytes = ['11111111', '11111111', '11110111', '11110111', '10000000', '00000000']//little endian
         var int16 = converter(bytes).toInt16Array()
         expect(int16 instanceof Int16Array).toBe(true)
         expect(int16[0]).toBe(-1)
@@ -90,6 +90,35 @@ describe('Node BytesConverter tests', () => {
         expect(uInt32[0]).toBe(128)
         expect(uInt32[1]).toBe(4160223223)
         expect(uInt32[2]).toBe(2004318071)
+
+    });
+
+    it('Should return a BigInt64Array, from bytes', async function () {
+        
+        var bytes = ['10000000', '00000000', '00000000', '00000000', '11110111', '11110111', '11110111', '11110111','10000000', '00000000', '00000000', '00000000', '11110111', '11110111', '11110111', '11110111']
+        var int64 = converter(bytes).toBigInt64Array()
+        expect(int64 instanceof BigInt64Array).toBe(true)
+        expect(int64.length).toBe(2)
+
+        expect(int64[0]).toBe(-578721386864836480n)
+        expect(int64[1]).toBe(-578721386864836480n)
+
+  
+
+    });
+
+    it('Should return a BigUint64Array, from bytes', async function () {
+        
+        var bytes = ['10000000', '00000000', '00000000', '00000000', '11110111', '11110111', '11110111', '11110111','10000000', '00000000', '00000000', '00000000', '11110111', '11110111', '11110111', '11110111']
+        var int64 = converter(bytes).toBigUint64Array()
+        expect(int64 instanceof BigUint64Array).toBe(true)
+        expect(int64.length).toBe(2)
+
+        expect(int64[0].toString()).toBe('17868022686844715136')//
+        expect(int64[1].toString()).toBe('17868022686844715136')//
+        // expect(int64[1]).toBe(-17868022686844715136n)
+
+  
 
     });
 
@@ -175,6 +204,26 @@ describe('Node BytesConverter tests', () => {
 
         var decimals = converter(bytes).toDecimals({ isSigned: true, integerSize: 32 })
         expect(decimals[0]).toBe(1423201492)
+
+    });
+
+    it('Should return bigints, from bytes', async function () {
+    
+        var bytes = ['10000000', '00000000', '00000000', '00000000', '11110111', '11110111', '11110111', '11110111','10000000', '00000000', '00000000', '00000000', '11110111', '11110111', '11110111', '11110111']
+
+        // TODO: explore endianess issue of all byte conversion
+        var decimals = converter(bytes).toDecimals({integerSize:64})
+        console.log(decimals)
+        expect(decimals.length).toBe(2)//
+        expect(decimals[0].toString()).toBe("17868022686844715136")
+        expect(decimals[1].toString()).toBe("17868022686844715136")
+
+        decimals = converter(bytes).toDecimals({integerSize:64,isSigned:true})
+        console.log(decimals)
+        expect(decimals.length).toBe(2)//
+        expect(decimals[0].toString()).toBe("-578721386864836480")
+        expect(decimals[1].toString()).toBe("-578721386864836480")
+
 
     });
 

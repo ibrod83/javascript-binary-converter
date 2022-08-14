@@ -23,6 +23,17 @@ describe('Node DecimalConverter tests', () => {
 
     });
 
+    it('Should return  hex, from bigint', async function () {
+        // var bytes = [212, 252, 136,43434343,-2] //-44,-4,-120 decimals in twos complement
+        var hexes = []
+
+        hexes[0] = converter(17868022686844715136n).toHex()//
+
+        expect(hexes[0]).toBe('F7F7F7F700000080')
+
+
+    });
+
   
     it('Should return bytes, from decimal', async function () {
         let bytes = converter(422).toBytes();
@@ -68,25 +79,13 @@ describe('Node DecimalConverter tests', () => {
         expect(bytes[1]).toBe('01110011')
         expect(bytes[2]).toBe('00001110')
         expect(bytes[3]).toBe('10110000')      
-        // expect(bytes.length).toBe(4) 
 
 
-        // bytes = converter(1.1).toBytes();//
-        // expect(bytes[3]).toBe('11001101')
-        // expect(bytes[2]).toBe('11001100')
-        // expect(bytes[1]).toBe('10001100')
-        // expect(bytes[0]).toBe('00111111')//s
-        // //['00111111', '10001100', '11001100', '11001101']
-        // expect(bytes.length).toBe(4)
+    });
 
-
-        // bytes = converter(-434.43421).toBytes();//
-        // expect(bytes[3]).toBe('10010100')
-        // expect(bytes[2]).toBe('00110111')
-        // expect(bytes[1]).toBe('11011001')
-        // expect(bytes[0]).toBe('11000011')
-        // ['11000011', '11011001', '00110111', '10010100']
-        // expect(bytes.length).toBe(4)
+    it('Should return bytes, from bigint', async function () {
+        const bytes = converter(17868022686844715136n).toBytes({endianness:'LITTLE'})
+        expect(bytes).toStrictEqual( ['11110111', '11110111', '11110111', '11110111', '00000000', '00000000', '00000000', '10000000'].reverse())
 
     });
 

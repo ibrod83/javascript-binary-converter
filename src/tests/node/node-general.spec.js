@@ -3,6 +3,7 @@ const converter = require('../../../build/cjs/converter').default;
 const { TextDecoder } = require('util')
 const { Blob } = require('node:buffer');
 const { BlobConverter } = require('../../../build/cjs/index');
+const { getSystemEndianness } = require('../../../build/cjs/utils/crossPlatform');
 
 /**
  * IMPORTANT: Make sure cjs build is refreshed!
@@ -104,7 +105,13 @@ describe('Node general tests', () => {
         const uint8 = converter(buffer).toUint8Array()
         expect(uint8.constructor.name).toBe('Uint8Array')
         expect(uint8.buffer === buffer).toBe(true)
-    });    
+    });   
+    
+    it("Should return the system's endianness", async function () {
+
+        const endianness = getSystemEndianness()
+        expect(endianness === 'LITTLE' || endianness === 'BIG').toBe(true)
+    });   
 
 
 });

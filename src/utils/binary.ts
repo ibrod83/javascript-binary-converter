@@ -1,11 +1,34 @@
 import { TypedArray } from "../sharedTypes";
 
-export function decimalToBinary(decimal: number) {
-
-    const binary =  (decimal >>> 0).toString(2);
+export function decimalToBinary(decimal: number|bigint) {
+    if(decimal > 4294967295 || decimal < -2147483647)return bigDecimalToBinary(decimal)
+    const binary =  (decimal as number >>> 0).toString(2);
     return binary;
 
 }
+
+export function bigDecimalToBinary(decimal:number | bigint,nBits=BigInt(64),asHex=false):string{
+   
+    [decimal, nBits] = [BigInt(decimal), BigInt(nBits)];  
+  
+    // if ((decimal > 0 && decimal >= BigInt(2) ** (nBits - BigInt(1))) || (decimal < 0 && -decimal > BigInt(2) ** (nBits - BigInt(1)))) {
+    //   throw new RangeError("overflow error");
+    // }
+    
+    const notation = asHex ? 16 : 2
+  
+    if(decimal>=0){
+        return decimal.toString(notation)
+    }
+
+    const bigint = (BigInt(BigInt(2) ** nBits) + decimal)
+
+    return bigint.toString(notation)    
+   
+    
+    
+}
+
 
 export function getClosestDividable(divided:number, divisor:number){
     let modulo =divided % divisor;
@@ -121,16 +144,26 @@ export function typedArrayToDecimals(typedArray: TypedArray) {
     return decimals;
 }
 
+
 export function decimalToHexaDecimal(decimal: number) {
     return  ((decimal)>>>0).toString(16).toUpperCase()
 }
 
-export function getBytesFromDecimal(decimal:number,{endianness='BIG' }: { endianness?:'LITTLE' | 'BIG' } = {}){
+export function bigDecimalToHexaDecimal(decimal: bigint) {
+    return  bigDecimalToBinary(decimal,undefined,true).toUpperCase()//
+}
 
-    if(!Number.isInteger(decimal))throw new Error('getBytesFromDecimal does not support floating point')
+export function getBytesFromDecimal(decimal:number|bigint,{endianness='BIG' }: { endianness?:'LITTLE' | 'BIG' } = {}){
+
+    if( typeof decimal === 'number' && !Number.isInteger(decimal))throw new Error('getBytesFromDecimal does not support floating point')
 
     const bytes =  getBytesFromBinary(decimalToBinary(decimal),{endianness})
     return bytes;
+}
+
+export function arrayBufferToBytes(arrayBuffer:ArrayBuffer){
+    const uint8 = new Uint8Array(arrayBuffer)
+    return uint8ToBytes(uint8)
 }
 
 
@@ -147,7 +180,6 @@ export function getBytesFromDecimal(decimal:number,{endianness='BIG' }: { endian
 //       return hexadecimal;
 //     } else {
 //       var hexadecimal = Math.abs(decimal).toString(16);
-//       debugger
 //       while ((hexadecimal.length % size) != 0) {
 //         hexadecimal = "" + 0 + hexadecimal;
 //       }

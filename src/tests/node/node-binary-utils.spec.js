@@ -1,9 +1,10 @@
 const { expect } = require('expect');
-const { groupBytes,binaryToDecimal,decimalToHexaDecimal, decimalToBinary,  getClosestDividable, removeRedundantSignificantBytes  } = require('../../../build/cjs/utils/binary');
+const { default: converter } = require('../../../build/cjs/converter');
+const { groupBytes, binaryToDecimal, decimalToHexaDecimal, decimalToBinary, getClosestDividable, removeRedundantSignificantBytes } = require('../../../build/cjs/utils/binary');
 
 
 
-describe('Node binary utils tests',() => {
+describe('Node binary utils tests', () => {
     it('Uint8: Should return correct numbers from a string of 8 bits', async function () {
         var decimal = binaryToDecimal('11111111')
         expect(decimal).toBe(255)
@@ -19,7 +20,7 @@ describe('Node binary utils tests',() => {
 
     });
 
-      // it('Uint8: Should return correct numbers from bits', async function () {
+    // it('Uint8: Should return correct numbers from bits', async function () {
     //     var decimal = binaryToDecimal(11111111)
     //     expect(decimal).toBe(255)
 
@@ -151,18 +152,37 @@ describe('Node binary utils tests',() => {
 
     });
     it('Should closest dividable', async function () {//
-        let closest = getClosestDividable(14,8)
-        expect(closest).toBe(16,8)       
-        closest = getClosestDividable(1,8)
-        expect(closest).toBe(8,8)       
-        closest = getClosestDividable(7,8)
-        expect(closest).toBe(8,8)       
-        closest = getClosestDividable(15,8)
-        expect(closest).toBe(16,8)       
-        closest = getClosestDividable(16,8)
-        expect(closest).toBe(16,8)       
-        closest = getClosestDividable(30,8)
-        expect(closest).toBe(32,8)        
+        let closest = getClosestDividable(14, 8)
+        expect(closest).toBe(16, 8)
+        closest = getClosestDividable(1, 8)
+        expect(closest).toBe(8, 8)
+        closest = getClosestDividable(7, 8)
+        expect(closest).toBe(8, 8)
+        closest = getClosestDividable(15, 8)
+        expect(closest).toBe(16, 8)
+        closest = getClosestDividable(16, 8)
+        expect(closest).toBe(16, 8)
+        closest = getClosestDividable(30, 8)
+        expect(closest).toBe(32, 8)
+
+    });
+
+    it('Should return binary from bigint', async function () {//
+        // 184467440737095516
+        // let binary = decimalToBinary(4294967295)//max 32 bit number 
+        // let binary = decimalToBinary(4294967296) //above 32 bit
+        let binary = decimalToBinary(184467440737095516n)
+        expect(binary).toBe('1010001111010111000010100011110101110000101000111101011100')
+
+        binary = decimalToBinary(8844674407370955)
+        expect(binary).toBe('11111011011000010111100111100001101001001000011001011')
+        
+        binary = decimalToBinary(-2157483648)//
+        expect(binary).toBe('1111111111111111111111111111111101111111011001110110100110000000')
+
+        binary = decimalToBinary(-3157483648434)//
+        expect(binary).toBe('1111111111111111111111010010000011010111010011110000101001001110')
+
 
     });
 
@@ -171,7 +191,7 @@ describe('Node binary utils tests',() => {
     //     let cleanBytes = removeRedundantSignificantBytes(bytes,'LITTLE')
     //     expect(bytes[0]).toBe('00010001')    
     //     expect(cleanBytes.length).toBe(3)     
-        
+
     //     cleanBytes = removeRedundantSignificantBytes(bytes,'BIG')
     //     expect(bytes[0]).toBe('00001000')    
     //     expect(cleanBytes.length).toBe(3)     
