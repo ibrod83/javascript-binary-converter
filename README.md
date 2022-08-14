@@ -57,6 +57,7 @@ const {converter} = javascriptBinaryConverter;
   - [Converting decimals to other notations](#converting-decimals-to-other-notations)
     - [Decimal to binary](#decimal-to-binary)
     - [Decimal to bytes](#decimal-to-bytes)
+    - [Decimal to hex](#decimal-to-hex)
 
 
 ## Concept
@@ -272,5 +273,15 @@ As mentioned above, you can also pass real "bytes", in the form of a string. Eac
 
   //['00000001','10100110']Default is big endian byte order. You can pass {endianness:'LITTLE'} to reverse it.
 
+ 
+```
+
+#### Decimal to hex
+
+```javascript
+   //In this example a bigint is passed, instead of a "normal"(32 bit) decimal 
+   const hex = converter(17868022686844715136n).toHex()
+   //'F7F7F7F700000080'
+   
  
 ```
