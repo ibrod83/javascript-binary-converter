@@ -1,8 +1,5 @@
-import { BlobCreationConfig, BytesArray, DecimalBytesArray, ImageCreationConfig, TypedArray } from "../sharedTypes"
-import { appendZeros, bigDecimalToHexaDecimal, binaryToDecimal, decimalToBinary, decimalToHexaDecimal, getBytesFromBinary, getBytesFromDecimal, groupBytes, splitBinaryStringToBytes, typedArrayToDecimals } from "../utils/binary"
-import { getBlobClass } from "../utils/crossPlatform"
-import { binaryToImage } from "../utils/image"
-import { BaseBytesConverter } from "./BaseBytesConverter"
+import { bigDecimalToHexaDecimal, decimalToBinary, decimalToHexaDecimal, getBytesFromDecimal, floatToBinary, bigDecimalToBinary, floatToHex } from "../utils/binary"
+import { isBigInt, isFloat } from "../utils/number"
 
 
 
@@ -12,7 +9,8 @@ export default class DecimalConverter {
 
 
     toBinary() {
-        return decimalToBinary(this.original)
+        if (isBigInt(this.original)) return bigDecimalToBinary(this.original)
+        return isFloat(this.original as number) ? floatToBinary(this.original as number) : decimalToBinary(this.original)
     }
 
     /**
@@ -25,8 +23,12 @@ export default class DecimalConverter {
 
     toHex() {
         if (typeof this.original === 'number') {
+            if (isFloat(this.original)) {
+                return floatToHex(this.original)
+            }
             return decimalToHexaDecimal(this.original)
         }
+
         return bigDecimalToHexaDecimal(this.original as bigint)
     }
 

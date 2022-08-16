@@ -1,0 +1,72 @@
+
+// function DecimalHexTwosComplement(decimal:number) {
+//     var size = 8;
+  
+//     if (decimal >= 0) {
+//       var hexadecimal = decimal.toString(16);
+  
+//       while ((hexadecimal.length % size) != 0) {
+//         hexadecimal = "" + 0 + hexadecimal;
+//       }
+  
+//       return hexadecimal;
+//     } else {
+//       var hexadecimal = Math.abs(decimal).toString(16);
+//       while ((hexadecimal.length % size) != 0) {
+//         hexadecimal = "" + 0 + hexadecimal;
+//       }
+  
+//       var output = '';
+//       for (let i = 0; i < hexadecimal.length; i++) {
+//         output += (0x0F - parseInt(hexadecimal[i], 16)).toString(16);
+//       }
+  
+//       output = (0x01 + parseInt(output, 16)).toString(16);
+//       return output.toUpperCase();
+//     }
+//   }
+
+
+// export function removeRedundantSignificantBytes(bytes:Array<string>,endianness:'LITTLE'|'BIG'){
+//     // const counter = endianness === 'LITTLE' ? bytes.length-1 : 0 
+//     if(endianness === 'LITTLE'){
+//         // ['00010001', '00101000', '00001000', '00000000']
+//         for(let i=bytes.length-1;i>0;i--){//
+//             const currentByte = bytes[i]
+//             if(parseInt(currentByte,2) !== 0)break;
+
+//             if(parseInt(currentByte,2) === 0){
+//                 bytes.splice(i,1)                
+//             }
+//         }
+//     }else{
+//         for(let i=0;i<bytes.length;i++){//
+//             const currentByte = bytes[i]
+//             if(parseInt(currentByte,2) !== 0)break;
+
+//             if(parseInt(currentByte,2) === 0){
+//                 bytes.splice(i,1)                
+//             }
+//         }
+//     }
+//     return bytes;
+// }
+
+
+
+
+
+// export function getBytesFromDecimal(decimal:number){    
+
+//     const shouldUseSignedInteger = false
+//     if(shouldUseSignedInteger)debugger
+//     const thirtyTwoBitTypedArray = Number.isInteger(decimal) ?  new Uint32Array([decimal]) : new Float32Array([decimal])
+//     const eightBitTypedArray = new Uint8Array(thirtyTwoBitTypedArray.buffer)
+
+//     const bytes = []
+//     for(let decimal of eightBitTypedArray){
+//         bytes.push(padBinaryString(decimalToBinary(decimal)))
+//     }
+    
+//     return removeRedundantSignificantBytes(bytes,'LITTLE');
+// }

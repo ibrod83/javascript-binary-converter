@@ -1,7 +1,7 @@
 import { BytesArray } from "../sharedTypes";
-import { appendZeros, decimalToBinary, uint8ToBytes } from "../utils/binary";
+import { typedArrayToBytes } from "../utils/binary";
 import { isNode } from "../utils/crossPlatform";
-import { binaryToImage, imageToBlob, imageToCanvas } from "../utils/image";
+import {  imageToBlob, imageToCanvas } from "../utils/image";
 
 
 interface ImageConversionConfig {
@@ -39,7 +39,7 @@ export default class ImageConverter {
      */
     async toBytes():Promise<BytesArray> {
         const uint8 = await this.toUint8Array()
-        const bytes = uint8ToBytes(uint8)
+        const bytes = typedArrayToBytes(uint8)
         return bytes
     }
 

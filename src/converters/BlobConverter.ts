@@ -1,5 +1,5 @@
 import { BytesArray, ImageCreationConfig } from "../sharedTypes";
-import { uint8ToBytes } from "../utils/binary";
+import { typedArrayToBytes } from "../utils/binary";
 import { blobToBase64, blobToCanvas } from "../utils/blob";
 import * as blobUtils from "../utils/image";
 
@@ -38,7 +38,7 @@ export default class BlobConverter {
 
   async toBytes():Promise<BytesArray>{
     const uint8 = await this.toUint8Array()
-    return uint8ToBytes(uint8)
+    return typedArrayToBytes(uint8)
   }
 
   /**

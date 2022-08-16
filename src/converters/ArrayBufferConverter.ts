@@ -1,5 +1,5 @@
 import { BlobCreationConfig, BytesArray, ImageCreationConfig } from "../sharedTypes";
-import { arrayBufferToBytes, uint8ToBytes } from "../utils/binary";
+import { arrayBufferToBytes, } from "../utils/binary";
 import { getBlobClass } from "../utils/crossPlatform";
 import { binaryToImage } from "../utils/image";
 

@@ -1,12 +1,14 @@
 import {  BytesArray,  TypedArray } from "../sharedTypes"
-import { appendZeros, binaryToDecimal, decimalToHexaDecimal,  typedArrayToDecimals } from "../utils/binary"
+import {  binaryToDecimal, decimalToHexaDecimal,   } from "../utils/binary"
+import { padString } from "../utils/string"
+import { typedArrayToDecimals } from "../utils/typedArray"
 import { BaseBytesConverter } from "./BaseBytesConverter"
 
 export default class BytesConverter extends BaseBytesConverter {
 
     constructor(protected original: BytesArray) {
         super(original)
-        this.original = this.original.map(byte => appendZeros(byte))//Make sure every byte has 8 bits, even if it's not mathematically needed
+        this.original = this.original.map(byte => padString(byte))//Make sure every byte has 8 bits, even if it's not mathematically needed
 
     }
 

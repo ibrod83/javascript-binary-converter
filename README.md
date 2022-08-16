@@ -56,8 +56,11 @@ const {converter} = javascriptBinaryConverter;
     - [Bytes to hex](#bytes-to-hex)
   - [Converting decimals to other notations](#converting-decimals-to-other-notations)
     - [Decimal to binary](#decimal-to-binary)
-    - [Decimal to bytes](#decimal-to-bytes)
+    - [Float to binary](#float-to-binary)  
     - [Decimal to hex](#decimal-to-hex)
+    - [Float to hex](#float-to-hex)
+    - [Decimal to bytes](#decimal-to-bytes)
+   
 
 
 ## Concept
@@ -254,7 +257,6 @@ As mentioned above, you can also pass real "bytes", in the form of a string. Eac
 
 #### Converting decimals to other notations
 
-> :warning: Float is not currently supported.
 
 #### Decimal to binary
 
@@ -263,6 +265,35 @@ As mentioned above, you can also pass real "bytes", in the form of a string. Eac
 
   const binary = converter(decimal).toBinary()
   //'1000101010010'
+ 
+```
+
+#### Float to binary
+
+```javascript
+   const binary = converter(-0.32323).toBinary()
+   //'10111110101001010111111001100111'   
+ 
+```
+
+
+#### Decimal to hex
+
+```javascript
+   //In this example a bigint is passed, instead of a "normal"(32 bit) decimal 
+
+   const hex = converter(17868022686844715136n).toHex()
+   //'F7F7F7F700000080'
+   
+ 
+```
+
+#### Float to hex
+
+```javascript
+    const hex = converter(-0.43431).toHex()
+    //'BEDE5DE1'
+   
  
 ```
 
@@ -276,12 +307,5 @@ As mentioned above, you can also pass real "bytes", in the form of a string. Eac
  
 ```
 
-#### Decimal to hex
 
-```javascript
-   //In this example a bigint is passed, instead of a "normal"(32 bit) decimal 
-   const hex = converter(17868022686844715136n).toHex()
-   //'F7F7F7F700000080'
-   
- 
-```
+

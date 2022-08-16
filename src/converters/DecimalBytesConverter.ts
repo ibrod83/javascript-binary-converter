@@ -1,7 +1,5 @@
-import { BlobCreationConfig, BytesArray, DecimalBytesArray, ImageCreationConfig, TypedArray } from "../sharedTypes"
-import { appendZeros, binaryToDecimal, decimalToBinary, decimalToHexaDecimal,  groupBytes, typedArrayToDecimals } from "../utils/binary"
-import { getBlobClass } from "../utils/crossPlatform"
-import { binaryToImage } from "../utils/image"
+import {  DecimalBytesArray,  } from "../sharedTypes"
+import {    decimalToHexaDecimal,    } from "../utils/binary"
 import { BaseBytesConverter } from "./BaseBytesConverter"
 
 
