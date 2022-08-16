@@ -32,7 +32,7 @@ export function bigDecimalToBinary(decimal: number | bigint, nBits = BigInt(64),
         return decimal.toString(notation)
     }
 
-    const bigint = (BigInt(BigInt(2) ** nBits) + decimal)//
+    const bigint = (BigInt(BigInt(2) ** nBits) + decimal)
 
     return bigint.toString(notation)
 }
