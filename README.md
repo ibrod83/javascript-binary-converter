@@ -46,7 +46,7 @@ const {converter} = javascriptBinaryConverter;
   - [File to bytes](#file-to-bytes)
   - [Blob to Image ](#blob-to-image)
   - [Image to Uint8Array](#image-to-uint8array)
-  - [Image to bytes](#image-to-bytes)
+  - [Image to byte decimals](#image-to-byte-decimals)
   - [Uint8Array to Image](#uint8array-to-image)
   - [Converting raw bytes](#converting-raw-bytes)
     - [Byte decimals to Int16Array](#byte-decimals-to-int16array)
@@ -147,15 +147,15 @@ const uint8 = await converter(image).toUnit8Array();
 
 &nbsp;
 
-#### Image to bytes
+#### Image to byte decimals
 
-If you want to get raw binary data of an Image:
+If you want to get raw binary data of an Image(each decimal corresponds a byte):
 
 ```javascript
 const image = document.querySelector("#some-image");
 
-const bytes = await converter(image).toBytes(); //Will return an array of strings, each containing 8 "bits", like:
-//[00101101,10111111,00000001...]
+const byteDecimals = await converter(image).toByteDecimals(); 
+//[95,1,129...]
 ```
 
 &nbsp;

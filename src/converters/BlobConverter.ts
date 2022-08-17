@@ -1,5 +1,5 @@
-import { BytesArray, ImageCreationConfig } from "../sharedTypes";
-import { typedArrayToBytes } from "../utils/binary";
+import { BytesArray, ImageCreationConfig, ToBytesConfig } from "../sharedTypes";
+import { arrayBufferToByteDecimals, typedArrayToBytes } from "../utils/binary";
 import { blobToBase64, blobToCanvas } from "../utils/blob";
 import * as blobUtils from "../utils/image";
 
@@ -32,21 +32,27 @@ export default class BlobConverter {
 
   }
 
-  async toCanvas(){
+  async toCanvas() {
     return blobToCanvas(this.original)
   }
 
-  async toBytes():Promise<BytesArray>{
+  async toBytes(): Promise<BytesArray> {
     const uint8 = await this.toUint8Array()
     return typedArrayToBytes(uint8)
+  }
+
+
+  async toByteDecimals({isSigned=false}:ToBytesConfig={}) {
+    const arrayBuffer = await this.toArrayBuffer()
+    return arrayBufferToByteDecimals(arrayBuffer,{isSigned})
   }
 
   /**
    * Returns a base64 string. If you want a dataUrl appended to it, pass {appendDataUrl:true}
    * In Node will always return plain base64
    */
-  toBase64(config:{appendDataUrl?:boolean}={appendDataUrl:false}) {
-    return blobToBase64(this.original,config)
+  toBase64(config: { appendDataUrl?: boolean } = { appendDataUrl: false }) {
+    return blobToBase64(this.original, config)
   }
 
 

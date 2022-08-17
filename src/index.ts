@@ -6,6 +6,7 @@ import ImageConverter from './converters/ImageConverter'
 import ArrayBufferConverter from './converters/ArrayBufferConverter'
 import BytesConverter from './converters/BytesConverter'
 import DecimalBytesConverter from './converters/DecimalBytesConverter'
+import DecimalConverter from './converters/DecimalConverter'
 
 import * as utils from './utils/index'
 
@@ -19,6 +20,7 @@ export{
     ArrayBufferConverter,
     BytesConverter,
     DecimalBytesConverter,
+    DecimalConverter,
     utils
 }
 

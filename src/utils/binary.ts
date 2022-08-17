@@ -1,4 +1,4 @@
-import { TypedArray } from "../sharedTypes";
+import { BytesArray, TypedArray } from "../sharedTypes";
 import { getSystemEndianness } from "./crossPlatform";
 import { getClosestDividable, isBigInt, isFloat } from "./number";
 import { padString } from "./string";
@@ -159,9 +159,26 @@ export function getBytesFromDecimal(decimal: number | bigint, { endianness = 'BI
     return bytes;
 }
 
+export function getByteDecimalsFromDecimal(decimal: number | bigint, { endianness = 'BIG',isSigned=false }: { endianness?: 'LITTLE' | 'BIG',isSigned?:boolean } = {}) {
+
+    const bytes = getBytesFromDecimal(decimal,{endianness})
+    return bytes.map(byte=>binaryToDecimal(byte,isSigned))
+}
+
 export function arrayBufferToBytes(arrayBuffer: ArrayBuffer) {
     const uint8 = new Uint8Array(arrayBuffer)
     return typedArrayToBytes(uint8)
+}
+
+export function bytesToDecimals(bytes:BytesArray){
+    return bytes.map(byte=>binaryToDecimal(byte))
+}
+
+
+export function arrayBufferToByteDecimals(arrayBuffer: ArrayBuffer,{isSigned=false}:{isSigned?:boolean}={}) {
+    const typedArray =  isSigned ? new Int8Array(arrayBuffer) :  new Uint8Array(arrayBuffer)
+    // return typedArrayToBytes(uint8)
+    return Array.from(typedArray)
 }
 
 

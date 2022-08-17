@@ -6,7 +6,6 @@ import { isNode } from "./utils/crossPlatform";
 import ImageConverter from "./converters/ImageConverter";
 import { BytesArray, DecimalBytesArray, TypedArray } from "./sharedTypes";
 import BytesConverter from "./converters/BytesConverter";
-import { isNumeric, isNumericString } from "./utils/number";
 import DecimalBytesConverter from "./converters/DecimalBytesConverter";
 import DecimalConverter from "./converters/DecimalConverter";
 

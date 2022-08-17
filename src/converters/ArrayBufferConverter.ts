@@ -1,5 +1,5 @@
-import { BlobCreationConfig, BytesArray, ImageCreationConfig } from "../sharedTypes";
-import { arrayBufferToBytes, } from "../utils/binary";
+import { BlobCreationConfig, BytesArray, ImageCreationConfig, ToBytesConfig } from "../sharedTypes";
+import { arrayBufferToByteDecimals, arrayBufferToBytes, } from "../utils/binary";
 import { getBlobClass } from "../utils/crossPlatform";
 import { binaryToImage } from "../utils/image";
 
@@ -61,6 +61,11 @@ export default class ArrayBufferConverter {
 
     toBytes():BytesArray {
         return arrayBufferToBytes(this.original)//
+    }
+
+    toByteDecimals({isSigned=false}:Omit<ToBytesConfig,'endianness'>={}):Array<number> {
+        const byteDecimals =  arrayBufferToByteDecimals(this.original,{isSigned})
+        return byteDecimals;
     }
 
 }

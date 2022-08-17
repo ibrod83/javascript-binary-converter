@@ -26,7 +26,7 @@ describe('Node DecimalConverter tests', () => {
     it('Should return hex, from bigint', async function () {
       
 
-        const hex = converter(17868022686844715136n).toHex()//
+        const hex = converter(17868022686844715136n).toHex()
 
         expect(hex).toBe('F7F7F7F700000080')
 
@@ -36,15 +36,15 @@ describe('Node DecimalConverter tests', () => {
     it('Should return hex, from float', async function () {
        
 
-        let hex = converter(1.1).toHex()//
+        let hex = converter(1.1).toHex()
 
         expect(hex).toBe('3F8CCCCD')
 
-        hex = converter(-1.1).toHex()//
+        hex = converter(-1.1).toHex()
 
         expect(hex).toBe('BF8CCCCD')
 
-        hex = converter(-0.43431).toHex()//
+        hex = converter(-0.43431).toHex()
 
         expect(hex).toBe('BEDE5DE1')
 
@@ -61,13 +61,11 @@ describe('Node DecimalConverter tests', () => {
         expect(bytes.length).toBe(2)
 
         bytes = converter(422).toBytes({ endianness: 'LITTLE' });
-        // console.log('bytes',bytes)
 
         expect(bytes[0]).toBe('10100110')
         expect(bytes[1]).toBe('00000001')//most significant byte!
 
         bytes = converter(256).toBytes({ endianness: 'LITTLE' });
-        // console.log('bytes',bytes)
 
         expect(bytes[0]).toBe('00000000')
         expect(bytes[1]).toBe('00000001')//most significant byte!
@@ -78,15 +76,13 @@ describe('Node DecimalConverter tests', () => {
         expect(bytes[0]).toBe('00001000')//most significant byte!
         expect(bytes[1]).toBe('00101000')
         expect(bytes[2]).toBe('00010001')
-        // expect(bytes.length).toBe(3)
 
-        bytes = converter(-534545).toBytes();//
+        bytes = converter(-534545).toBytes();
         console.log('bytes', bytes)//
         expect(bytes[0]).toBe('11111111')//most significant byte!
         expect(bytes[1]).toBe('11110111')
         expect(bytes[2]).toBe('11010111')
         expect(bytes[3]).toBe('11101111')
-        // expect(bytes.length).toBe(4)
 
 
         bytes = converter(-143454544).toBytes();//
@@ -96,6 +92,49 @@ describe('Node DecimalConverter tests', () => {
         expect(bytes[1]).toBe('01110011')
         expect(bytes[2]).toBe('00001110')
         expect(bytes[3]).toBe('10110000')
+
+
+    });
+
+    it('Should return byte decimals, from decimal', async function () {
+        let bytes = converter(422).toByteDecimals();
+
+        expect(bytes[0]).toBe(1)//most significant byte!
+        expect(bytes[1]).toBe(166)//
+
+        expect(bytes.length).toBe(2)
+
+        bytes = converter(422).toByteDecimals({ endianness: 'LITTLE' });
+
+        expect(bytes[0]).toBe(166)
+        expect(bytes[1]).toBe(1)//most significant byte!
+
+        bytes = converter(256).toByteDecimals({ endianness: 'LITTLE' });
+
+        expect(bytes[0]).toBe(0)
+        expect(bytes[1]).toBe(1)//most significant byte!
+
+
+        bytes = converter(534545).toByteDecimals();
+
+        expect(bytes[0]).toBe(8)//most significant byte!
+        expect(bytes[1]).toBe(40)
+        expect(bytes[2]).toBe(17)
+
+
+        bytes = converter(-534545).toByteDecimals();
+        expect(bytes[0]).toBe(255)//most significant byte!
+        expect(bytes[1]).toBe(247)
+        expect(bytes[2]).toBe(215)
+        expect(bytes[3]).toBe(239)
+
+
+        bytes = converter(-143454544).toByteDecimals();    
+
+        expect(bytes[0]).toBe(247)//most significant byte!
+        expect(bytes[1]).toBe(115)
+        expect(bytes[2]).toBe(14)
+        expect(bytes[3]).toBe(176)
 
 
     });

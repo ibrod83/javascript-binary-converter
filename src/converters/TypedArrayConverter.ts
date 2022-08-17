@@ -1,5 +1,5 @@
 import { BlobCreationConfig, BytesArray, ImageCreationConfig, TypedArray } from '../sharedTypes'
-import { typedArrayToBytes } from '../utils/binary'
+import { bytesToDecimals, typedArrayToBytes } from '../utils/binary'
 import { getBlobClass } from '../utils/crossPlatform'
 import { binaryToImage } from '../utils/image'
 
@@ -65,6 +65,11 @@ export default class TypedArrayConverter {
     toBytes():BytesArray{
         const bytes = this.original instanceof Uint8Array ? typedArrayToBytes(this.original) : typedArrayToBytes(new Uint8Array(this.original))
         return bytes;
+    }
+
+    toByteDecimals(){
+        const bytes = this.toBytes();
+        return bytesToDecimals(bytes)
     }
 
 

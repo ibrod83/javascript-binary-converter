@@ -26,7 +26,6 @@ describe('Node binary utils tests', () => {
 
     //     var decimal = binaryToDecimal(001)
     //     expect(decimal).toBe(1)
-    //     debugger
     //     var decimal = binaryToDecimal(00101)
     //     expect(decimal).toBe(5)
 

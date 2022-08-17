@@ -1,4 +1,5 @@
-import { bigDecimalToHexaDecimal, decimalToBinary, decimalToHexaDecimal, getBytesFromDecimal, floatToBinary, bigDecimalToBinary, floatToHex } from "../utils/binary"
+import { ToBytesConfig } from "../sharedTypes"
+import { bigDecimalToHexaDecimal, decimalToBinary, decimalToHexaDecimal, getBytesFromDecimal, floatToBinary, bigDecimalToBinary, floatToHex, binaryToDecimal, getByteDecimalsFromDecimal } from "../utils/binary"
 import { isBigInt, isFloat } from "../utils/number"
 
 
@@ -14,11 +15,14 @@ export default class DecimalConverter {
     }
 
     /**
-     * Does not support bigint(above 32 bit) or floating point. Returns bytes in the order corresponding the system's endianness 
-     * The default byte order is "big endian", meaning most significant byte is first.
+     * Does not support bigint(above 32 bit) or floating point.
      */
-    toBytes({ endianness = 'BIG' }: { endianness?: 'LITTLE' | 'BIG' } = {}) {
+    toBytes({ endianness = 'BIG' }: Omit<ToBytesConfig,'isSigned'> = {}) {
         return getBytesFromDecimal(this.original, { endianness })
+    }
+
+    toByteDecimals({ endianness = 'BIG',isSigned=false }: ToBytesConfig = {}) {//
+        return getByteDecimalsFromDecimal(this.original,{endianness,isSigned})
     }
 
     toHex() {

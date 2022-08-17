@@ -119,6 +119,19 @@ describe('Browser image tests', () => {
         document.body.appendChild(image)
     });
 
+    it('Should return byte decimals, from an Image', async function () {
+
+        const { imageFromDom } = await createObjectsForFileDummyTests('#extra-small')
+        const bytes = await converter(imageFromDom).toByteDecimals()
+        expect(bytes.length).toBe(extraSmallImageByteDecimals.length)
+        expect(JSON.stringify(extraSmallImageByteDecimals) === JSON.stringify(bytes)).toBe(true)
+        const uint8 = new Uint8Array(bytes)
+        const image = await converter(uint8).toImage()
+        expect(image.width).toBe(5)
+        image.id= "image_from_should_return_byte_decimals"
+        document.body.appendChild(image)
+    });
+
 
     it('Should return a an image, from byte decimals', async function () {
         const bytes = getByteDecimals()
