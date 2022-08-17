@@ -49,9 +49,7 @@ const {converter} = javascriptBinaryConverter;
   - [Image to bytes](#image-to-bytes)
   - [Uint8Array to Image](#uint8array-to-image)
   - [Converting raw bytes](#converting-raw-bytes)
-    - [Byte decimals to image](#byte-decimals-to-image)
     - [Byte decimals to Int16Array](#byte-decimals-to-int16array)
-    - [Byte decimals to Uint32Array](#byte-decimals-to-uint32array)
     - [Bytes to decimals](#bytes-to-decimals)
     - [Bytes to hex](#bytes-to-hex)
   - [Converting decimals to other notations](#converting-decimals-to-other-notations)
@@ -197,16 +195,6 @@ document.body.appendChild(image); //You can see the image in the DOM
 
 
 
-#### Byte decimals to image
-
-```javascript
-  const bytes = [255, 255, 34, 1, 120, 111...]//Some byte decimals that logically represent an image.
-
-  const image = await converter(bytes).toImage()//Returns an HTMLImageElement
-
- document.body.appendChild(image)
-```
-
 #### Byte decimals to Int16Array
 
 > :warning: Important: Being that int16 uses two bytes(16 bits) to represent 1 number, the program will "group" the bytes into groups of 2.
@@ -219,17 +207,6 @@ In the following case, 4 bytes will result in 2 numbers. Note that being that In
 
     const int16 = converter(bytes).toInt16Array()
     //The Int16Array will contain two elements:-32383 and 767.
-
-```
-#### Byte decimals to Uint32Array
-
-Same as in the example above, just with an unsigned 32 bit integer: 12 bytes will result in 3 numbers.
-
-```javascript
-    const bytes = [128, 0,0,0, 247, 247, 247, 247, 119, 119, 119, 119]
-
-     var uInt32 = converter(bytes).toUint32Array()
-    //The Uint32Array will contain three elements: 128, 4160223223, 2004318071
 
 ```
 
