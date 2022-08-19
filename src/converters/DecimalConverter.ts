@@ -1,5 +1,6 @@
 import { ToBytesConfig } from "../sharedTypes"
-import { bigDecimalToHexaDecimal, decimalToBinary, decimalToHexaDecimal, getBytesFromDecimal, floatToBinary, bigDecimalToBinary, floatToHex, binaryToDecimal, getByteDecimalsFromDecimal } from "../utils/binary"
+import {  decimalToBinary,  getBytesFromDecimal, floatToBinary, bigDecimalToBinary,  getByteDecimalsFromDecimal } from "../utils/binary"
+import { bigDecimalToHexaDecimal, decimalToHexaDecimal, floatToHex } from "../utils/hex"
 import { isBigInt, isFloat } from "../utils/number"
 
 

@@ -3,10 +3,6 @@ export function isNumeric(n:any) {
   }
 
 
-  export function isNumericString(n:any) {
-    return !isNaN(parseFloat(n)) && isFinite(n) && typeof n === 'string';
-  }
-
   export function isFloat(number:number){
    return  typeof number === 'number' && !Number.isInteger(number)
   }
@@ -23,3 +19,11 @@ export function isNumeric(n:any) {
     }
     return divided;
 }
+
+export function normalizeBigInt(decimal: number | bigint, nBits = BigInt(64)){
+  [decimal, nBits] = [BigInt(decimal), BigInt(nBits)];
+  if (decimal >= 0) return decimal
+
+  return (BigInt(BigInt(2) ** nBits) + decimal)
+}
+

@@ -16,3 +16,7 @@ export function trimString(string: string, requiredLength = 8) {
 export function reverseString(s:string){
     return s.split("").reverse().join("");
 }
+
+export function isNumericString(n:any) {
+    return !isNaN(parseFloat(n)) && isFinite(n) && typeof n === 'string';
+  }

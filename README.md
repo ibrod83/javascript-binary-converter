@@ -51,13 +51,18 @@ const {converter} = javascriptBinaryConverter;
   - [Converting raw bytes](#converting-raw-bytes)
     - [Byte decimals to Int16Array](#byte-decimals-to-int16array)
     - [Bytes to decimals](#bytes-to-decimals)
-    - [Bytes to hex](#bytes-to-hex)
+    - [Bytes to hex](#bytes-to-hex) 
   - [Converting decimals to other notations](#converting-decimals-to-other-notations)
     - [Decimal to binary](#decimal-to-binary)
     - [Float to binary](#float-to-binary)  
     - [Decimal to hex](#decimal-to-hex)
     - [Float to hex](#float-to-hex)
     - [Decimal to bytes](#decimal-to-bytes)
+  - [Converting hex to other notations](#converting-hex-to-other-notations)    
+    - [Hex to decimal](#hex-to-decimal)    
+    - [Signed Hex to decimal](#signed-hex-to-decimal)    
+    - [Hex to binary](#hex-to-binary)    
+    - [Hex to float](#hex-to-float)    
    
 
 
@@ -284,5 +289,41 @@ As mentioned above, you can also pass real "bytes", in the form of a string. Eac
  
 ```
 
+#### Converting hex to other notations
+
+#### Hex to decimal
+
+```javascript
+   
+   const decimal = converter('FFF4').toDecimal()
+   //65524   
+ 
+```
+
+#### Signed Hex to decimal
+you can also assert that the hex is of two's complement convention
+
+```javascript
+   //Same hex as above, just signed.
+   const decimal = converter('FFF4').toDecimal({isSigned:true})
+   //-12   
+ 
+```
+
+#### Hex to binary
+
+```javascript
+   const binary = converter('296C167').toBinary()
+   //'10100101101100000101100111' 
+ 
+```
+
+#### Hex to float
+
+```javascript
+   const float = converter('bede61d0').toFloat()
+   //-0.43434000015 
+ 
+```
 
 

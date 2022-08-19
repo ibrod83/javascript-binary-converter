@@ -1,5 +1,6 @@
 import {  DecimalBytesArray,  } from "../sharedTypes"
-import {    decimalToHexaDecimal,    } from "../utils/binary"
+import {        } from "../utils/binary"
+import { decimalToHexaDecimal } from "../utils/hex"
 import { BaseBytesConverter } from "./BaseBytesConverter"
 
 

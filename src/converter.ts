@@ -8,10 +8,11 @@ import { BytesArray, DecimalBytesArray, TypedArray } from "./sharedTypes";
 import BytesConverter from "./converters/BytesConverter";
 import DecimalBytesConverter from "./converters/DecimalBytesConverter";
 import DecimalConverter from "./converters/DecimalConverter";
+import HexConverter from "./converters/HexConverter";
 
 
 
-type Convertable = TypedArray | Blob | File | ArrayBuffer | HTMLImageElement | BytesArray |  DecimalBytesArray | number | bigint;//Types supported.
+type Convertable = TypedArray | Blob | File | ArrayBuffer | HTMLImageElement | BytesArray |  DecimalBytesArray | number | bigint | string;//Types supported.
 
 
 /**
@@ -24,6 +25,7 @@ function converter(original: ArrayBuffer): ArrayBufferConverter
 function converter(original: HTMLImageElement): ImageConverter
 function converter(original: DecimalBytesArray): DecimalBytesConverter
 function converter(original: number|bigint): DecimalConverter
+function converter(original: string): HexConverter
 function converter(original: BytesArray): BytesConverter
 
 
@@ -41,6 +43,8 @@ function converter(original: Convertable) {
         
         if ( original instanceof Blob ) return new BlobConverter(original as Blob)
     }      
+
+    if (typeof original === 'string') return new HexConverter(original)
 
     if (original instanceof ArrayBuffer) return new ArrayBufferConverter(original)
 

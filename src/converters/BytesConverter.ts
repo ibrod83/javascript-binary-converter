@@ -1,5 +1,6 @@
 import {  BytesArray,  TypedArray } from "../sharedTypes"
-import {  binaryToDecimal, decimalToHexaDecimal,   } from "../utils/binary"
+import {  binaryToDecimal   } from "../utils/binary"
+import { decimalToHexaDecimal } from "../utils/hex"
 import { padString } from "../utils/string"
 import { typedArrayToDecimals } from "../utils/typedArray"
 import { BaseBytesConverter } from "./BaseBytesConverter"

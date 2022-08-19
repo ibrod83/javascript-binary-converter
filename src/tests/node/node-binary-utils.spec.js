@@ -1,5 +1,6 @@
 const { expect } = require('expect');
-const { groupBytes, floatToBinary, binaryToDecimal, decimalToHexaDecimal,   bigDecimalToBinary } = require('../../../build/cjs/utils/binary');
+const { groupBytes, floatToBinary, binaryToDecimal,    bigDecimalToBinary } = require('../../../build/cjs/utils/binary');
+const {decimalToHexaDecimal } = require('../../../build/cjs/utils/hex');
 const { getClosestDividable } = require('../../../build/cjs/utils/number');
 
 
