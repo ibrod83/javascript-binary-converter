@@ -8,7 +8,7 @@ export function decimalToHexaDecimal(decimal: number) {
 
 export function bigDecimalToHexaDecimal(decimal: bigint) {
     const normalizedBigInt = normalizeBigInt(decimal)
-    return normalizedBigInt.toString(16).toUpperCase()//
+    return normalizedBigInt.toString(16).toUpperCase()
 }
 
 export function floatToHex(float: number) {
