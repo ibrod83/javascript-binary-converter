@@ -1,5 +1,5 @@
 import { BytesArray } from "../sharedTypes";
-import { binaryToDecimal, bytesToDecimals, typedArrayToBytes } from "../utils/binary";
+import { binaryToInteger, bytesToIntegers, typedArrayToBytes } from "../utils/binary";
 import { isNode } from "../utils/crossPlatform";
 import {  imageToBlob, imageToCanvas } from "../utils/image";
 
@@ -43,9 +43,9 @@ export default class ImageConverter {
         return bytes
     }
 
-    async toByteDecimals() {
+    async toDecimalBytes() {
         const bytes = await this.toBytes()
-        return bytesToDecimals(bytes)
+        return bytesToIntegers(bytes)
     }
 
     toCanvas(config?: ImageConversionConfig) {

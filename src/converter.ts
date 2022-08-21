@@ -7,7 +7,7 @@ import ImageConverter from "./converters/ImageConverter";
 import { BytesArray, DecimalBytesArray, TypedArray } from "./sharedTypes";
 import BytesConverter from "./converters/BytesConverter";
 import DecimalBytesConverter from "./converters/DecimalBytesConverter";
-import DecimalConverter from "./converters/DecimalConverter";
+import IntegerConverter from "./converters/IntegerConverter";
 import HexConverter from "./converters/HexConverter";
 
 
@@ -24,12 +24,12 @@ function converter(original: Blob): BlobConverter
 function converter(original: ArrayBuffer): ArrayBufferConverter
 function converter(original: HTMLImageElement): ImageConverter
 function converter(original: DecimalBytesArray): DecimalBytesConverter
-function converter(original: number|bigint): DecimalConverter
+function converter(original: number|bigint): IntegerConverter
 function converter(original: string): HexConverter
 function converter(original: BytesArray): BytesConverter
 
 
-function converter(original: Convertable) {
+function converter(original: Convertable) {//
     if(isNode && original.constructor.name === 'Blob'){
        throw new Error('In order to convert a Blob in Node, import BlobConverter directly') 
     }
@@ -48,7 +48,7 @@ function converter(original: Convertable) {
 
     if (original instanceof ArrayBuffer) return new ArrayBufferConverter(original)
 
-    if(typeof original === 'number' || typeof original === 'bigint')return new DecimalConverter(original) 
+    if(typeof original === 'number' || typeof original === 'bigint')return new IntegerConverter(original) 
 
     if(Array.isArray(original) && typeof original[0] === 'number') return new DecimalBytesConverter(original as Array<number>) 
 

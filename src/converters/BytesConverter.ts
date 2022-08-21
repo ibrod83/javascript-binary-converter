@@ -1,8 +1,8 @@
 import {  BytesArray,  TypedArray } from "../sharedTypes"
-import {  binaryToDecimal   } from "../utils/binary"
-import { decimalToHexaDecimal } from "../utils/hex"
+import {  binaryToInteger   } from "../utils/binary"
+import { integerToHexaDecimal } from "../utils/hex"
 import { padString } from "../utils/string"
-import { typedArrayToDecimals } from "../utils/typedArray"
+import { typedArrayToIntegers } from "../utils/typedArray"
 import { BaseBytesConverter } from "./BaseBytesConverter"
 
 export default class BytesConverter extends BaseBytesConverter {
@@ -13,52 +13,52 @@ export default class BytesConverter extends BaseBytesConverter {
 
     }
 
-    private _getDecimals(isSigned: boolean = false) {
-        return this.original.map(binary => binaryToDecimal(binary, isSigned))
+    private _getIntegers(isSigned: boolean = false) {
+        return this.original.map(binary => binaryToInteger(binary, isSigned))
     }
 
 
     toUint8Array() {
-        return new Uint8Array(this._getDecimals())
+        return new Uint8Array(this._getIntegers())
 
     }
 
     toInt8Array() {
-        return new Int8Array(this._getDecimals(true))
+        return new Int8Array(this._getIntegers(true))
     }
 
 
 
     toUint16Array() {
-        const decimals = this._getDecimals(false)
-        return new Uint16Array(new Uint8Array(decimals).buffer)
+        const integers = this._getIntegers(false)
+        return new Uint16Array(new Uint8Array(integers).buffer)
     }
 
     toInt16Array() {
-        const decimals = this._getDecimals(true)
-        return new Int16Array(new Int8Array(decimals).buffer)
+        const integers = this._getIntegers(true)
+        return new Int16Array(new Int8Array(integers).buffer)
     }
 
     toUint32Array() {
-        const decimals = this._getDecimals(false)
-        return new Uint32Array(new Uint8Array(decimals).buffer)
+        const integers = this._getIntegers(false)
+        return new Uint32Array(new Uint8Array(integers).buffer)
     }
 
     toInt32Array() {
-        const decimals = this._getDecimals(true)
-        return new Int32Array(new Int8Array(decimals).buffer)
+        const integers = this._getIntegers(true)
+        return new Int32Array(new Int8Array(integers).buffer)
     }
 
     toBigInt64Array() {
-        const decimals = this._getDecimals(true)
-        const bigintArray = new BigInt64Array(new Int8Array(decimals).buffer)
+        const integers = this._getIntegers(true)
+        const bigintArray = new BigInt64Array(new Int8Array(integers).buffer)
         return bigintArray
     }
 
 
     toBigUint64Array() {
-        const decimals = this._getDecimals(true)//
-        const bigintArray = new BigUint64Array(new Uint8Array(decimals).buffer)
+        const integers = this._getIntegers(true)//
+        const bigintArray = new BigUint64Array(new Uint8Array(integers).buffer)
         return bigintArray
     }
 
@@ -75,29 +75,29 @@ export default class BytesConverter extends BaseBytesConverter {
     /**
      * Defaults: isSigned = false, integerSize = 8
      */
-    toDecimals({ isSigned = false, integerSize = 8 }: { isSigned?: boolean, integerSize?: 8 | 16 | 32 | 64 } = {}) {
+    toIntegers({ isSigned = false, integerSize = 8 }: { isSigned?: boolean, integerSize?: 8 | 16 | 32 | 64 } = {}) {
 
         let typedArray: TypedArray;
         switch (integerSize) {
 
             case 8:
-                return this.original.map(binary => binaryToDecimal(binary, isSigned))
+                return this.original.map(binary => binaryToInteger(binary, isSigned))
             case 16:
                 typedArray = isSigned ? this.toInt16Array() : this.toUint16Array()
-                return typedArrayToDecimals(typedArray)
+                return typedArrayToIntegers(typedArray)
             case 32:
                 typedArray = isSigned ? this.toInt32Array() : this.toUint32Array()
-                return typedArrayToDecimals(typedArray)
+                return typedArrayToIntegers(typedArray)
             case 64:
                 typedArray = isSigned ? this.toBigInt64Array() : this.toBigUint64Array()
-                return typedArrayToDecimals(typedArray)
+                return typedArrayToIntegers(typedArray)
             default:
                 throw new Error('The integer size is invalid(8,16,32,64 are allowed)')
         }
     }
 
     toHex({ isSigned = false }: { isSigned?: boolean } = {}) {
-        return this.original.map((dec) => decimalToHexaDecimal(binaryToDecimal(dec, isSigned)))
+        return this.original.map((int) => integerToHexaDecimal(binaryToInteger(int, isSigned)))
     }
 
 

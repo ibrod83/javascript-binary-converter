@@ -1,4 +1,4 @@
-import { hexToBinary, hexToDecimal, hexToFloat } from "../utils/hex";
+import { hexToBinary, hexToInteger, hexToFloat } from "../utils/hex";
 
 
 
@@ -13,8 +13,8 @@ export default class HexConverter {
         return binary
     }
 
-    toDecimal( { isSigned = false }: { isSigned?: boolean } = {}){
-        const decimal = hexToDecimal(this.original,{isSigned})
+    toInteger( { isSigned = false }: { isSigned?: boolean } = {}){
+        const decimal = hexToInteger(this.original,{isSigned})
         return decimal
     }
 

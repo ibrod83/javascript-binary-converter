@@ -6,7 +6,7 @@ const {converter} = javascriptBinaryConverter;
 
 const {image,binary} = javascriptBinaryConverter.utils
 const { imageToBlob,  } = image;
-const { decimalToBinary, bigDecimalToBinary } = binary;
+const { integerToBinary, bigIntegerToBinary } = binary;
 
 /**
  * Some of these tests will fail on Firefox, probably due to different default quality in creation of jpeg.
@@ -31,18 +31,18 @@ describe('Browser general tests', () => {
 
     it('Should return binary from bigint', async function () {//
         // 184467440737095516
-        // let binary = decimalToBinary(4294967295)//max 32 bit number 
-        // let binary = decimalToBinary(4294967296) //above 32 bit
-        let binary = bigDecimalToBinary(184467440737095516n)
+        // let binary = integerToBinary(4294967295)//max 32 bit number 
+        // let binary = integerToBinary(4294967296) //above 32 bit
+        let binary = bigIntegerToBinary(184467440737095516n)
         expect(binary).toBe('1010001111010111000010100011110101110000101000111101011100')
 
-        binary = bigDecimalToBinary(8844674407370955)
+        binary = bigIntegerToBinary(8844674407370955)
         expect(binary).toBe('11111011011000010111100111100001101001001000011001011')
         
-        binary = bigDecimalToBinary(-2157483648)//
+        binary = bigIntegerToBinary(-2157483648)//
         expect(binary).toBe('1111111111111111111111111111111101111111011001110110100110000000')
 
-        binary = bigDecimalToBinary(-3157483648434)//
+        binary = bigIntegerToBinary(-3157483648434)//
         expect(binary).toBe('1111111111111111111111010010000011010111010011110000101001001110')
 
 

@@ -11,7 +11,6 @@ export abstract class BaseBytesConverter{
     
     toText() {
         const uint8 = this.toUint8Array()
-
         const decoder = new TextDecoder()
         return decoder.decode(uint8)
     }

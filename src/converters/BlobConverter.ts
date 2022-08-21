@@ -1,5 +1,5 @@
 import { BytesArray, ImageCreationConfig, ToBytesConfig } from "../sharedTypes";
-import { arrayBufferToByteDecimals, typedArrayToBytes } from "../utils/binary";
+import { arrayBufferToDecimalBytes, typedArrayToBytes } from "../utils/binary";
 import { blobToBase64, blobToCanvas } from "../utils/blob";
 import * as blobUtils from "../utils/image";
 
@@ -42,9 +42,9 @@ export default class BlobConverter {
   }
 
 
-  async toByteDecimals({isSigned=false}:ToBytesConfig={}) {
+  async toDecimalBytes({isSigned=false}:ToBytesConfig={}) {
     const arrayBuffer = await this.toArrayBuffer()
-    return arrayBufferToByteDecimals(arrayBuffer,{isSigned})
+    return arrayBufferToDecimalBytes(arrayBuffer,{isSigned})
   }
 
   /**

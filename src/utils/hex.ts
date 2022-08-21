@@ -1,13 +1,13 @@
-import { binaryToDecimal, getTwosComplementDecimal, } from "./binary";
+import { binaryToInteger, getTwosComplementDecimal, } from "./binary";
 import { getTwosComplementBinary } from "./bits";
 import { normalizeBigInt } from "./number"
 
-export function decimalToHexaDecimal(decimal: number) {
-    return ((decimal) >>> 0).toString(16).toUpperCase()
+export function integerToHexaDecimal(integer: number) {
+    return ((integer) >>> 0).toString(16).toUpperCase()
 }
 
-export function bigDecimalToHexaDecimal(decimal: bigint) {
-    const normalizedBigInt = normalizeBigInt(decimal)
+export function bigIntegerToHexaDecimal(integer: bigint) {
+    const normalizedBigInt = normalizeBigInt(integer)
     return normalizedBigInt.toString(16).toUpperCase()
 }
 
@@ -31,7 +31,7 @@ export function hexToBinary(hex: string) {
     return parseInt(hex, 16).toString(2).toUpperCase()
 }
 
-export function hexToDecimal(hex: string, { isSigned = false }: { isSigned?: boolean } = {}) {
+export function hexToInteger(hex: string, { isSigned = false }: { isSigned?: boolean } = {}) {
     if (!isSigned) {
         return parseInt(hex, 16)
     } else {
@@ -43,7 +43,7 @@ export function hexToDecimal(hex: string, { isSigned = false }: { isSigned?: boo
 
 
 export function hexToFloat(hex: string) {
-    const decimalFromHex = hexToDecimal(hex)
+    const decimalFromHex = hexToInteger(hex)
     const int32 = new Uint32Array([decimalFromHex])
     const float32 = new Float32Array(int32.buffer)
     return float32[0]
@@ -51,14 +51,14 @@ export function hexToFloat(hex: string) {
 }
 
 // export function hexToFloat(hex: string, { isSigned = false }: { isSigned?: boolean } = {}) {
-//     const decimalFromHex = hexToDecimal(hex)
+//     const decimalFromHex = hexToInteger(hex)
 //     let int32;
 //     if (!isSigned) {
 //         int32 = new Uint32Array([decimalFromHex])
 //     } else {
 //         const binaryFromHex = hexToBinary(hex)
 //         const twosComplementBinary = getTwosComplementBinary(binaryFromHex)
-//         const twosComplementDecimal = binaryToDecimal(twosComplementBinary);
+//         const twosComplementDecimal = binaryToInteger(twosComplementBinary);
 //         int32 = new Int32Array([twosComplementDecimal])
 //     }
 

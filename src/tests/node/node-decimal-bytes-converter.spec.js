@@ -1,7 +1,7 @@
 const { expect } = require('expect');
 const converter = require('../../../build/cjs/converter').default;
 const { Blob } = require('node:buffer');
-const { getByteDecimals ,} = require('./test-utils');
+const { getDecimalBytes ,} = require('./test-utils');
 
 
 
@@ -112,7 +112,7 @@ describe('Node DecimalBytesConverter tests', () => {
 
 
     it('Should return a Blob, from byte decimals', async function () {
-        const bytes = getByteDecimals()
+        const bytes = getDecimalBytes()
         var blob = await converter(bytes).toBlob()
         expect(blob instanceof Blob).toBe(true)
         expect(blob.size === bytes.length).toBe(true)
@@ -198,7 +198,7 @@ describe('Node DecimalBytesConverter tests', () => {
     
     // const bytes = ['11111111', '11111111', '11110111']
 
-//   const decimals = converter(bytes).toDecimals({isSigned:true})//Can be signed or unsigned. You can also assert the integer size(Default is 8)
+//   const decimals = converter(bytes).toIntegers({isSigned:true})//Can be signed or unsigned. You can also assert the integer size(Default is 8)
     // console.log('yoyo',decimals)
 
 

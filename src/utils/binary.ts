@@ -4,7 +4,7 @@ import { getSystemEndianness } from "./crossPlatform";
 import { getClosestDividable, isBigInt, isFloat, normalizeBigInt } from "./number";
 import { padString } from "./string";
 
-export function decimalToBinary(decimal: number | bigint) {
+export function integerToBinary(decimal: number | bigint) {
     const binary = (decimal as number >>> 0).toString(2);
     return binary;
 }
@@ -20,7 +20,7 @@ export function floatToBinary(float: number) {
 
 
 
-export function bigDecimalToBinary(decimal: number | bigint, nBits = BigInt(64)): string {
+export function bigIntegerToBinary(decimal: number | bigint, nBits = BigInt(64)): string {
 
     const normalizedBigInt = normalizeBigInt(decimal, nBits)
     return normalizedBigInt.toString(2)
@@ -39,9 +39,9 @@ export function getBytesFromBinary(binaryString: string, { endianness = 'LITTLE'
 }
 
 
-export function binaryToDecimal(binary: string, isSigned: boolean = false) {
+export function binaryToInteger(binary: string, isSigned: boolean = false) {
 
-    if (binary.length > 32) throw new Error('binaryToDecimal does not support bigint')
+    if (binary.length > 32) throw new Error('binaryToInteger does not support bigint')
 
     return isSigned ? getSignedInteger(binary) : parseInt(binary, 2);
 }
@@ -69,7 +69,7 @@ export function getTwosComplementDecimal(binary: string) {
 export function typedArrayToBytes(typedArray: TypedArray) {
     const bytes: Array<string> = []
     for (let decimal of typedArray) {
-        const binary = decimalToBinary(decimal);
+        const binary = integerToBinary(decimal);
         bytes.push(padString(binary, 8))
     }
     return bytes
@@ -93,18 +93,18 @@ export function groupBytes(bytes: Array<string>, groupSize: number) {
 }
 
 
-export function getBytesFromDecimal(decimal: number | bigint, { endianness = 'BIG' }: { endianness?: 'LITTLE' | 'BIG' } = {}) {
+export function getBytesFromInteger(decimal: number | bigint, { endianness = 'BIG' }: { endianness?: 'LITTLE' | 'BIG' } = {}) {
 
     if (typeof decimal === 'number' && isFloat(decimal)) return getBytesFromBinary(floatToBinary(decimal))
 
-    const bytes = getBytesFromBinary(isBigInt(decimal) ? bigDecimalToBinary(decimal) : decimalToBinary(decimal), { endianness })
+    const bytes = getBytesFromBinary(isBigInt(decimal) ? bigIntegerToBinary(decimal) : integerToBinary(decimal), { endianness })
     return bytes;
 }
 
-export function getByteDecimalsFromDecimal(decimal: number | bigint, { endianness = 'BIG', isSigned = false }: { endianness?: 'LITTLE' | 'BIG', isSigned?: boolean } = {}) {
+export function getDecimalBytesFromInteger(decimal: number | bigint, { endianness = 'BIG', isSigned = false }: { endianness?: 'LITTLE' | 'BIG', isSigned?: boolean } = {}) {
 
-    const bytes = getBytesFromDecimal(decimal, { endianness })
-    return bytes.map(byte => binaryToDecimal(byte, isSigned))
+    const bytes = getBytesFromInteger(decimal, { endianness })
+    return bytes.map(byte => binaryToInteger(byte, isSigned))
 }
 
 export function arrayBufferToBytes(arrayBuffer: ArrayBuffer) {
@@ -112,12 +112,12 @@ export function arrayBufferToBytes(arrayBuffer: ArrayBuffer) {
     return typedArrayToBytes(uint8)
 }
 
-export function bytesToDecimals(bytes: BytesArray) {
-    return bytes.map(byte => binaryToDecimal(byte))
+export function bytesToIntegers(bytes: BytesArray) {
+    return bytes.map(byte => binaryToInteger(byte))
 }
 
 
-export function arrayBufferToByteDecimals(arrayBuffer: ArrayBuffer, { isSigned = false }: { isSigned?: boolean } = {}) {
+export function arrayBufferToDecimalBytes(arrayBuffer: ArrayBuffer, { isSigned = false }: { isSigned?: boolean } = {}) {
     const typedArray = isSigned ? new Int8Array(arrayBuffer) : new Uint8Array(arrayBuffer)
     return Array.from(typedArray)
 }

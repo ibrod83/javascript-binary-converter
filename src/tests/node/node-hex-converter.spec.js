@@ -27,25 +27,25 @@ describe('Node HexConverter tests', () => {
     });   
 
     it('Should return decimal, from hex', async function () {
-        let decimal = converter('296C167').toDecimal()
+        let decimal = converter('296C167').toInteger()
         expect(decimal).toBe(43434343)
 
-        decimal = converter('0x3ede61d0').toDecimal()
+        decimal = converter('0x3ede61d0').toInteger()
         expect(decimal).toBe(1054761424)
 
-        decimal = converter('bede61d0').toDecimal()
+        decimal = converter('bede61d0').toInteger()
         expect(decimal).toBe(3202245072)
 
-        decimal = converter('FFF4').toDecimal({isSigned:false})
+        decimal = converter('FFF4').toInteger({isSigned:false})
         expect(decimal).toBe(65524)
 
     });
 
     it('Should decimal, from hex, signed convention', async function () {
-        let decimal = converter('FFF4').toDecimal({isSigned:true})
+        let decimal = converter('FFF4').toInteger({isSigned:true})
         expect(decimal).toBe(-12)
 
-        decimal = converter('00000000BEDE61D0').toDecimal({isSigned:true})
+        decimal = converter('00000000BEDE61D0').toInteger({isSigned:true})
         expect(decimal).toBe(-1092722224) 
 
     });

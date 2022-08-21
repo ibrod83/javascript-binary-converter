@@ -1,7 +1,7 @@
 const { expect } = require('expect');
 const converter = require('../../../build/cjs/converter').default;
 const { Blob } = require('node:buffer');
-const { getBytes,extraSmallImageByteDecimals,twosComplementExtraSmallImageBytes} = require('./test-utils');
+const { getBytes,extraSmallImageDecimalBytes,twosComplementExtraSmallImageBytes} = require('./test-utils');
 
 
 
@@ -170,27 +170,27 @@ describe('Node BytesConverter tests', () => {
         expect(blob.size === bytes.length).toBe(true)
     });
 
-    it('Should return decimals, from bytes', async function () {
+    it('Should return integers, from bytes', async function () {
         var bytes = getBytes()
         // console.log('bytes', bytes)
-        var decimals = converter(bytes).toDecimals()
+        var decimals = converter(bytes).toIntegers()
         // console.log(decimals)
-        var decimalsCorrect = decimals.every((decimal, index) => extraSmallImageByteDecimals[index] === decimal)
+        var decimalsCorrect = decimals.every((decimal, index) => extraSmallImageDecimalBytes[index] === decimal)
         expect(decimalsCorrect).toBe(true)
 
 
-        var decimals = converter(bytes).toDecimals({ isSigned: true })
+        var decimals = converter(bytes).toIntegers({ isSigned: true })
 
         var decimalsCorrect = decimals.every((decimal, index) => twosComplementExtraSmallImageBytes[index] === decimal)
         expect(decimalsCorrect).toBe(true)
 
         var bytes = ['01010100', '01010100', '11010100', '01010100']
-        var decimals = converter(bytes).toDecimals({ isSigned: false, integerSize: 16 })
+        var decimals = converter(bytes).toIntegers({ isSigned: false, integerSize: 16 })
 
         expect(decimals[0]).toBe(21588)
         expect(decimals[1]).toBe(21716)
 
-        var decimals = converter(bytes).toDecimals({ isSigned: true, integerSize: 16 })
+        var decimals = converter(bytes).toIntegers({ isSigned: true, integerSize: 16 })
 
         expect(decimals[0]).toBe(21588)
         expect(decimals[1]).toBe(21716)
@@ -199,10 +199,10 @@ describe('Node BytesConverter tests', () => {
         var bytes = ['11010100', '01010100', '11010100', '01010100']
         //01010100110101000101010011010100
         //01010100110101000101010011010100
-        var decimals = converter(bytes).toDecimals({ isSigned: false, integerSize: 32 })
+        var decimals = converter(bytes).toIntegers({ isSigned: false, integerSize: 32 })
         expect(decimals[0]).toBe(1423201492)
 
-        var decimals = converter(bytes).toDecimals({ isSigned: true, integerSize: 32 })
+        var decimals = converter(bytes).toIntegers({ isSigned: true, integerSize: 32 })
         expect(decimals[0]).toBe(1423201492)
 
     });
@@ -212,13 +212,13 @@ describe('Node BytesConverter tests', () => {
         var bytes = ['10000000', '00000000', '00000000', '00000000', '11110111', '11110111', '11110111', '11110111','10000000', '00000000', '00000000', '00000000', '11110111', '11110111', '11110111', '11110111']
 
         // TODO: explore endianess issue of all byte conversion
-        var decimals = converter(bytes).toDecimals({integerSize:64})
+        var decimals = converter(bytes).toIntegers({integerSize:64})
         console.log(decimals)
         expect(decimals.length).toBe(2)//
         expect(decimals[0].toString()).toBe("17868022686844715136")
         expect(decimals[1].toString()).toBe("17868022686844715136")
 
-        decimals = converter(bytes).toDecimals({integerSize:64,isSigned:true})
+        decimals = converter(bytes).toIntegers({integerSize:64,isSigned:true})
         console.log(decimals)
         expect(decimals.length).toBe(2)//
         expect(decimals[0].toString()).toBe("-578721386864836480")
@@ -227,22 +227,22 @@ describe('Node BytesConverter tests', () => {
 
     });
 
-    it('Should return decimals, from partial bytes', async function () {
+    it('Should return integers, from partial bytes', async function () {
         var bytes = getBytes()
 
-        var decimals = converter(bytes).toDecimals()
+        var decimals = converter(bytes).toIntegers()
 
-        var decimalsCorrect = decimals.every((decimal, index) => extraSmallImageByteDecimals[index] === decimal)
+        var decimalsCorrect = decimals.every((decimal, index) => extraSmallImageDecimalBytes[index] === decimal)
         expect(decimalsCorrect).toBe(true)
 
 
-        var decimals = converter(bytes).toDecimals({ isSigned: true })
+        var decimals = converter(bytes).toIntegers({ isSigned: true })
 
         var decimalsCorrect = decimals.every((decimal, index) => twosComplementExtraSmallImageBytes[index] === decimal)
         expect(decimalsCorrect).toBe(true)
 
         var bytes = ['1010100', '1010100', '11010100', '1010100']
-        var decimals = converter(bytes).toDecimals({ isSigned: false, integerSize: 16 })
+        var decimals = converter(bytes).toIntegers({ isSigned: false, integerSize: 16 })
 
         expect(decimals[0]).toBe(21588)
         expect(decimals[1]).toBe(21716)

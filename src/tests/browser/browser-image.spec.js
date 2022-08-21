@@ -1,4 +1,4 @@
-import {mockExpect as expect,createObjectsForFileDummyTests,dummyImageBytes ,extraSmallImageByteDecimals,getBytes,getByteDecimals } from './test-utils.js'
+import {mockExpect as expect,createObjectsForFileDummyTests,dummyImageBytes ,extraSmallImageDecimalBytes,getBytes,getDecimalBytes } from './test-utils.js'
 const javascriptBinaryConverter = window['javascript-binary-converter']
 
 const {converter} = javascriptBinaryConverter;
@@ -112,7 +112,7 @@ describe('Browser image tests', () => {
 
         const { imageFromDom } = await createObjectsForFileDummyTests('#extra-small')
         const bytes = await converter(imageFromDom).toBytes()
-        expect(bytes.length).toBe(extraSmallImageByteDecimals.length)
+        expect(bytes.length).toBe(extraSmallImageDecimalBytes.length)
         const decimalsFromBytes = bytes.map(byte => parseInt(byte, 2))
         const uint8 = new Uint8Array(decimalsFromBytes)
         const image = await converter(uint8).toImage()
@@ -122,9 +122,9 @@ describe('Browser image tests', () => {
     it('Should return byte decimals, from an Image', async function () {
 
         const { imageFromDom } = await createObjectsForFileDummyTests('#extra-small')
-        const bytes = await converter(imageFromDom).toByteDecimals()
-        expect(bytes.length).toBe(extraSmallImageByteDecimals.length)
-        expect(JSON.stringify(extraSmallImageByteDecimals) === JSON.stringify(bytes)).toBe(true)
+        const bytes = await converter(imageFromDom).toDecimalBytes()
+        expect(bytes.length).toBe(extraSmallImageDecimalBytes.length)
+        expect(JSON.stringify(extraSmallImageDecimalBytes) === JSON.stringify(bytes)).toBe(true)
         const uint8 = new Uint8Array(bytes)
         const image = await converter(uint8).toImage()
         expect(image.width).toBe(5)
@@ -134,7 +134,7 @@ describe('Browser image tests', () => {
 
 
     it('Should return a an image, from byte decimals', async function () {
-        const bytes = getByteDecimals()
+        const bytes = getDecimalBytes()
         var image = await converter(bytes).toImage()
         image.id = 'image_from_byte_decimals'
         expect(image instanceof HTMLImageElement).toBe(true)

@@ -1,4 +1,4 @@
-javascript-binary-converter is a simple utility to convert various binary data objects in Javascript, like Blob, File, TypedArray and others. Works both in the browser and in Node.js(with limitations). It also provides some conversion abilities of raw bytes.
+javascript-binary-converter is a simple utility to convert various binary data objects in Javascript, like Blob, File, TypedArray and others. Works both in the browser and in Node.js(with limitations). It also provides conversion abilities of from various notations(binary,hex,decimal) to others.
 
 If you encounter any bugs or have a question, please don't hesitate to open an issue.
 
@@ -53,14 +53,14 @@ const {converter} = javascriptBinaryConverter;
     - [Bytes to decimals](#bytes-to-decimals)
     - [Bytes to hex](#bytes-to-hex) 
   - [Converting decimals to other notations](#converting-decimals-to-other-notations)
-    - [Decimal to binary](#decimal-to-binary)
+    - [Integer to binary](#integer-to-binary)
     - [Float to binary](#float-to-binary)  
-    - [Decimal to hex](#decimal-to-hex)
+    - [Integer to hex](#integer-to-hex)
     - [Float to hex](#float-to-hex)
-    - [Decimal to bytes](#decimal-to-bytes)
+    - [Integer to decimal bytes](#integer-to-decimal-bytes)
   - [Converting hex to other notations](#converting-hex-to-other-notations)    
-    - [Hex to decimal](#hex-to-decimal)    
-    - [Signed Hex to decimal](#signed-hex-to-decimal)    
+    - [Hex to integer](#hex-to-integer)    
+    - [Signed Hex to integer](#signed-hex-to-integer)    
     - [Hex to binary](#hex-to-binary)    
     - [Hex to float](#hex-to-float)    
    
@@ -154,12 +154,12 @@ const uint8 = await converter(image).toUnit8Array();
 
 #### Image to byte decimals
 
-If you want to get raw binary data of an Image(each decimal corresponds a byte):
+"byte decimals" are normal bytes, just in decimal notation instead of binary.
 
 ```javascript
 const image = document.querySelector("#some-image");
 
-const byteDecimals = await converter(image).toByteDecimals(); 
+const byteIntegers = await converter(image).toByteIntegers(); 
 //[95,1,129...]
 ```
 
@@ -167,11 +167,11 @@ const byteDecimals = await converter(image).toByteDecimals();
 
 #### Uint8Array to Image
 
-Suppose you have an array of decimals, each representing a byte, in an unsigned 8 bit integer. You can convert those bytes into an html image(assuming the bytes represent an actual image):
+Suppose you have an array of integers, each representing a byte, in an unsigned 8 bit integer. You can convert those bytes into an html image(assuming the bytes represent an actual image):
 
 ```javascript
-const dummyImageByteDecimals = [
-  //These decimals(bytes) represent a tiny image
+const dummyImageByteIntegers = [
+  //These integers("bytes") represent a tiny image
   137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 0, 5, 0, 0,
   0, 6, 8, 6, 0, 0, 0, 11, 251, 84, 75, 0, 0, 0, 1, 115, 82, 71, 66, 0, 174, 206,
   28, 233, 0, 0, 0, 137, 73, 68, 65, 84, 24, 87, 1, 126, 0, 129, 255, 1, 255, 106,
@@ -185,7 +185,7 @@ const dummyImageByteDecimals = [
   174, 66, 96, 130,
 ];
 
-const uint8 = new Uint8Array(dummyImageByteDecimals);
+const uint8 = new Uint8Array(dummyImageByteIntegers);
 
 const image = await converter(uint8).toImage();
 
@@ -222,7 +222,7 @@ As mentioned above, you can also pass real "bytes", in the form of a string. Eac
 ```javascript
   const bytes = ['11111111', '11111111', '11110111']
 
-  const decimals = converter(bytes).toDecimals({isSigned:true})//Can be signed or unsigned. You can also assert the integer size(Default is 8)
+  const decimals = converter(bytes).toIntegers({isSigned:true})//Can be signed or unsigned. You can also assert the integer size(Default is 8)
   //[-1,-1,-9]
  
 ```
@@ -240,7 +240,7 @@ As mentioned above, you can also pass real "bytes", in the form of a string. Eac
 #### Converting decimals to other notations
 
 
-#### Decimal to binary
+#### Integer to binary
 
 ```javascript
    const decimal = 4434
@@ -259,7 +259,7 @@ As mentioned above, you can also pass real "bytes", in the form of a string. Eac
 ```
 
 
-#### Decimal to hex
+#### Integer to hex
 
 ```javascript
    //In this example a bigint is passed, instead of a "normal"(32 bit) decimal 
@@ -279,33 +279,33 @@ As mentioned above, you can also pass real "bytes", in the form of a string. Eac
  
 ```
 
-#### Decimal to bytes
+#### Integer to decimal bytes
 
 ```javascript
-   const bytes = converter(422).toBytes();
+   const bytes = converter(422).toDecimalBytes();
 
-  //['00000001','10100110']Default is big endian byte order. You can pass {endianness:'LITTLE'} to reverse it.
+  //[1,166] Default is big endian byte order. You can pass {endianness:'LITTLE'} to reverse it.
 
  
 ```
 
 #### Converting hex to other notations
 
-#### Hex to decimal
+#### Hex to integer
 
 ```javascript
    
-   const decimal = converter('FFF4').toDecimal()
+   const integer = converter('FFF4').toInteger()
    //65524   
  
 ```
 
-#### Signed Hex to decimal
+#### Signed Hex to integer
 you can also assert that the hex is of two's complement convention
 
 ```javascript
    //Same hex as above, just signed.
-   const decimal = converter('FFF4').toDecimal({isSigned:true})
+   const integer = converter('FFF4').toInteger({isSigned:true})
    //-12   
  
 ```

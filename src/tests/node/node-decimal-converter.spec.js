@@ -4,7 +4,7 @@ const converter = require('../../../build/cjs/converter').default;
 
 
 
-describe('Node DecimalConverter tests', () => {
+describe('Node IntegerConverter tests', () => {
 
     it('Should return  hex, from decimal', async function () {
         var bytes = [212, 252, 136, 43434343, -2] //-44,-4,-120 decimals in twos complement
@@ -97,39 +97,39 @@ describe('Node DecimalConverter tests', () => {
     });
 
     it('Should return byte decimals, from decimal', async function () {
-        let bytes = converter(422).toByteDecimals();
+        let bytes = converter(422).toDecimalBytes();
 
         expect(bytes[0]).toBe(1)//most significant byte!
         expect(bytes[1]).toBe(166)//
 
         expect(bytes.length).toBe(2)
 
-        bytes = converter(422).toByteDecimals({ endianness: 'LITTLE' });
+        bytes = converter(422).toDecimalBytes({ endianness: 'LITTLE' });
 
         expect(bytes[0]).toBe(166)
         expect(bytes[1]).toBe(1)//most significant byte!
 
-        bytes = converter(256).toByteDecimals({ endianness: 'LITTLE' });
+        bytes = converter(256).toDecimalBytes({ endianness: 'LITTLE' });
 
         expect(bytes[0]).toBe(0)
         expect(bytes[1]).toBe(1)//most significant byte!
 
 
-        bytes = converter(534545).toByteDecimals();
+        bytes = converter(534545).toDecimalBytes();
 
         expect(bytes[0]).toBe(8)//most significant byte!
         expect(bytes[1]).toBe(40)
         expect(bytes[2]).toBe(17)
 
 
-        bytes = converter(-534545).toByteDecimals();
+        bytes = converter(-534545).toDecimalBytes();
         expect(bytes[0]).toBe(255)//most significant byte!
         expect(bytes[1]).toBe(247)
         expect(bytes[2]).toBe(215)
         expect(bytes[3]).toBe(239)
 
 
-        bytes = converter(-143454544).toByteDecimals();    
+        bytes = converter(-143454544).toDecimalBytes();    
 
         expect(bytes[0]).toBe(247)//most significant byte!
         expect(bytes[1]).toBe(115)

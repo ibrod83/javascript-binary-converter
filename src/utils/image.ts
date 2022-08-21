@@ -50,7 +50,7 @@ export async function getBlobWithModifiedImageSize(binary: Blob | File, config: 
 
 
 /**
- * Reduce the dimensions of an image, while maintaning its ratio.
+ * Reduce the dimensions of an image, while maintaining its ratio.
  */
 export function getScaledDimensions({ width: w, height: h, maxSize }: ScaledDimensionsConfig) {
     let width = w

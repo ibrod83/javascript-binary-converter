@@ -1,103 +1,103 @@
 const { expect } = require('expect');
-const { groupBytes, floatToBinary, binaryToDecimal,    bigDecimalToBinary } = require('../../../build/cjs/utils/binary');
-const {decimalToHexaDecimal } = require('../../../build/cjs/utils/hex');
+const { groupBytes, floatToBinary, binaryToInteger,    bigIntegerToBinary } = require('../../../build/cjs/utils/binary');
+const {integerToHexaDecimal } = require('../../../build/cjs/utils/hex');
 const { getClosestDividable } = require('../../../build/cjs/utils/number');
 
 
 
 describe('Node binary utils tests', () => {
     it('Uint8: Should return correct numbers from a string of 8 bits', async function () {
-        var decimal = binaryToDecimal('11111111')
+        var decimal = binaryToInteger('11111111')
         expect(decimal).toBe(255)
 
-        var decimal = binaryToDecimal('001')
+        var decimal = binaryToInteger('001')
         expect(decimal).toBe(1)
 
-        var decimal = binaryToDecimal('00101')
+        var decimal = binaryToInteger('00101')
         expect(decimal).toBe(5)
 
-        var decimal = binaryToDecimal('101')
+        var decimal = binaryToInteger('101')
         expect(decimal).toBe(5)
 
     });
 
     // it('Uint8: Should return correct numbers from bits', async function () {
-    //     var decimal = binaryToDecimal(11111111)
+    //     var decimal = binaryToInteger(11111111)
     //     expect(decimal).toBe(255)
 
-    //     var decimal = binaryToDecimal(001)
+    //     var decimal = binaryToInteger(001)
     //     expect(decimal).toBe(1)
-    //     var decimal = binaryToDecimal(00101)
+    //     var decimal = binaryToInteger(00101)
     //     expect(decimal).toBe(5)
 
-    //     var decimal = binaryToDecimal(101)
+    //     var decimal = binaryToInteger(101)
     //     expect(decimal).toBe(5)
 
     // });
 
     it('Uint16: Should return 65535 from a string of 16 bits', async function () {
-        const decimal = binaryToDecimal('1111111111111111')
+        const decimal = binaryToInteger('1111111111111111')
         expect(decimal).toBe(65535)
 
     });
     it('Uint32: Should return 4294967295 from a string of 32 bits', async function () {
-        const decimal = binaryToDecimal('11111111111111111111111111111111')
+        const decimal = binaryToInteger('11111111111111111111111111111111')
 
         expect(decimal).toBe(4294967295)
 
     });
 
     it('Int8: Should return correct numbers from a string of 8 bits', async function () {
-        var decimal = binaryToDecimal('10000000', true)
+        var decimal = binaryToInteger('10000000', true)
         expect(decimal).toBe(-128)
 
-        var decimal = binaryToDecimal('00000000', true)
+        var decimal = binaryToInteger('00000000', true)
         expect(decimal).toBe(0)
 
-        var decimal = binaryToDecimal('11111111', true)
+        var decimal = binaryToInteger('11111111', true)
         expect(decimal).toBe(-1)
 
-        var decimal = binaryToDecimal('11110111', true)
+        var decimal = binaryToInteger('11110111', true)
         expect(decimal).toBe(-9)
 
-        var decimal = binaryToDecimal('01110111', true)
+        var decimal = binaryToInteger('01110111', true)
         expect(decimal).toBe(119)
 
 
     });
 
     it('Int16: Should return correct numbers from a string of 16 bits', async function () {
-        var decimal = binaryToDecimal('1000000010000000', true)
+        var decimal = binaryToInteger('1000000010000000', true)
         expect(decimal).toBe(-32640)
 
-        var decimal = binaryToDecimal('0000000000000000', true)
+        var decimal = binaryToInteger('0000000000000000', true)
         expect(decimal).toBe(0)
 
-        var decimal = binaryToDecimal('1111111111111111', true)
+        var decimal = binaryToInteger('1111111111111111', true)
         expect(decimal).toBe(-1)
 
-        var decimal = binaryToDecimal('1111011111110111', true)
+        var decimal = binaryToInteger('1111011111110111', true)
         expect(decimal).toBe(-2057)
 
-        var decimal = binaryToDecimal('0111011101110111', true)
+        var decimal = binaryToInteger('0111011101110111', true)
         expect(decimal).toBe(30583)
 
     });
 
     it('Int32: Should return correct numbers from a string of 32 bits', async function () {
-        var decimal = binaryToDecimal('10000000000000000000000000000000', true)
+        var decimal = binaryToInteger('10000000000000000000000000000000', true)
         expect(decimal).toBe(-2147483648)
 
-        var decimal = binaryToDecimal('00000000000000000000000000000000', true)
+        var decimal = binaryToInteger('00000000000000000000000000000000', true)
         expect(decimal).toBe(0)
 
-        var decimal = binaryToDecimal('11111111111111111111111111111111', true)
+        var decimal = binaryToInteger('11111111111111111111111111111111', true)
         expect(decimal).toBe(-1)
 
-        var decimal = binaryToDecimal('11110111111101111111011111110111', true)
+        var decimal = binaryToInteger('11110111111101111111011111110111', true)
         expect(decimal).toBe(-134744073)
 
-        var decimal = binaryToDecimal('01110111011101110111011101110111', true)
+        var decimal = binaryToInteger('01110111011101110111011101110111', true)
         expect(decimal).toBe(2004318071)
 
     });
@@ -139,15 +139,15 @@ describe('Node binary utils tests', () => {
 
     it('Should return hex, from decimal', async function () {
         var decimal = 1234
-        var hex = decimalToHexaDecimal(decimal)
+        var hex = integerToHexaDecimal(decimal)
         expect(hex).toBe('4D2')
 
         var decimal = -1234
-        var hex = decimalToHexaDecimal(decimal)
+        var hex = integerToHexaDecimal(decimal)
         expect(hex).toBe('FFFFFB2E')
 
         var decimal = -1234534543
-        var hex = decimalToHexaDecimal(decimal)
+        var hex = integerToHexaDecimal(decimal)
         expect(hex).toBe('B66A7F71')
 
     });
@@ -169,18 +169,18 @@ describe('Node binary utils tests', () => {
 
     it('Should return binary from bigint', async function () {//
         // 184467440737095516
-        // let binary = decimalToBinary(4294967295)//max 32 bit number 
-        // let binary = decimalToBinary(4294967296) //above 32 bit
-        let binary = bigDecimalToBinary(184467440737095516n)
+        // let binary = integerToBinary(4294967295)//max 32 bit number 
+        // let binary = integerToBinary(4294967296) //above 32 bit
+        let binary = bigIntegerToBinary(184467440737095516n)
         expect(binary).toBe('1010001111010111000010100011110101110000101000111101011100')
 
-        binary = bigDecimalToBinary(8844674407370955)
+        binary = bigIntegerToBinary(8844674407370955)
         expect(binary).toBe('11111011011000010111100111100001101001001000011001011')
         
-        binary = bigDecimalToBinary(-2157483648)//
+        binary = bigIntegerToBinary(-2157483648)//
         expect(binary).toBe('1111111111111111111111111111111101111111011001110110100110000000')
 
-        binary = bigDecimalToBinary(-3157483648434)//
+        binary = bigIntegerToBinary(-3157483648434)//
         expect(binary).toBe('1111111111111111111111010010000011010111010011110000101001001110')
 
 
@@ -220,7 +220,7 @@ describe('Node binary utils tests', () => {
 
     // it('Should trim unnecessary first bytes ', async function () {
     //     let bytes;
-    //     const decimal = decimalToBinary()
+    //     const decimal = integerToBinary()
 
     // });
 

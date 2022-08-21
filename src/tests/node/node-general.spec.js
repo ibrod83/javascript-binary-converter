@@ -103,8 +103,8 @@ describe('Node general tests', () => {
 
     //     const blob = new Blob([1])
     //     const blobConverter = new BlobConverter(blob)
-    //     const byteDecimals = await blobConverter.toByteDecimals()
-    //     expect(byteDecimals).toStrictEqual([206])
+    //     const decimalBytes = await blobConverter.toDecimalBytes()
+    //     expect(decimalBytes).toStrictEqual([206])
 
     // });
 
@@ -116,17 +116,17 @@ describe('Node general tests', () => {
         expect(uint8.buffer === buffer).toBe(true)
     });   
 
-    it('Should return byteDecimals, from an ArrayBuffer', async function () {
+    it('Should return decimalBytes, from an ArrayBuffer', async function () {
         const int16 = new Int16Array([1,2,3])
-        let decimals = converter(int16.buffer).toByteDecimals()
+        let decimals = converter(int16.buffer).toDecimalBytes()
         expect(decimals).toStrictEqual([1,0,2,0,3,0])
 
         let int8 = new Int8Array([-1,-2])
-        decimals = converter(int8.buffer).toByteDecimals()
+        decimals = converter(int8.buffer).toDecimalBytes()
         expect(decimals).toStrictEqual([255,254])
 
         const uint8 = new Uint8Array([255,254])
-        decimals = converter(uint8.buffer).toByteDecimals({isSigned:true})
+        decimals = converter(uint8.buffer).toDecimalBytes({isSigned:true})
         expect(decimals).toStrictEqual([-1,-2])
     });   
     

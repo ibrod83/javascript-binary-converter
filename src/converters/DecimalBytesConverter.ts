@@ -1,6 +1,6 @@
 import {  DecimalBytesArray,  } from "../sharedTypes"
 import {        } from "../utils/binary"
-import { decimalToHexaDecimal } from "../utils/hex"
+import { integerToHexaDecimal } from "../utils/hex"
 import { BaseBytesConverter } from "./BaseBytesConverter"
 
 
@@ -57,7 +57,7 @@ export default class DecimalBytesConverter extends BaseBytesConverter {
    
     toHex(){   
 
-        return this.original.map((dec)=>decimalToHexaDecimal(dec))
+        return this.original.map((dec)=>integerToHexaDecimal(dec))
     }
 
 
