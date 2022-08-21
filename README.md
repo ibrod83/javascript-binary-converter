@@ -1,4 +1,6 @@
-javascript-binary-converter is a simple utility to convert various binary data objects in Javascript, like Blob, File, TypedArray and others. Works both in the browser and in Node.js(with limitations). It also provides conversion abilities of from various notations(binary,hex,decimal) to others.
+javascript-binary-converter is a simple utility to convert various binary data objects in Javascript, like Blob, File, TypedArray and others. It also provides conversion abilities from various notations(binary,hex,decimal,"bytes") to others.
+
+ Works both in the browser and in Node.js(with limitations).
 
 If you encounter any bugs or have a question, please don't hesitate to open an issue.
 
