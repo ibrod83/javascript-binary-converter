@@ -7,6 +7,7 @@ import ArrayBufferConverter from './converters/ArrayBufferConverter'
 import BytesConverter from './converters/BytesConverter'
 import DecimalBytesConverter from './converters/DecimalBytesConverter'
 import IntegerConverter from './converters/IntegerConverter'
+import BinaryConverter from './converters/BinaryConverter'
 
 import * as utils from './utils/index'
 
@@ -21,6 +22,7 @@ export{
     BytesConverter,
     DecimalBytesConverter,
     IntegerConverter,
+    BinaryConverter,
     utils
 }
 

@@ -66,6 +66,11 @@ const {converter} = javascriptBinaryConverter;
     - [Hex to binary](#hex-to-binary)    
     - [Hex to float](#hex-to-float)      
     - [Hex to double precision float](#hex-to-double-precision-float)      
+  - [Converting binary to other notations](#converting-binary-to-other-notations)
+     - [Binary to integer](#binary-to-integer)     
+     - [Twos complement Binary to integer](#twos-complement-binary-to-integer)     
+     - [Binary to float](#binary-to-float)     
+        
    
 
 
@@ -339,4 +344,34 @@ You can also assert that the hex represents a double precision float(Float64)
  
 ```
 
+#### Converting binary to other notations
+"binary" is a string of 0's and 1's. In order to use this functionality,
+You will need to import a BinaryConverter class, instead of using the generic converter function
 
+#### Binary to integer
+ ```javascript
+   const {BinaryConverter} = require('javascript-binary-converter');
+
+   const integer = new BinaryConverter('0010100101101100000101100111').toInteger()
+   //result: 43434343
+ 
+```
+
+#### Twos complement Binary to integer
+If you know your binary if of two's complement convention:
+ ```javascript
+   const {BinaryConverter} = require('javascript-binary-converter');
+
+   const integer = new BinaryConverter('10111110110111100110000111010000').toInteger({isSigned:true})
+   //result: -1092722224
+ 
+```
+
+#### Binary to float
+ ```javascript
+   const {BinaryConverter} = require('javascript-binary-converter');
+
+   const float = new BinaryConverter('0010100101101100000101100111').toFloat()
+   //result: 2.215152....
+ 
+```

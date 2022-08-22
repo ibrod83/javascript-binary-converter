@@ -37,6 +37,12 @@ export function hexToBinary(hex: string) {
     return parseInt(hex, 16).toString(2).toUpperCase()
 }
 
+
+export function binaryToHex(binary: string, { isSigned = false }: { isSigned?: boolean } = {}){
+    var hex = parseInt(binary, 2).toString(16).toUpperCase();
+    return hex;
+}
+
 export function hexToInteger(hex: string, { isSigned = false }: { isSigned?: boolean } = {}) {
     if (!isSigned) {
         return parseInt(hex, 16)
@@ -47,6 +53,9 @@ export function hexToInteger(hex: string, { isSigned = false }: { isSigned?: boo
         return twosComplementDecimal
     }
 }
+
+
+
 
 
 export function hexToFloat(hex: string) {

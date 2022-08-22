@@ -19,6 +19,14 @@ export function floatToBinary(float: number,{ precision = 'SINGLE' }: { precisio
 }
 
 
+export function binaryToFloat(binary: string) {
+    const integerFromBinary = parseInt(binary,2)
+    const uint8 = new Uint32Array([integerFromBinary])
+    const float32 = new Float32Array(uint8.buffer)
+    return float32[0]
+}
+
+
 
 export function bigIntegerToBinary(decimal: number | bigint, nBits = BigInt(64)): string {
 
