@@ -51,6 +51,32 @@ describe('Node IntegerConverter tests', () => {
 
     });
 
+    it('Should return hex, from double precision float', async function () {
+       
+
+        let hex = converter(1.1).toHex({precision:'DOUBLE'})
+
+        expect(hex).toBe('3FF199999999999A')
+
+        hex = converter(-1.1).toHex({precision:'DOUBLE'})
+
+        expect(hex).toBe('BFF199999999999A')
+
+        hex = converter(-0.43431).toHex({precision:'DOUBLE'})
+
+        expect(hex).toBe('BFDBCBBC2B94D940')
+
+        hex = converter(-0.43431444344444443455).toHex({precision:'DOUBLE'})
+
+        expect(hex).toBe('BFDBCBCECEB18EA1')
+
+        hex = converter(3232434.43434556565666443).toHex({precision:'DOUBLE'})
+
+        expect(hex).toBe('4148A9593798A2B0')
+
+
+    });
+
 
     it('Should return bytes, from decimal', async function () {
         let bytes = converter(422).toBytes();
@@ -167,8 +193,17 @@ describe('Node IntegerConverter tests', () => {
 
     });
 
+    it('Should return binary, from double precision float', async function () {
+        let binary = converter(-0.32323).toBinary({precision:'DOUBLE'})
+        expect(binary).toBe('1011111111010100101011111100110011100001110001011000001001010110')
+
+        binary = converter(555555.6565656565656565666).toBinary({precision:'DOUBLE'})
+        expect(binary).toBe('0100000100100000111101000100011101010000001010010101111110101101')
+
+    });
 
 
+    
 
 })
 

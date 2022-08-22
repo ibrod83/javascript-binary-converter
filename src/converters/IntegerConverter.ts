@@ -1,4 +1,4 @@
-import { ToBytesConfig } from "../sharedTypes"
+import {  FloatConversionConfig, ToBytesConfig } from "../sharedTypes"
 import {  integerToBinary,  getBytesFromInteger, floatToBinary, bigIntegerToBinary,  getDecimalBytesFromInteger } from "../utils/binary"
 import { bigIntegerToHexaDecimal, integerToHexaDecimal, floatToHex } from "../utils/hex"
 import { isBigInt, isFloat } from "../utils/number"
@@ -11,9 +11,9 @@ export default class IntegerConverter {
     constructor(protected original: number | bigint) { }
 
 
-    toBinary() {
+    toBinary({ precision = 'SINGLE' }: FloatConversionConfig = {}) {
         if (isBigInt(this.original)) return bigIntegerToBinary(this.original)
-        return isFloat(this.original as number) ? floatToBinary(this.original as number) : integerToBinary(this.original)
+        return isFloat(this.original as number) ? floatToBinary(this.original as number,{precision}) : integerToBinary(this.original)
     }
 
     /**
@@ -27,10 +27,10 @@ export default class IntegerConverter {
         return getDecimalBytesFromInteger(this.original,{endianness,isSigned})
     }
 
-    toHex() {
+    toHex({ precision = 'SINGLE' }: FloatConversionConfig = {}) {
         if (typeof this.original === 'number') {
             if (isFloat(this.original)) {
-                return floatToHex(this.original)
+                return floatToHex(this.original,{precision})
             }
             return integerToHexaDecimal(this.original)
         }

@@ -1,5 +1,5 @@
-import { binaryToInteger, getTwosComplementDecimal, } from "./binary";
-import { getTwosComplementBinary } from "./bits";
+import { FloatConversionConfig } from "../sharedTypes";
+import { getTwosComplementDecimal, } from "./binary";
 import { normalizeBigInt } from "./number"
 
 export function integerToHexaDecimal(integer: number) {
@@ -11,16 +11,22 @@ export function bigIntegerToHexaDecimal(integer: bigint) {
     return normalizedBigInt.toString(16).toUpperCase()
 }
 
-export function floatToHex(float: number) {
+export function floatToHex(float: number, { precision = 'SINGLE' }: FloatConversionConfig= {}) {
     const getHex = (i: number) => ('00' + i.toString(16)).slice(-2);
 
-    const view = new DataView(new ArrayBuffer(4))
+    const numberOfBytes = precision === 'SINGLE' ? 4 : 8
 
-    view.setFloat32(0, float);
+    const view = new DataView(new ArrayBuffer(numberOfBytes))
+    
+    if (precision === 'SINGLE') {
+        view.setFloat32(0, float);
+    } else {
+        view.setFloat64(0, float);
+    }
 
     const hex = Array
         //@ts-ignore
-        .apply(null, { length: 4 })
+        .apply(null, { length:  numberOfBytes })
         .map((_, i) => getHex(view.getUint8(i)))
         .join('');
 
@@ -34,7 +40,8 @@ export function hexToBinary(hex: string) {
 export function hexToInteger(hex: string, { isSigned = false }: { isSigned?: boolean } = {}) {
     if (!isSigned) {
         return parseInt(hex, 16)
-    } else {
+    }
+     else {
         const binaryFromHex = hexToBinary(hex)
         const twosComplementDecimal = getTwosComplementDecimal(binaryFromHex);
         return twosComplementDecimal
@@ -44,25 +51,10 @@ export function hexToInteger(hex: string, { isSigned = false }: { isSigned?: boo
 
 export function hexToFloat(hex: string) {
     const decimalFromHex = hexToInteger(hex)
-    const int32 = new Uint32Array([decimalFromHex])
-    const float32 = new Float32Array(int32.buffer)
-    return float32[0]
-    // return parseInt(hex, 16)
+    const typedArray =  new Uint32Array([decimalFromHex])
+    const floatTypedArray =   new Float32Array(typedArray.buffer) 
+    return floatTypedArray[0]
+
 }
 
-// export function hexToFloat(hex: string, { isSigned = false }: { isSigned?: boolean } = {}) {
-//     const decimalFromHex = hexToInteger(hex)
-//     let int32;
-//     if (!isSigned) {
-//         int32 = new Uint32Array([decimalFromHex])
-//     } else {
-//         const binaryFromHex = hexToBinary(hex)
-//         const twosComplementBinary = getTwosComplementBinary(binaryFromHex)
-//         const twosComplementDecimal = binaryToInteger(twosComplementBinary);
-//         int32 = new Int32Array([twosComplementDecimal])
-//     }
 
-//     const float32 = new Float32Array(int32.buffer)
-//     return float32[0]
-//     // return parseInt(hex, 16)
-// }

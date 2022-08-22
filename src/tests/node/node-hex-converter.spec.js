@@ -52,17 +52,31 @@ describe('Node HexConverter tests', () => {
 
 
     it('Should return float, from hex', async function () {
-        let binary = converter('296C167').toFloat()
-        expect(binary.toString()).toContain('2.215152')
+        let float = converter('296C167').toFloat()
+        expect(float.toString()).toContain('2.215152')
         
 
-        binary = converter('0x3ede61d0').toFloat()
-        expect(binary.toString()).toContain('0.43434000015')
+        float = converter('0x3ede61d0').toFloat()
+        expect(float.toString()).toContain('0.43434000015')
 
-        binary = converter('bede61d0').toFloat()
-        expect(binary.toString()).toContain('-0.43434000015')
+        float = converter('bede61d0').toFloat()
+        expect(float.toString()).toContain('-0.43434000015')
 
     });
+
+    // it('Should return double precision float, from hex', async function () {
+    //     let float = converter('4001B8A1D57211EA').toFloat({precision:'DOUBLE'})
+    //     console.log('floatt',float)
+    //     expect(float.toString()).toContain('2.215152423')
+        
+
+    //     // binary = converter('0x3ede61d0').toFloat()
+    //     // expect(binary.toString()).toContain('0.43434000015')
+
+    //     // binary = converter('bede61d0').toFloat()
+    //     // expect(binary.toString()).toContain('-0.43434000015')
+
+    // });
 
 })
 

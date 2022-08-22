@@ -64,7 +64,8 @@ const {converter} = javascriptBinaryConverter;
     - [Hex to integer](#hex-to-integer)    
     - [Signed Hex to integer](#signed-hex-to-integer)    
     - [Hex to binary](#hex-to-binary)    
-    - [Hex to float](#hex-to-float)    
+    - [Hex to float](#hex-to-float)      
+    - [Hex to double precision float](#hex-to-double-precision-float)      
    
 
 
@@ -321,6 +322,16 @@ you can also assert that the hex is of two's complement convention
 ```
 
 #### Hex to float
+
+```javascript
+   const float = converter('bede61d0').toFloat()
+   //-0.43434000015 
+ 
+```
+
+#### Hex to double precision float
+
+You can also assert that the hex represents a double precision float(Float64)
 
 ```javascript
    const float = converter('bede61d0').toFloat()

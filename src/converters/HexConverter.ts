@@ -1,7 +1,5 @@
 import { hexToBinary, hexToInteger, hexToFloat } from "../utils/hex";
 
-
-
 export default class HexConverter {
 
     constructor(protected original: string) { 

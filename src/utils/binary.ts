@@ -10,9 +10,9 @@ export function integerToBinary(decimal: number | bigint) {
 }
 
 
-export function floatToBinary(float: number) {
-    const float32 = new Float32Array([float])
-    const int8 = new Uint8Array(float32.buffer)
+export function floatToBinary(float: number,{ precision = 'SINGLE' }: { precision?: 'SINGLE' | 'DOUBLE' } = {}) {
+    const floatTypedArray = precision === 'SINGLE' ?  new Float32Array([float]) : new Float64Array([float])
+    const int8 = new Uint8Array(floatTypedArray.buffer)
     const bytes = typedArrayToBytes(int8)
     const endianness = getSystemEndianness()
     return endianness === 'LITTLE' ? bytes.reverse().join("") : bytes.join("")
