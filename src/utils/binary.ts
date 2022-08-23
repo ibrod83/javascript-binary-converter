@@ -20,12 +20,21 @@ export function floatToBinary(float: number, { precision = 'SINGLE' }: { precisi
 
 
 
-export function binaryToFloat(binary: string,{ precision = 'SINGLE' }: FloatConversionConfig = {}) {
-    const integerFromBinary = parseInt(binary,2)
-    const typedArray = precision === 'SINGLE' ?  new Uint32Array([integerFromBinary]) : new BigUint64Array([BigInt(integerFromBinary)])
-    console.log(typedArray.buffer)
-    const float = precision === 'SINGLE' ?  new Float32Array(typedArray.buffer) : new Float64Array(typedArray.buffer)
-    return float[0]
+
+export function binaryToFloat(binary: string, { precision = 'SINGLE' }: FloatConversionConfig = {}) {
+    const numBits = precision === 'SINGLE' ? 32 : 64;
+    const numBytes = numBits/8
+    binary = padString(binary,numBits)
+    const bytes = splitBinaryStringToBytes(binary)
+    var buffer = new ArrayBuffer(numBytes);
+    var uint8 = new Uint8Array(buffer);
+    for (let i=0;i<bytes.length;i++) {
+ 
+        uint8[i] = binaryToInteger(bytes[i])
+    }
+    var view = new DataView(buffer);
+    return precision === 'SINGLE' ?  view.getFloat32(0, false) : view.getFloat64(0, false)  
+
 }
 
 
@@ -131,23 +140,3 @@ export function arrayBufferToDecimalBytes(arrayBuffer: ArrayBuffer, { isSigned =
     const typedArray = isSigned ? new Int8Array(arrayBuffer) : new Uint8Array(arrayBuffer)
     return Array.from(typedArray)
 }
-
-
-// export function binaryToFloat(binary: string, { precision = 'SINGLE' }: { precision?: 'SINGLE' | 'DOUBLE' } = {}) {
-//     if (precision === 'SINGLE') {
-//         const integerFromBinary = parseInt(binary, 2)
-//         const uint8 = new Uint32Array([integerFromBinary])
-//         const float32 = new Float32Array(uint8.buffer)
-//         return float32[0]
-//     }
-
-//     var sum = 0;
-//     var i;
-//     for (i = 0; i < binary.length; i++) {
-//         if (binary[i] === '1') {
-//             sum += Math.pow(2.0, -(i + 1));
-//         }
-//     }
-//     return sum;
-// }
-

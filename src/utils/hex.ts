@@ -1,6 +1,8 @@
 import { FloatConversionConfig } from "../sharedTypes";
-import { getTwosComplementDecimal, } from "./binary";
+import { binaryToInteger, getTwosComplementDecimal, } from "./binary";
+import { splitBinaryStringToBytes } from "./bits";
 import { normalizeBigInt } from "./number"
+import { padString } from "./string";
 
 export function integerToHexaDecimal(integer: number) {
     return ((integer) >>> 0).toString(16).toUpperCase()
@@ -66,4 +68,20 @@ export function hexToFloat(hex: string) {
 
 }
 
+
+// export function hexToFloat(binary: string, { precision = 'SINGLE' }: FloatConversionConfig = {}) {
+//     const numBits = precision === 'SINGLE' ? 32 : 64;
+//     const numBytes = numBits/8
+//     binary = padString(binary,numBits)
+//     const bytes = splitBinaryStringToBytes(binary)
+//     var buffer = new ArrayBuffer(numBytes);
+//     var uint8 = new Uint8Array(buffer);
+//     for (let i=0;i<bytes.length;i++) {
+ 
+//         uint8[i] = binaryToInteger(bytes[i])
+//     }
+//     var view = new DataView(buffer);
+//     return precision === 'SINGLE' ?  view.getFloat32(0, false) : view.getFloat64(0, false)  
+
+// }
 

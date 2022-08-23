@@ -310,7 +310,7 @@ you can also assert that the hex is of two's complement convention
  
 ```
 
-#### Hex to float
+#### Hex to float(32 only)
 
 ```javascript
    const float = converter('bede61d0').toFloat()
@@ -318,15 +318,6 @@ you can also assert that the hex is of two's complement convention
  
 ```
 
-#### Hex to double precision float
-
-You can also assert that the hex represents a double precision float(Float64)
-
-```javascript
-   const float = converter('bede61d0').toFloat()
-   //-0.43434000015 
- 
-```
 
 #### Converting binary to other notations
 "binary" is a string of 0's and 1's. In order to use this functionality,
@@ -352,12 +343,22 @@ If you know your binary if of two's complement convention:
 ```
 
 #### Binary to float
-> :warning: Supports only float32 IEEE-754
+
 
  ```javascript
    const {BinaryConverter} = require('javascript-binary-converter');
 
-   const float = new BinaryConverter('0010100101101100000101100111').toFloat()
+   const float32 = new BinaryConverter('00000010100101101100000101100111').toFloat()
    //result: 2.215152....
  
 ```
+You can also convert it to float64(double precision).
+
+ ```javascript 
+   
+   const float64 = new BinaryConverter('1111111111100001110011001111001110000101111010111100100010100000').toFloat({precision:'DOUBLE'})
+   //result: -1.0e308
+ 
+```
+
+
