@@ -1,4 +1,4 @@
-import { BytesArray, TypedArray } from "../sharedTypes";
+import { BytesArray, FloatConversionConfig, TypedArray } from "../sharedTypes";
 import { getTwosComplementBinary, splitBinaryStringToBytes } from "./bits";
 import { getSystemEndianness } from "./crossPlatform";
 import { getClosestDividable, isBigInt, isFloat, normalizeBigInt } from "./number";
@@ -10,8 +10,8 @@ export function integerToBinary(decimal: number | bigint) {
 }
 
 
-export function floatToBinary(float: number,{ precision = 'SINGLE' }: { precision?: 'SINGLE' | 'DOUBLE' } = {}) {
-    const floatTypedArray = precision === 'SINGLE' ?  new Float32Array([float]) : new Float64Array([float])
+export function floatToBinary(float: number, { precision = 'SINGLE' }: { precision?: 'SINGLE' | 'DOUBLE' } = {}) {
+    const floatTypedArray = precision === 'SINGLE' ? new Float32Array([float]) : new Float64Array([float])
     const int8 = new Uint8Array(floatTypedArray.buffer)
     const bytes = typedArrayToBytes(int8)
     const endianness = getSystemEndianness()
@@ -19,11 +19,13 @@ export function floatToBinary(float: number,{ precision = 'SINGLE' }: { precisio
 }
 
 
-export function binaryToFloat(binary: string) {
+
+export function binaryToFloat(binary: string,{ precision = 'SINGLE' }: FloatConversionConfig = {}) {
     const integerFromBinary = parseInt(binary,2)
-    const uint8 = new Uint32Array([integerFromBinary])
-    const float32 = new Float32Array(uint8.buffer)
-    return float32[0]
+    const typedArray = precision === 'SINGLE' ?  new Uint32Array([integerFromBinary]) : new BigUint64Array([BigInt(integerFromBinary)])
+    console.log(typedArray.buffer)
+    const float = precision === 'SINGLE' ?  new Float32Array(typedArray.buffer) : new Float64Array(typedArray.buffer)
+    return float[0]
 }
 
 
@@ -68,8 +70,8 @@ export function getSignedInteger(bits: string) {
 
 export function getTwosComplementDecimal(binary: string) {
     const twosComplementBinary = getTwosComplementBinary(binary)
-   return parseInt(twosComplementBinary,2) * -1;
-    
+    return parseInt(twosComplementBinary, 2) * -1;
+
 }
 
 
@@ -131,4 +133,21 @@ export function arrayBufferToDecimalBytes(arrayBuffer: ArrayBuffer, { isSigned =
 }
 
 
+// export function binaryToFloat(binary: string, { precision = 'SINGLE' }: { precision?: 'SINGLE' | 'DOUBLE' } = {}) {
+//     if (precision === 'SINGLE') {
+//         const integerFromBinary = parseInt(binary, 2)
+//         const uint8 = new Uint32Array([integerFromBinary])
+//         const float32 = new Float32Array(uint8.buffer)
+//         return float32[0]
+//     }
+
+//     var sum = 0;
+//     var i;
+//     for (i = 0; i < binary.length; i++) {
+//         if (binary[i] === '1') {
+//             sum += Math.pow(2.0, -(i + 1));
+//         }
+//     }
+//     return sum;
+// }
 

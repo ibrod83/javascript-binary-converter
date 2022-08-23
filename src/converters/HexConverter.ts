@@ -17,7 +17,11 @@ export default class HexConverter {
     }
 
 
+    /**
+     * Supports only float32 IEEE-754
+     */
     toFloat( ){
+        if(this.original.length>32)throw new Error('Binary is longer than 32. Double precision float is not supported')
         const float = hexToFloat(this.original)
         return float
     }

@@ -352,6 +352,8 @@ If you know your binary if of two's complement convention:
 ```
 
 #### Binary to float
+> :warning: Supports only float32 IEEE-754
+
  ```javascript
    const {BinaryConverter} = require('javascript-binary-converter');
 

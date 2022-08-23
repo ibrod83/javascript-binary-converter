@@ -45,7 +45,27 @@ describe('Node BinaryConverter tests', () => {
         float = new converter('10111110110111100110000111010000').toFloat()
         expect(float.toString()).toContain('-0.43434000015')
 
+        float = new converter('01111111011111111111111111111111').toFloat()
+        expect(float).toBe(3.4028234663852886e+38)
+
     });
+
+    // it('Should return double precision float, from binary', async function () {
+    //     // let float = new converter('0111111111101111111111111111111111111111111111111111111111111110').toFloat({precision:'DOUBLE'})
+    //     let float = new converter('1111111111100001110011001111001110000101111010111100100010100000').toFloat({precision:'DOUBLE'})
+    //     // let float = new converter('0011111111110001111100000111110000011110101101000111011000010100').toFloat({precision:'DOUBLE'})
+
+    //     // expect(float.toString()).toContain('1.79769313')
+    //     expect(float).toBe(-1.0e308)
+        
+
+    //     // float = new converter('00111110110111100110000111010000').toFloat()
+    //     // expect(float.toString()).toContain('0.43434000015')
+
+    //     // float = new converter('10111110110111100110000111010000').toFloat()
+    //     // expect(float.toString()).toContain('-0.43434000015')
+
+    // });
 
     it('Should return hex, from binary', async function () {
         
