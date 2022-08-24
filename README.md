@@ -333,7 +333,7 @@ You will need to import a BinaryConverter class, instead of using the generic co
 ```
 
 #### Twos complement Binary to integer
-If you know your binary if of two's complement convention:
+If you know your binary is of two's complement convention:
  ```javascript
    const {BinaryConverter} = require('javascript-binary-converter');
 
