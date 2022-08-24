@@ -310,7 +310,7 @@ you can also assert that the hex is of two's complement convention
  
 ```
 
-#### Hex to float(32 only)
+#### Hex to float
 
 ```javascript
    const float = converter('bede61d0').toFloat()
