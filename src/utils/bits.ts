@@ -1,3 +1,5 @@
+import { splitStringToChunks } from "./string";
+
 export function getTwosComplementBinary(bits:string){
     const inverse = getInverseBinary(bits)
     const integer = (parseInt(inverse, 2) + 1)
@@ -17,14 +19,19 @@ export function getInverseBinary(bits: string) {
 
 
 export function splitBinaryStringToBytes(binaryString: string) {
-    const bytes = []
-    let currentBitString = ""
-    for (let i = 1; i <= binaryString.length; i++) {
-        currentBitString += binaryString[i - 1]
-        if (i % 8 === 0 || i === binaryString.length) {
-            bytes.push(currentBitString)
-            currentBitString = ""
-        }
-    }
-    return bytes
+    return splitStringToChunks(binaryString,8)
 }
+
+// export function splitBinaryStringToBytes(binaryString: string) {
+//     const bytes = []
+//     let currentBitString = ""
+//     for (let i = 1; i <= binaryString.length; i++) {
+//         currentBitString += binaryString[i - 1]
+//         if (i % 8 === 0 || i === binaryString.length) {
+//             bytes.push(currentBitString)
+//             currentBitString = ""
+//         }
+//     }
+//     return bytes
+ 
+// }

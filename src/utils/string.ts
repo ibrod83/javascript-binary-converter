@@ -20,3 +20,7 @@ export function reverseString(s:string){
 export function isNumericString(n:any) {
     return !isNaN(parseFloat(n)) && isFinite(n) && typeof n === 'string';
   }
+
+  export function splitStringToChunks(string:string,chunkSize:number){
+    return string.match(new RegExp('.{1,' + chunkSize + '}', 'g')) as Array<string>;
+  }

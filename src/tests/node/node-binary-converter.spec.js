@@ -52,6 +52,7 @@ describe('Node BinaryConverter tests', () => {
 
     it('Should return double precision float, from binary', async function () {
         let float = new converter('1111111111100001110011001111001110000101111010111100100010100000').toFloat({precision:'DOUBLE'})  
+                                //   '1111111111100001110011001111001110000101111010111100100010100000'  
         expect(float).toBe(-1.0e308)        
         float = new converter('0111111111101111111111111111111111111111111111111111111111111110').toFloat({precision:'DOUBLE'})
         expect(float).toBe(1.7976931348623155e+308)

@@ -53,7 +53,8 @@ describe('Node HexConverter tests', () => {
 
     it('Should return float, from hex', async function () {
         let float = converter('296C167').toFloat()
-        expect(float.toString()).toContain('2.215152')
+        expect(float.toString()).toContain('2.21515265')
+        expect(float.toString()).toContain('e-37')
         
 
         float = converter('0x3ede61d0').toFloat()
@@ -66,11 +67,10 @@ describe('Node HexConverter tests', () => {
 
     it('Should return double precision float, from hex', async function () {
         let float = converter('4001B8A1D57211EA').toFloat({precision:'DOUBLE'})
-        console.log('floatt',float)
-        expect(float).toBe(2.2151524234232056)
+        expect(float).toBe(2.2151524234234232)
         
         float = converter('FFE1CCF385EBC8A0').toFloat({precision:'DOUBLE'})  
-        expect(float).toBe(-9.99999999999968e+307)//Different value from binaryToHex due to conversion from hex to binary first. Needs to be reasearched.        
+        expect(float).toBe(-1e+308)//Different value from binaryToHex due to conversion from hex to binary first. Needs to be reasearched.        
 
 
     });
