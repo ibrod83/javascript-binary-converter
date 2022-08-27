@@ -61,10 +61,10 @@ describe('Node BinaryConverter tests', () => {
 
     it('Should return hex, from binary', async function () {
         
-        let binary = new converter('10100101101100000101100111').toHex()
+        let binary = new converter('10100101101100000101100111').toHexString()
         expect(binary).toBe('296C167')
         // 111110110111100110000111010000
-        binary = new converter('111110110111100110000111010000').toHex()
+        binary = new converter('111110110111100110000111010000').toHexString()
         expect(binary).toBe('3EDE61D0')
 
        

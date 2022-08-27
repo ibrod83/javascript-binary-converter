@@ -23,7 +23,7 @@ import converter from "javascript-binary-converter";
 ## Usage in Node.js(CommonJS):
 
 ```javascript
-const converter = require("javascript-binary-converter").default;
+const {converter} = require("javascript-binary-converter");
 ```
 
 ## Usage in the browser, in a classical HTML page:
@@ -44,24 +44,27 @@ const {converter} = javascriptBinaryConverter;
 - [Concept](#concept)
 - [Usage in Node](#usage-in-node)
 - [Examples](#examples)
-  - [File to Image](#file-to-image)
-  - [File to bytes](#file-to-bytes)
-  - [Blob to Image ](#blob-to-image)
-  - [Image to Uint8Array](#image-to-uint8array)
-  - [Image to byte decimals](#image-to-byte-decimals)
-  - [Uint8Array to Image](#uint8array-to-image)
-  - [Converting raw bytes](#converting-raw-bytes)
-  - [Converting decimals to other notations](#converting-decimals-to-other-notations)
-  - [Converting hex to other notations](#converting-hex-to-other-notations)       
+  - [Converting numbers to various notations](#converting-numbers-to-various-notations)
+  - [Converting hex string to other notations](#converting-hex-string-to-other-notations)       
   - [Converting binary to other notations](#converting-binary-to-other-notations)
+  - [Converting text](#converting-text)
+  - [Browser tools](#browser-tools)  
+    - [File to Image](#file-to-image)
+    - [File to bytes](#file-to-bytes)
+    - [Blob to Image ](#blob-to-image)
+    - [Image to Uint8Array](#image-to-uint8array)
+    - [Image to byte decimals](#image-to-byte-decimals)
+    - [Uint8Array to Image](#uint8array-to-image)
+  - [Converting bytes](#converting-bytes)
+
         
    
 
 
 ## Concept
 
-converter is a function that accepts any of the convertible objects, recognize the type, and expose the conversion methods that exist for this specific object.
-Just pass the object you want to convert, and call the appropriate method.
+converter is a function that accepts any of the convertible objects, recognizes the type of the argument, and exposes the conversion methods that exist for this specific type. Just pass the object you want to convert, and call the appropriate method.
+(Some conversion functionalities require importing a class directly, instead of using this function.)
 
 ## Usage in Node
 Not all conversion functionality is available in Node, due to natural limitations. For instance, Image conversion is unavailable, because this object 
@@ -69,6 +72,189 @@ simply doesn't exist in Node(same goes for the File object). The program will th
 If, for some reason, you need to convert a Blob object(available in Node since version 15) to some other type, import BlobConverter directly, instead of using the generic converter function, which will show incorrect method signatures in this case(some internal limitations).
 
 ## Examples
+
+#### Converting numbers to various notations
+
+If you pass a type Number, NumberConverter is invoked behind the scenes. Any JS Number notation is valid: decimal,octal(begins with 0o),hex(begins with 0x),binary(begins with 0b). More on this: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Numbers_and_dates
+
+
+#### Integer to binary
+
+```javascript
+   const decimal = 4434
+
+  const binary = converter(decimal).toBinary()
+  //'1000101010010'
+ 
+```
+
+#### Float to binary
+
+```javascript
+   const binary = converter(-0.32323).toBinary()
+   //'10111110101001010111111001100111'   
+ 
+```
+
+#### Hex(Number) to binary
+
+```javascript
+   const binary = converter(0x296C167).toBinary()
+   //'10100101101100000101100111'   
+ 
+```
+
+#### Binary(Number) to double precision float
+
+```javascript
+   const binary = 0b00111110110111100110000111010000//A Number in binary notation
+   const float = converter(binary).toFloat()
+   //0.4343400001525879   
+ 
+```
+
+
+#### Integer to hex string
+
+```javascript
+   //In this example a bigint is passed, instead of a "normal"(32 bit) decimal 
+
+   const hexString = converter(17868022686844715136n).toHexString()
+   //'F7F7F7F700000080'
+   
+ 
+```
+
+#### Float to hex string
+
+```javascript
+    const hexString = converter(-0.43431).toHexString()
+    //'BEDE5DE1'
+   
+ 
+```
+
+#### Integer to decimal bytes
+
+```javascript
+   const bytes = converter(422).toDecimalBytes();
+
+  //[1,166] Default is big endian byte order. You can pass {endianness:'LITTLE'} to reverse it.
+
+ 
+```
+
+#### Converting hex string to other notations
+
+If you have a "hex string"(as opposed to a JS Number in hex notation), you can import the HexStringConverter directly(you cannot use the generic converter function for this)
+
+#### Hex string to integer
+
+```javascript
+
+   const {HexStringConverter} = require('javascript-binary-converter');
+   
+   const integer = new HexStringConverter('FFF4').toInteger()
+   //65524   
+ 
+```
+
+#### Signed Hex string to integer
+
+you can also assert that the hex is of two's complement convention
+
+```javascript
+   const {HexStringConverter} = require('javascript-binary-converter');
+
+   //Same hex as above, just signed.
+   const integer = new HexStringConverter('FFF4').toInteger({isSigned:true})
+   //-12   
+ 
+```
+
+#### Hex string to binary
+
+```javascript
+
+   const {HexStringConverter} = require('javascript-binary-converter');
+
+   const binary = new HexStringConverter('296C167').toBinary()
+   //'10100101101100000101100111' 
+ 
+```
+
+#### Hex string to float
+
+```javascript
+
+   const {HexStringConverter} = require('javascript-binary-converter');
+
+   const float = new HexStringConverter('bede61d0').toFloat()
+   //-0.43434000015 
+ 
+```
+
+
+#### Converting binary to other notations
+"binary" is a string of 0's and 1's. In order to use this functionality,
+You will need to import a BinaryConverter class, instead of using the generic converter function
+
+#### Binary to integer
+ ```javascript
+   const {BinaryConverter} = require('javascript-binary-converter');
+
+   const integer = new BinaryConverter('0010100101101100000101100111').toInteger()
+   //result: 43434343
+ 
+```
+
+#### Twos complement Binary to integer
+If you know your binary is of two's complement convention:
+ ```javascript
+   const {BinaryConverter} = require('javascript-binary-converter');
+
+   const integer = new BinaryConverter('10111110110111100110000111010000').toInteger({isSigned:true})
+   //result: -1092722224
+ 
+```
+
+#### Binary to float
+
+
+ ```javascript
+   const {BinaryConverter} = require('javascript-binary-converter');
+
+   const float32 = new BinaryConverter('00000010100101101100000101100111').toFloat()
+   //result: 2.215152....
+ 
+```
+You can also convert it to float64(double precision).
+
+ ```javascript 
+   
+   const float64 = new BinaryConverter('1111111111100001110011001111001110000101111010111100100010100000').toFloat({precision:'DOUBLE'})
+   //result: -1.0e308
+ 
+```
+
+#### Converting text
+
+(Only UTF-8)
+
+### Text to binary
+```javascript
+  const binary = converter('💜').toBinary()
+  //'11110000100111111001001010011100'   
+```
+
+### Text to Uint8Array
+```javascript
+  const uint8 = converter(`A\nA`).toUint8Array()
+  //Uint8Array items: [65,10,65]
+```
+#### Browser tools
+
+The program provides some conversion abilities of binary objects that exist only in the browser. Examples:
 
 #### File to image
 
@@ -186,11 +372,11 @@ document.body.appendChild(image); //You can see the image in the DOM
 
 &nbsp;
 
-#### Converting raw bytes
+#### Converting bytes
 
-"raw bytes", in this regard, is either an array of "bits"(a string of zeros and ones), or of decimal numbers, representing a byte(0 to 255 if unsigned, -128 to 127 if signed). Do not pass binary digits of 1 and 0, as numbers(like 10111101). If you need this, use a string("10111101"). Please note that this functionality might still have some logical flaws, so feel free to open an issue if you suspect you found one. Also, efficiency might be a problem, with very large data. 
+"bytes", in this regard, are either an array of "bits"(a string of zeros and ones), or of decimal numbers, representing a byte(0 to 255 if unsigned, -128 to 127 if signed). Do not pass binary digits of 1 and 0, as numbers(like 10111101). If you need this, use a string("10111101"). Please note that this functionality might still have some logical flaws, so feel free to open an issue if you suspect you found one. Also, efficiency might be a problem, with very large data. 
 
-
+A couple of examples:
 
 #### Byte decimals to Int16Array
 
@@ -216,148 +402,6 @@ As mentioned above, you can also pass real "bytes", in the form of a string. Eac
 
   const decimals = converter(bytes).toIntegers({isSigned:true})//Can be signed or unsigned. You can also assert the integer size(Default is 8)
   //[-1,-1,-9]
- 
-```
-
-#### Bytes to hex
-
-```javascript
-   const bytes = ['11010100', '11111100','10001000']
-
-  const hexes = converter(bytes).toHex({isSigned:false})//Can be signed or unsigned. Default is false.
-  //['D4','FC','88']
- 
-```
-
-#### Converting decimals to other notations
-
-
-#### Integer to binary
-
-```javascript
-   const decimal = 4434
-
-  const binary = converter(decimal).toBinary()
-  //'1000101010010'
- 
-```
-
-#### Float to binary
-
-```javascript
-   const binary = converter(-0.32323).toBinary()
-   //'10111110101001010111111001100111'   
- 
-```
-
-
-#### Integer to hex
-
-```javascript
-   //In this example a bigint is passed, instead of a "normal"(32 bit) decimal 
-
-   const hex = converter(17868022686844715136n).toHex()
-   //'F7F7F7F700000080'
-   
- 
-```
-
-#### Float to hex
-
-```javascript
-    const hex = converter(-0.43431).toHex()
-    //'BEDE5DE1'
-   
- 
-```
-
-#### Integer to decimal bytes
-
-```javascript
-   const bytes = converter(422).toDecimalBytes();
-
-  //[1,166] Default is big endian byte order. You can pass {endianness:'LITTLE'} to reverse it.
-
- 
-```
-
-#### Converting hex to other notations
-
-#### Hex to integer
-
-```javascript
-   
-   const integer = converter('FFF4').toInteger()
-   //65524   
- 
-```
-
-#### Signed Hex to integer
-you can also assert that the hex is of two's complement convention
-
-```javascript
-   //Same hex as above, just signed.
-   const integer = converter('FFF4').toInteger({isSigned:true})
-   //-12   
- 
-```
-
-#### Hex to binary
-
-```javascript
-   const binary = converter('296C167').toBinary()
-   //'10100101101100000101100111' 
- 
-```
-
-#### Hex to float
-
-```javascript
-   const float = converter('bede61d0').toFloat()
-   //-0.43434000015 
- 
-```
-
-
-#### Converting binary to other notations
-"binary" is a string of 0's and 1's. In order to use this functionality,
-You will need to import a BinaryConverter class, instead of using the generic converter function
-
-#### Binary to integer
- ```javascript
-   const {BinaryConverter} = require('javascript-binary-converter');
-
-   const integer = new BinaryConverter('0010100101101100000101100111').toInteger()
-   //result: 43434343
- 
-```
-
-#### Twos complement Binary to integer
-If you know your binary is of two's complement convention:
- ```javascript
-   const {BinaryConverter} = require('javascript-binary-converter');
-
-   const integer = new BinaryConverter('10111110110111100110000111010000').toInteger({isSigned:true})
-   //result: -1092722224
- 
-```
-
-#### Binary to float
-
-
- ```javascript
-   const {BinaryConverter} = require('javascript-binary-converter');
-
-   const float32 = new BinaryConverter('00000010100101101100000101100111').toFloat()
-   //result: 2.215152....
- 
-```
-You can also convert it to float64(double precision).
-
- ```javascript 
-   
-   const float64 = new BinaryConverter('1111111111100001110011001111001110000101111010111100100010100000').toFloat({precision:'DOUBLE'})
-   //result: -1.0e308
  
 ```
 

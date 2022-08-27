@@ -1,7 +1,8 @@
 const { expect } = require('expect');
 const { groupBytes, floatToBinary, binaryToInteger,    bigIntegerToBinary } = require('../../../build/cjs/utils/binary');
-const {integerToHexaDecimal } = require('../../../build/cjs/utils/hex');
+const {integerToHexaDecimal, isHexNumber } = require('../../../build/cjs/utils/hex');
 const { getClosestDividable } = require('../../../build/cjs/utils/number');
+const { stringToBinary } = require('../../../build/cjs/utils/string');
 
 
 
@@ -205,6 +206,7 @@ describe('Node binary utils tests', () => {
 
 
     });
+
 
     // it('Should remove redundant significant bytes', async function () {//
     //     const bytes = ['00010001', '00101000', '00001000', '00000000']

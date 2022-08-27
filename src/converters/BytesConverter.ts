@@ -96,7 +96,7 @@ export default class BytesConverter extends BaseBytesConverter {
         }
     }
 
-    toHex({ isSigned = false }: { isSigned?: boolean } = {}) {
+    toHexString({ isSigned = false }: { isSigned?: boolean } = {}) {
         return this.original.map((int) => integerToHexaDecimal(binaryToInteger(int, isSigned)))
     }
 

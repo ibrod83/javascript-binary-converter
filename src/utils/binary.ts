@@ -70,14 +70,14 @@ export function getSignedInteger(bits: string) {
 
     const negative = (bits[0] === '1');
     if (negative) {
-        return getTwosComplementDecimal(bits)//
+        return getDecimalFromTwosComplementBinary(bits)//
     }
     else {
         return parseInt(bits, 2);
     }
 }
 
-export function getTwosComplementDecimal(binary: string) {
+export function getDecimalFromTwosComplementBinary(binary: string) {
     const twosComplementBinary = getTwosComplementBinary(binary)
     return parseInt(twosComplementBinary, 2) * -1;
 

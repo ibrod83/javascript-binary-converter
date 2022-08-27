@@ -55,7 +55,7 @@ export default class DecimalBytesConverter extends BaseBytesConverter {
         return new BigInt64Array(this.toInt8Array().buffer)
     }
    
-    toHex(){   
+    toHexString(){   
 
         return this.original.map((dec)=>integerToHexaDecimal(dec))
     }

@@ -253,14 +253,14 @@ describe('Node BytesConverter tests', () => {
 
     it('Should return an array of hex, from an array of bytes', async function () {
         var bytes = ['11010100', '11111100', '10001000'] //-44,-4,-120 decimals in twos complement
-        var hexes = converter(bytes).toHex()
+        var hexes = converter(bytes).toHexString()
         expect(hexes[0]).toBe('D4')
         expect(hexes[1]).toBe('FC')
         expect(hexes[2]).toBe('88')
         // console.log('hexes', hexes)
 
 
-        var hexes = converter(bytes).toHex({ isSigned: true })
+        var hexes = converter(bytes).toHexString({ isSigned: true })
 
         expect(hexes[0][hexes[0].length - 1]).toBe('4')
         expect(hexes[0][hexes[0].length - 2]).toBe('D')

@@ -1,5 +1,5 @@
 import { FloatConversionConfig } from "../sharedTypes";
-import { binaryToFloat, getTwosComplementDecimal, } from "./binary";
+import { binaryToFloat, getDecimalFromTwosComplementBinary, } from "./binary";
 import { normalizeBigInt } from "./number"
 import { padString, splitStringToChunks } from "./string";
 
@@ -12,7 +12,7 @@ export function bigIntegerToHexaDecimal(integer: bigint) {
     return normalizedBigInt.toString(16).toUpperCase()
 }
 
-export function floatToHex(float: number, { precision = 'SINGLE' }: FloatConversionConfig = {}) {
+export function floatToHexString(float: number, { precision = 'SINGLE' }: FloatConversionConfig = {}) {
     const getHex = (i: number) => ('00' + i.toString(16)).slice(-2);
 
     const numberOfBytes = precision === 'SINGLE' ? 4 : 8
@@ -31,29 +31,31 @@ export function floatToHex(float: number, { precision = 'SINGLE' }: FloatConvers
         .map((_, i) => getHex(view.getUint8(i)))
         .join('');
 
+    // return hex.toLocaleUpperCase();
     return hex.toLocaleUpperCase();
 }
 
-export function hexToBinary(hex: string) {
+export function hexStringToBinary(hex: string) {
     return parseInt(hex, 16).toString(2).toUpperCase()
 }
 
 
-export function binaryToHex(binary: string, { isSigned = false }: { isSigned?: boolean } = {}) {
+export function binaryToHexString(binary: string, { isSigned = false }: { isSigned?: boolean } = {}) {
     var hex = parseInt(binary, 2).toString(16).toUpperCase();
     return hex;
 }
 
-export function hexToInteger(hex: string, { isSigned = false }: { isSigned?: boolean } = {}) {
+export function hexStringToInteger(hex: string, { isSigned = false }: { isSigned?: boolean } = {}) {
     if (!isSigned) {
         return parseInt(hex, 16)
     }
     else {
-        const binaryFromHex = hexToBinary(hex)
-        const twosComplementDecimal = getTwosComplementDecimal(binaryFromHex);
+        const binaryFromHex = hexStringToBinary(hex)
+        const twosComplementDecimal = getDecimalFromTwosComplementBinary(binaryFromHex);
         return twosComplementDecimal
     }
 }
+
 
 
 function normalizeHex(hex:string,requireHexLength:number){
@@ -64,7 +66,7 @@ function normalizeHex(hex:string,requireHexLength:number){
 }
 
 
-export function hexToFloat(hex: string, { precision = 'SINGLE' }: FloatConversionConfig = {}) {
+export function hexStringToFloat(hex: string, { precision = 'SINGLE' }: FloatConversionConfig = {}) {
     const numBits = precision === 'SINGLE' ? 32 : 64;
     const numBytes = numBits / 8
     hex= normalizeHex(hex,numBytes*2)
@@ -84,5 +86,4 @@ export function hexToFloat(hex: string, { precision = 'SINGLE' }: FloatConversio
 export function splitHexStringToHexBytes(binaryString: string) {
     return splitStringToChunks(binaryString, 2)
 }
-
 

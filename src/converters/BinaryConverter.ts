@@ -1,6 +1,6 @@
 import { FloatConversionConfig } from "../sharedTypes";
 import { binaryToFloat, binaryToInteger } from "../utils/binary";
-import { hexToBinary, hexToInteger, hexToFloat, binaryToHex } from "../utils/hex";
+import {  binaryToHexString } from "../utils/hex";
 
 export default class BinaryConverter {
 
@@ -20,8 +20,8 @@ export default class BinaryConverter {
         return float
     }
 
-    toHex( ){
-       return binaryToHex(this.original)
+    toHexString( ){
+       return binaryToHexString(this.original)
     }
 
 

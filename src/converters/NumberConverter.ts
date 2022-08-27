@@ -1,12 +1,15 @@
 import {  FloatConversionConfig, ToBytesConfig } from "../sharedTypes"
 import {  integerToBinary,  getBytesFromInteger, floatToBinary, bigIntegerToBinary,  getDecimalBytesFromInteger } from "../utils/binary"
-import { bigIntegerToHexaDecimal, integerToHexaDecimal, floatToHex } from "../utils/hex"
+import { bigIntegerToHexaDecimal, integerToHexaDecimal, floatToHexString, hexStringToFloat } from "../utils/hex"
 import { isBigInt, isFloat } from "../utils/number"
 
 
 
 
-export default class IntegerConverter {
+/**
+ * This class handles any number|bigint, in any type Number notation(decimal,octal,hex,binary)
+ */
+export default class NumberConverter {
 
     constructor(protected original: number | bigint) { }
 
@@ -15,6 +18,12 @@ export default class IntegerConverter {
         if (isBigInt(this.original)) return bigIntegerToBinary(this.original)
         return isFloat(this.original as number) ? floatToBinary(this.original as number,{precision}) : integerToBinary(this.original)
     }
+
+    toInteger(){
+        //@ts-ignore
+        return parseInt(this.original)
+    }
+    
 
     /**
      * Does not support bigint(above 32 bit) or floating point.
@@ -27,16 +36,26 @@ export default class IntegerConverter {
         return getDecimalBytesFromInteger(this.original,{endianness,isSigned})
     }
 
-    toHex({ precision = 'SINGLE' }: FloatConversionConfig = {}) {
+    toHexString({ precision = 'SINGLE' }: FloatConversionConfig = {}) {
         if (typeof this.original === 'number') {
             if (isFloat(this.original)) {
-                return floatToHex(this.original,{precision})
+                return floatToHexString(this.original,{precision})
             }
             return integerToHexaDecimal(this.original)
         }
 
         return bigIntegerToHexaDecimal(this.original as bigint)
     }
+
+    toFloat( { precision = 'SINGLE' }: FloatConversionConfig = {}){
+        const float = hexStringToFloat(this.original.toString(16),{precision})
+        return float
+    }
+
+    // toInteger( { isSigned = false }: { isSigned?: boolean } = {}){
+    //     const decimal = hexStringToInteger(this.original,{isSigned})
+    //     return decimal
+    // }
 
 
 }
