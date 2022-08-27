@@ -105,7 +105,7 @@ If you pass a type Number, NumberConverter is invoked behind the scenes. Any JS 
 ```
 
 
-#### Binary(Number) to double precision float
+#### Binary(Number) float
 
 ```javascript
    const binary = 0b00111110110111100110000111010000//A Number in binary notation
