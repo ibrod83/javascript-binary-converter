@@ -213,13 +213,11 @@ describe('Node BytesConverter tests', () => {
 
         // TODO: explore endianess issue of all byte conversion
         var decimals = converter(bytes).toIntegers({integerSize:64})
-        console.log(decimals)
         expect(decimals.length).toBe(2)//
         expect(decimals[0].toString()).toBe("17868022686844715136")
         expect(decimals[1].toString()).toBe("17868022686844715136")
 
         decimals = converter(bytes).toIntegers({integerSize:64,isSigned:true})
-        console.log(decimals)
         expect(decimals.length).toBe(2)//
         expect(decimals[0].toString()).toBe("-578721386864836480")
         expect(decimals[1].toString()).toBe("-578721386864836480")

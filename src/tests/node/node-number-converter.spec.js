@@ -112,7 +112,6 @@ describe('Node NumberConverter tests', () => {
         expect(bytes[2]).toBe('00010001')
 
         bytes = converter(-534545).toBytes();
-        console.log('bytes', bytes)//
         expect(bytes[0]).toBe('11111111')//most significant byte!
         expect(bytes[1]).toBe('11110111')
         expect(bytes[2]).toBe('11010111')
@@ -120,7 +119,6 @@ describe('Node NumberConverter tests', () => {
 
 
         bytes = converter(-143454544).toBytes();//
-        console.log('bytes', bytes)
         // [       "11110111",        "01110011",       "00001110",       "10110000"     ]
         expect(bytes[0]).toBe('11110111')//most significant byte!
         expect(bytes[1]).toBe('01110011')
@@ -163,7 +161,6 @@ describe('Node NumberConverter tests', () => {
 
 
         bytes = converter(-0x88CF150).toBytes();//
-        console.log('bytes', bytes)
         // [       "11110111",        "01110011",       "00001110",       "10110000"     ]
         expect(bytes[0]).toBe('11110111')//most significant byte!
         expect(bytes[1]).toBe('01110011')
@@ -416,14 +413,23 @@ describe('Node NumberConverter tests', () => {
 
     });
 
-    // it('Should decimal, from hex, signed convention', async function () {
-    //     // let decimal = converter(0xFFF4).toInteger({isSigned:true})
-    //     // expect(decimal).toBe(-12)
+    it('Should return decimal, from other notations, signed convention', async function () {
+        let decimal = converter(0xFFF4).toInteger({isSigned:true})
+        expect(decimal).toBe(-12)
 
-    //     // decimal = converter(0x00000000BEDE61D0).toInteger({isSigned:true})
-    //     // expect(decimal).toBe(-1092722224) 
+        decimal = converter(0x00000000BEDE61D0).toInteger({isSigned:true})
+        expect(decimal).toBe(-1092722224) 
 
-    // });
+        decimal = converter(0o27667460720).toInteger({isSigned:true})
+        expect(decimal).toBe(-1092722224) 
+
+        decimal = converter(0b10111110110111100110000111010000).toInteger({isSigned:true})
+        expect(decimal).toBe(-1092722224) 
+
+        decimal = converter(-0xFF).toInteger()
+        expect(decimal).toBe(-255) 
+
+    });
 
 
 

@@ -1,6 +1,6 @@
 import {  FloatConversionConfig, ToBytesConfig } from "../sharedTypes"
 import {  integerToBinary,  getBytesFromInteger, floatToBinary, bigIntegerToBinary,  getDecimalBytesFromInteger } from "../utils/binary"
-import { bigIntegerToHexaDecimal, integerToHexaDecimal, floatToHexString, hexStringToFloat } from "../utils/hex"
+import { bigIntegerToHexaDecimal, integerToHexaDecimal, floatToHexString, hexStringToFloat, hexStringToInteger } from "../utils/hex"
 import { isBigInt, isFloat } from "../utils/number"
 
 
@@ -19,9 +19,13 @@ export default class NumberConverter {
         return isFloat(this.original as number) ? floatToBinary(this.original as number,{precision}) : integerToBinary(this.original)
     }
 
-    toInteger(){
-        //@ts-ignore
+    toInteger({ isSigned = false }: { isSigned?: boolean } = {}){
+       
+        if(!isSigned) //@ts-ignore
         return parseInt(this.original)
+
+        const hex = this.original.toString(16)
+        return hexStringToInteger(hex,{isSigned})
     }
     
 
