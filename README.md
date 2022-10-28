@@ -4,8 +4,6 @@ javascript-binary-converter is a simple utility to convert various binary data o
 
 If you encounter any bugs or have a question, please don't hesitate to open an issue.
 
-> :warning: **The API is still unstable and might undergo significant changes. Do not rely on semver, until it reaches version 1.0**
-
 
 ## Installation
 
