@@ -1,13 +1,11 @@
-const { expect } = require('expect');
-const converter = require('../../../build/cjs/converter').default;
-const { TextDecoder } = require('util')
-const { Blob } = require('node:buffer');
-const { BlobConverter } = require('../../../build/cjs/index');
-const { getSystemEndianness } = require('../../../build/cjs/utils/crossPlatform');
 
-/**
- * IMPORTANT: Make sure cjs build is refreshed!
- */
+import { Blob } from 'node:buffer';
+import { expect } from "expect";
+import converter from "../../converter";
+import BlobConverter from "../../converters/BlobConverter";
+import { getSystemEndianness } from '../../utils/crossPlatform';
+
+
 describe('Node general tests', () => {
 
     it('Should return an Int8Array, from Uint8Array', async function () {
@@ -46,7 +44,7 @@ describe('Node general tests', () => {
         const float32 = converter(uint8).toFloat32()
 
         expect(float32 instanceof Float32Array).toBe(true)
-        expect(float32[0].toString().includes(1.356709147)).toBe(true)
+        expect(float32[0].toString().includes('1.356709147')).toBe(true)
 
     });
 
@@ -82,7 +80,9 @@ describe('Node general tests', () => {
 
     it('Should return a dataUrl string from Blob', async function () {
 
+        //@ts-ignore
         const blob = new Blob([206, 134])
+        //@ts-ignore
         const blobConverter = new BlobConverter(blob)
         const url = await blobConverter.toBase64();
 
@@ -92,7 +92,9 @@ describe('Node general tests', () => {
 
     it('Should return bytes from Blob', async function () {
 
+        //@ts-ignore
         const blob = new Blob([206])
+        //@ts-ignore
         const blobConverter = new BlobConverter(blob)
         const bytes = await blobConverter.toBytes()
         expect(bytes.length).toBe(3)

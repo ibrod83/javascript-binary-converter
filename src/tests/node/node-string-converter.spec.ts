@@ -1,7 +1,5 @@
-const { expect } = require('expect');
-const {converter} = require('../../../build/cjs');
-
-
+import { expect } from "expect";
+import converter from "../../converter";
 
 
 describe('Node StringConverter tests', () => {
@@ -26,9 +24,7 @@ describe('Node StringConverter tests', () => {
         const arrayFromUint8 = Array.from(uint8)
         expect(arrayFromUint8).toStrictEqual([65,10,65]) 
       
-    });   
-
-   
+    });    
 
 })
 

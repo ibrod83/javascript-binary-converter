@@ -1,9 +1,7 @@
-const { expect } = require('expect');
-const { groupBytes, floatToBinary, binaryToInteger,    bigIntegerToBinary } = require('../../../build/cjs/utils/binary');
-const {integerToHexaDecimal, isHexNumber } = require('../../../build/cjs/utils/hex');
-const { getClosestDividable } = require('../../../build/cjs/utils/number');
-const { stringToBinary } = require('../../../build/cjs/utils/string');
-
+import { expect } from "expect";
+import { binaryToInteger, groupBytes, bigIntegerToBinary, floatToBinary } from "../../utils/binary";
+import { integerToHexaDecimal } from "../../utils/hex";
+import { getClosestDividable } from "../../utils/number";
 
 
 describe('Node binary utils tests', () => {
@@ -154,17 +152,17 @@ describe('Node binary utils tests', () => {
     });
     it('Should closest dividable', async function () {//
         let closest = getClosestDividable(14, 8)
-        expect(closest).toBe(16, 8)
+        expect(closest).toBe(16)
         closest = getClosestDividable(1, 8)
-        expect(closest).toBe(8, 8)
+        expect(closest).toBe(8)
         closest = getClosestDividable(7, 8)
-        expect(closest).toBe(8, 8)
+        expect(closest).toBe(8)
         closest = getClosestDividable(15, 8)
-        expect(closest).toBe(16, 8)
+        expect(closest).toBe(16)
         closest = getClosestDividable(16, 8)
-        expect(closest).toBe(16, 8)
+        expect(closest).toBe(16)
         closest = getClosestDividable(30, 8)
-        expect(closest).toBe(32, 8)
+        expect(closest).toBe(32)
 
     });
 
@@ -172,6 +170,7 @@ describe('Node binary utils tests', () => {
         // 184467440737095516
         // let binary = integerToBinary(4294967295)//max 32 bit number 
         // let binary = integerToBinary(4294967296) //above 32 bit
+    
         let binary = bigIntegerToBinary(184467440737095516n)
         expect(binary).toBe('1010001111010111000010100011110101110000101000111101011100')
 

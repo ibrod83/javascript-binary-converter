@@ -1,12 +1,8 @@
-const { expect } = require('expect');
-const {BinaryConverter} = require('../../../build/cjs');
-const converter = BinaryConverter
-
-
+import { expect } from 'expect';
+import BinaryConverter from '../../converters/BinaryConverter';
+let converter = BinaryConverter
 
 describe('Node BinaryConverter tests', () => {
-
-    
 
     it('Should return decimal, from binary', async function () {
         
@@ -25,7 +21,7 @@ describe('Node BinaryConverter tests', () => {
     });
 
     it('Should return decimal, from binary, signed convention', async function () {
-        let decimal =new  converter('1111111111110100').toInteger({isSigned:true})
+        let decimal = new converter('1111111111110100').toInteger({isSigned:true})
         expect(decimal).toBe(-12)
 
         decimal = new converter('10111110110111100110000111010000').toInteger({isSigned:true})
@@ -67,14 +63,6 @@ describe('Node BinaryConverter tests', () => {
         binary = new converter('111110110111100110000111010000').toHexString()
         expect(binary).toBe('3EDE61D0')
 
-       
-
-
     }); 
 
-
 })
-
-
-
-

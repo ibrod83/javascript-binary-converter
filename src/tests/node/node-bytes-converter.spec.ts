@@ -1,13 +1,10 @@
+import converter from "../../converter";
 const { expect } = require('expect');
-const converter = require('../../../build/cjs/converter').default;
 const { Blob } = require('node:buffer');
-const { getBytes,extraSmallImageDecimalBytes,twosComplementExtraSmallImageBytes} = require('./test-utils');
+import { getBytes,extraSmallImageDecimalBytes,twosComplementExtraSmallImageBytes} from './test-utils';
 
 
-
-describe('Node BytesConverter tests', () => {
-
-     
+describe('Node BytesConverter tests', () => {     
 
     it('Should return Uint8Array, and an Int8Array, from bytes', async function () {
         var bytes = ['11111111', '00000001']

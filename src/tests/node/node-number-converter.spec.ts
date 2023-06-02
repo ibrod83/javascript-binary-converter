@@ -1,8 +1,5 @@
-const { expect } = require('expect');
-const {converter} = require('../../../build/cjs');
-
-
-
+import { expect } from "expect";
+import converter from "../../converter";
 
 describe('Node NumberConverter tests', () => {
 

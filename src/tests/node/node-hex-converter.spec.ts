@@ -1,6 +1,7 @@
-const { expect } = require('expect');
-const {HexStringConverter} = require('../../../build/cjs');
+import { expect } from "expect";
+import HexStringConverter from "../../converters/HexStringConverter";
 
+ 
 const converter = HexStringConverter
 
 

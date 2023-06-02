@@ -1,10 +1,6 @@
-const { expect } = require('expect');
-const converter = require('../../../build/cjs/converter').default;
-const { Blob } = require('node:buffer');
-const { getDecimalBytes ,} = require('./test-utils');
-
-
-
+import { expect } from "expect";
+import converter from "../../converter";
+import { getDecimalBytes } from "./test-utils";
 
 describe('Node DecimalBytesConverter tests', () => {     
 
